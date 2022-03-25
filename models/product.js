@@ -13,3 +13,23 @@ const ProductModel = mongoose.model('product', ProductSchema)
 module.exports = ProductModel
 
 
+// ProductModel.find({
+//   size
+//   :
+//   "S"
+// }
+//   )
+// .then(function(data){
+//   console.log(data);
+// })
+// .catch(function(err){
+//   console.log(err);
+// })
+// ProductModel.find({color:{$regex:'re',$options:'i'}})
+// .then(function(data){
+//     console.log(data);
+//   })
+// .catch(function(err){
+//   console.log(err);
+// })
+  

@@ -8,3 +8,8 @@ const CategorySchema = mongoose.Schema({
 const CategoryModel = mongoose.model('category', CategorySchema)
 
 module.exports = CategoryModel
+
+CategoryModel.create({
+  name	: 'Shirt',
+  thumbnail: 'Shirt'
+},)

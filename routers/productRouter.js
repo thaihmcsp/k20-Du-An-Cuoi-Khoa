@@ -15,4 +15,20 @@ router.get('/',function(req,res){
       });
 })
 
+router.post('/',function(req,res){
+  console.log(req.body);
+  ProductModel.create(
+    {
+      color:req.body.color,
+      size:req.body.size,
+      quantity:req.body.quantity
+    }
+  )
+  .then(function (data) {
+      res.json({mess:'ok',data})
+    })
+    .catch(function (err) {
+      res.json({mess:'thất bại',err})
+    });
+})
 module.exports = router

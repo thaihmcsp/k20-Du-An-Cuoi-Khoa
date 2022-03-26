@@ -9,7 +9,7 @@ const CategoryModel = mongoose.model('category', CategorySchema)
 
 module.exports = CategoryModel
 
-CategoryModel.create({
-  name	: 'Shirt',
-  thumbnail: 'Shirt'
-},)
+// CategoryModel.create({
+//   name	: 'Shirt',
+//   thumbnail: 'Shirt'
+// },)

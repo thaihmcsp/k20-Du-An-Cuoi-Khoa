@@ -1,0 +1,14 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --page-color: #eff0f5;
+  --font-color: #424242;
+  --btn-color: #f57224;
+  --hover-btn-color: #d2621e;
+  --error-color: #f44336;
+  --link-color: #049cb9;
+}

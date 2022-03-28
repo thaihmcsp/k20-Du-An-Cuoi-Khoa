@@ -1,0 +1,100 @@
+
+.searchconten{
+    border: 1px solid black;
+    width: 333px;
+}
+.searchtong{
+    display: flex;
+    flex-direction: column;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.buttomhome{
+    border-bottom: 1px solid rgb(185, 185, 185);
+    ;
+}
+.tong2manhinhdoc{
+    display: flex;
+    flex-direction: row;
+}
+.khoibentrai{
+    width: 150px
+    ;
+    max-width: 100%;
+}
+.khoibenphai{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+}
+.headerkhoiphai{
+    border: 1px solid rgb(185, 185, 185);
+}
+
+.noidungbenphai{
+    border: 1px solid rgb(185, 185, 185);
+}
+.phantrang{
+    border: 1px solid rgb(185, 185, 185);
+}
+
+
+/* 
+.anticon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
+
+.anticon .anticon-icon {
+  display: block;
+}
+
+.anticon[tabindex] {
+  cursor: pointer;
+}
+
+.anticon-spin::before,
+.anticon-spin {
+  display: inline-block;
+  -webkit-animation: loadingCircle 1s infinite linear;
+  animation: loadingCircle 1s infinite linear;
+}
+
+@-webkit-keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingCircle {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+} */

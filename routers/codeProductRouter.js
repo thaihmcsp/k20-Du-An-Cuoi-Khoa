@@ -23,6 +23,8 @@ router.post('/',function(req,res){
     ProductCodeModel.find(
         {name:{$regex:req.query.name,$options:'i'}}
       )
+      .skip((req.query.page-1) *req.query.limit)
+      .limit(req.query.limit)
       .then(function (data) {
           res.json({mess:'ok',data})
         })
@@ -30,4 +32,23 @@ router.post('/',function(req,res){
           res.json({mess:'thất bại',err})
         });
   })
+  
+  // router.get('/',function(req,res){
+  //   console.log(req.query.name);
+  //   ProductCodeModel.find(
+  //       {name:{$regex:req.query.name,$options:'i'}}
+  //     )
+  //     .skip((req.query.page-1) *req.query.limit)
+  //     .limit(req.query.limit)
+  //     .then(function (data) {
+  //         res.json({mess:'ok',data})
+  //       })
+  //       .catch(function (err) {
+  //         res.json({mess:'thất bại',err})
+  //       });
+  // })
+
+
+
+
 module.exports = router

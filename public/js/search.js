@@ -71,7 +71,7 @@ function render(page){
      for (let i = 0; i < data.data.length; i++) {
         let div = `
      <tr>
-         <td> tên sản phẩm là :  ${data.data[i].name}zzzzzzzzzzzzzzzzzzzzzzzzzzzzz</td>
+         <td> tên sản phẩm là :  ${data.data[i].name}</td>
          <td>giá là :  ${data.data[i].price}  </td>
      </tr>
         `
@@ -157,7 +157,7 @@ function suggest(){
    const data = $('#search').val()
 $.ajax({
     type: "get",
-    url: "/codeProduct",
+    url: "/codeProduct/?limit=8",
     data: { name: data },
   })
   .then(function (data) {

@@ -1,6 +1,5 @@
 
 .searchconten{
-    border: 1px solid black;
     width: 333px;
 }
 .searchtong{
@@ -43,58 +42,17 @@
     border: 1px solid rgb(185, 185, 185);
 }
 
-
-/* 
-.anticon {
-  display: inline-block;
-  color: inherit;
-  font-style: normal;
-  line-height: 0;
-  text-align: center;
-  text-transform: none;
-  vertical-align: -0.125em;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#search{
+  width: 285px;
 }
-
-.anticon > * {
-  line-height: 1;
+.buttomhome{
+  font-size: 28px;
 }
-
-.anticon svg {
-  display: inline-block;
+.searchtong{
+    display: flex;
+    position: absolute;
 }
-
-.anticon::before {
-  display: none;
+.searchconten{
+    background-color: white;
+    position: relative;
 }
-
-.anticon .anticon-icon {
-  display: block;
-}
-
-.anticon[tabindex] {
-  cursor: pointer;
-}
-
-.anticon-spin::before,
-.anticon-spin {
-  display: inline-block;
-  -webkit-animation: loadingCircle 1s infinite linear;
-  animation: loadingCircle 1s infinite linear;
-}
-
-@-webkit-keyframes loadingCircle {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes loadingCircle {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-} */

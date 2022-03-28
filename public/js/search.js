@@ -178,6 +178,9 @@ $.ajax({
  }, 1000);
 }
 
+function oncz(){
+  $('.searchtong').html('')
+}
 
 // function search1(){
 //   console.log(999,$('#search').val().length);

@@ -1,8 +1,5 @@
 body {
   background-color: var(--page-color);
-  display: flex;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--font-color);
 }
 
 .main {

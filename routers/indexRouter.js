@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const path = require("path");
 const userModel = require("../models/userModel");
-const { checkForm, checkUser } = require("../middleWare/checkLogin");
+const { checkUser } = require("../middleWare/checkLogin");
 
-router.get("/home", checkForm, (req, res) => {
+router.get("/home", (req, res) => {
   res.render("user/home/home");
 });
 

@@ -1,3 +1,4 @@
+let TotalPage
 function search(){
   const search = $("#search").val();
   console.log(3,search);
@@ -10,6 +11,7 @@ function search(){
     console.log(22,data);
     
 console.log(21,data.data.length);
+  TotalPage = data.data.length
     if (data.data.length === 0) {
       $('.headerkhoiphai').html('')
         let div1 = `
@@ -32,13 +34,13 @@ console.log(21,data.data.length);
         `
         $('.headerkhoiphai').append(div1)
      }
-     $('.phantrang').html('')
+     $('.phantranggiua').html('')
      for (let i = 0; i < data.data.length / 5; i++) {
       let div = `
       <button onclick='getData(${i+1})' class="" type="button"> ${i+1}
                 </button>
       `
-      $('.phantrang').append(div)
+      $('.phantranggiua').append(div)
       
     }
     }
@@ -47,18 +49,36 @@ console.log(21,data.data.length);
     console.log(err);
   });
   render(1)
-
-  function getData(page){
-    render(page)
-    }
-
 }
 
 
+
+// page thứ mấy thì hiện dữ liện page đấy
 function getData(page){
+  console.log(page,TotalPage);
   render(page)
+  let TotalPage1=TotalPage/5 +1
+  console.log(64,page,TotalPage1);
+   if (page>TotalPage1-1) {
+ } else {
+
+  if (page<2) {
+  } else {
+    $('.trangtruoc').off('click')
+  $('.trangtruoc').on('click',function(){
+    getData(page-1)
+  });
+  $('.trangsau').off('click')
+  $('.trangsau').on('click',function(){
+    getData(page+1);
+  })
+  }
+  }
+    
   }
 
+
+// tạo render hiện dữ liệu của page nào đó
 function render(page){
   const search = $("#search").val();
   $.ajax({
@@ -83,10 +103,13 @@ function render(page){
      console.log(err);
    })
  }
-// search sản phẩm và up lên trang search
+
+
+
+
+
 
 // thêm sản phẩn đơn giản
-
 function addsanpham(){
   const color= $('#color').val()
   const size= $('#size').val()
@@ -109,6 +132,7 @@ function addsanpham(){
 {/* <input type="text" name="" id="name" placeholder="name">
         <input type="text" name="" id="thumbnail" placeholder="thumbnail"></input> */}
 
+// thêm cate
 function addcategory(){
   const name= $('#name').val()
   const thumbnail= $('#thumbnail').val()
@@ -126,9 +150,9 @@ function addcategory(){
   });
 }
 
-{/* <input type="text" name="" id="code" placeholder="code">
-        <input type="text" name="" id="name1" placeholder="name">
-        <input type="number" name="" id="price" placeholder="price"></input> */}
+
+
+// thêm prdcode
 function addproductCode(){
   const code= $('#code').val()
   const name1= $('#name1').val()
@@ -146,9 +170,9 @@ function addproductCode(){
     console.log(err);
   });
 }
-// ;
 
 
+// khi gõ vào ô tìm kiếm sẽ ra 8 kết quả đầu tiên ở dưới ô search
  let time
 function suggest(){
   $('.searchconten').css({display: 'block'})
@@ -178,6 +202,7 @@ $.ajax({
  }, 1000);
 }
 
+// khi search xong click ra bất cứ chỗ khác thì hộp search sẽ biến mất
 function oncz(){
   $('.searchtong').html('')
 }

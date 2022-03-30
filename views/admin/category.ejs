@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Category</h1>
+    <%- include('./header.ejs') %> <br>
+    <div class="change">
+        <form enctype="multipart/form-data">
+          <input type="text" id="name" name="name" placeholder="VD: Đồ gia dụng" />
+          <input id="clickavatar" type="file" name="thumbnail" style="display: none;"/>
+          <img src="/public/upload/add.jpg" alt="" id="change" onclick="importData()" />
+        </form>
+        <button onclick="addCategory()">ADD Category</button>
+    </div>
+        <%- include('./datacategory.ejs') %> <br>
+</body>
+</html>

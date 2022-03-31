@@ -16,3 +16,10 @@ module.exports = ProductCodeModel
 //   {name: {$regex: 'Quan', $options: 'i'}}
 //   )
 //   .then(data=>{console.log(data);})
+// ProductCodeModel.create({
+//   code:	'333',
+//   name:	'ví',
+//   thumbnail:	'ví da nam',
+//   categoryID:	'789',
+//   price: 300000
+// })

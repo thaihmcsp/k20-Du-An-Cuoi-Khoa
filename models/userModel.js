@@ -19,10 +19,4 @@ const UserModel = mongoose.model('user', UserSchema)
 
 module.exports = UserModel
 
-// UserModel.create({
-//   fullName:	'Nguyễn Xuân Chiến',
-//   password:	'123',
-//   email:	'xuanchien0111@gmail.com',
-//   role:	'admin',
-// })
 

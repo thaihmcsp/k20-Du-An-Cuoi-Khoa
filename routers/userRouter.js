@@ -1,28 +1,41 @@
 const router = require("express").Router();
+const { log } = require("console");
 const path = require("path");
 const UserModel = require("../models/userModel");
 
 
-router.post("/createadmin", async function (req, res) {
-  try {
-    const user = await UserModel.find({ fullName: req.body.fullName });
-    console.log(user);
-    if (!user) {
-      const data = await UserModel.create({
-        fullName: req.body.fullName,
-        password: req.body.password,
-        email: req.body.email,
-        role: req.body.role,
-      });
-      res.status(200).json({ mess: "Bạn đã đăng ký tài khoản thành công" });
-    } else {
-      res.json({ mess: "Tài khoản này đã có người đăng ký" });
-    }
-  } catch (error) {
-    res.status(500).json({ mess: "Bạn đăng ký thất bạn" });
-  }
+router.get('/admin/get',async function(req,res){
+  const user = await UserModel.find()
+  .skip((req.query.page - 1) * req.query.limit)
+  .limit(req.query.limit)
+  res.render('admin/manage',{user})
+})
+
+router.get('/get',async function(req,res){
+  const user = await UserModel.find()
+  .limit(5)
+  const totalPage = await UserModel.count()
+  res.render('admin/createuser',{user, totalPage: totalPage/5})
+})
+
+router.get("/:id", async function (req, res) {
+  const profile = await UserModel.findOne({ _id: req.params.id });
+  res.json(profile);
 });
 
+router.put("/:idedit", async function (req, res) {
+  try {
+    const profile = await UserModel.updateOne(
+      { _id: req.params.idedit },
+      {
+        role: req.body.role,
+      }
+    );
+    res.json(profile);
+  } catch (error) {
+    res.status(500).json({mess: 'Loi server'})
+  }
+});
 
 
 module.exports = router;

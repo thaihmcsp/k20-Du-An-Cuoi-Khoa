@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CATEGORY LAZADA</title>
+    <link rel="icon" href="/public/upload/logo-lazada.png" type="image/x-icon" />
 </head>
 <body>
     <h1>Category</h1>
     <%- include('./header.ejs') %> <br>
     <div class="change">
-        <form enctype="multipart/form-data">
-          <input type="text" id="name" name="name" placeholder="VD: Đồ gia dụng" />
+        <h4>Thêm phân loại sản phẩm <i class="fa-solid fa-heart-circle-plus"></i></h4>
+        <form enctype="multipart/form-data" id="bangadd">
+          <input type="text" id="name" name="name" placeholder="VD: Đồ gia dụng" /><br>
+          <small class="note1"></small> <br>
           <input id="clickavatar" type="file" name="thumbnail" style="display: none;"/>
-          <img src="/public/upload/add.jpg" alt="" id="change" onclick="importData()" />
+          <img src="/public/upload/add.jpg" alt="" id="change" onclick="importData()" /> <br>
+          <small class="note2"></small> <br>
         </form>
-        <button onclick="addCategory()">ADD Category</button>
+        <button onclick="addCategory()" id="add">ADD <i class="fa-solid fa-circle-plus"></i></button>
     </div>
-        <%- include('./datacategory.ejs') %> <br>
+    <div class="category">
+        <%- include('./datacategory.ejs') %> 
+    </div>
 </body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </html>

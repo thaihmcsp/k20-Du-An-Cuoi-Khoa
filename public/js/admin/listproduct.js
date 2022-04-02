@@ -1,3 +1,20 @@
+const fileUpload = document.querySelector("#listImg");
+
+fileUpload.addEventListener("change", (e) => {
+	const files = e.target.files;
+	for(let i = 0 ; i < files.length ; i ++) {
+    const img = files[i].name
+    const div = `
+    <img src="/public/upload/${img}" alt="">
+    `
+    $('.luong').append(div)
+	}
+})
+
+function importData(){
+  document.getElementById("listImg").click();
+}
+
 async function ADD() {
   const listImg = $("#listImg").val();
   const color = $("#color").val();

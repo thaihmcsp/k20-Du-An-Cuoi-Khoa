@@ -42,7 +42,6 @@ router.delete("/:id", async function (req, res) {
 
 router.get("/:id", async function (req, res) {
   try {
-    console.log(2);
     const list = await ProductCode.findOne({ _id: req.params.id });
     res.json(list);
   } catch (error) {

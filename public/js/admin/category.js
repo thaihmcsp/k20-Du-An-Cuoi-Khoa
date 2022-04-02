@@ -42,32 +42,55 @@ fileToRea.addEventListener(
   false
 );
 
+async function but(page){
+  const res = await $.ajax({
+    url: `/category/get?page=${page}&limit=5`,
+    type: 'GET'
+  })
+  $('.category').html('')
+  $('.category').html(res)
+}
+
 async function addCategory() {
   try {
-    const form = $("form")[0];
-    const formData = new FormData(form);
-    const res = await $.ajax({
-      url: "/category/add",
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-    });
-    alert(`Đã thêm ${name}`);
-    window.location.reload();
+    const name = $('#name').val()
+    const thumbnail = $('#clickavatar').val()
+    console.log(name);
+    if(name == '' ){
+      $('.note1').html('Vui lòng điền tên phân loại !')
+    }
+    if(thumbnail == ''){
+      $('.note2').html('Vui lòng nhận phải ảnh phân loại !')
+    }
+    else{
+      const form = $("form")[0];
+      const formData = new FormData(form);
+      const res = await $.ajax({
+        url: "/category/add",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+      });
+      window.location.reload();
+    }
   } catch (error) {
     alert(`Thư mục đã có ${name}`);
   }
 }
 
-async function deletethumbanail(id) {
-  // console.log(id);
+var id = ''
+async function xoa(a) {
+  id = a
+}
+
+async function deletethumbanail() {
   try {
     const res = await $.ajax({
       url: "/category/" + id,
       type: "DELETE",
     });
-    window.location.reload();
+    window.location.reload()
   } catch (error) {
     console.log(error);
   }

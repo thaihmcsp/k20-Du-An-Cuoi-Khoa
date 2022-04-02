@@ -42,7 +42,28 @@ fileToRea.addEventListener(
 
 async function add() {
   try {
-    const form = $("form")[0];
+    const code = $('#code').val()
+    const name = $('#name').val()
+    const clickavatar = $('#clickavatar').val()
+    const category = $('#category').val()
+    const price = $('#price').val()
+    if(code == ''){
+     $('.note1').text('Vui lòng điền mã code sản phẩm')
+    }
+    if(name == ''){
+      $('.note2').text('Vui lòng điền tên sản phẩm')
+    }
+    if(clickavatar == ''){
+      $('.note3').text('Vui lòng ảnh sản phẩm')
+    }
+    if(category == ''){
+      $('.note4').text('Vui lòng nhập phân loại sản phẩm')
+    }
+    if(price == ''){
+      $('.note5').text('Vui lòng nhập giá tiền sản phẩm')
+    }
+    else{
+      const form = $("form")[0];
     const formData = new FormData(form);
     const res = await $.ajax({
       url: "/codeProduct/add",
@@ -51,23 +72,23 @@ async function add() {
       processData: false,
       contentType: false,
     });
-    console.log(res);
     window.location.reload();
+    }
   } catch (error) {
     console.log(error);
   }
 }
+var id = ''
+async function xoa(a) {
+  id = a
+}
 
-async function xoa(id) {
-  try {
-    const res = await $.ajax({
-      url: "/codeProduct/" + id,
-      type: "DELETE",
-    });
-    window.location.reload();
-  } catch (error) {
-    console.log(error);
-  }
+async function yes(){
+  const res = await $.ajax({
+    url: "/codeProduct/" + id,
+    type: 'DELETE'
+  })
+  window.location.reload()
 }
 
 var idupdate = "";
@@ -78,7 +99,6 @@ async function update(id) {
     url: "/codeProduct/" + id,
     type: 'GET'
   })
-  console.log(res);
   $(".code").val(res.code)
   $(".name").val(res.name)
   $("#changeimg").attr('src', "/" + res.thumbnail)

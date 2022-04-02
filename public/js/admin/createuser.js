@@ -1,43 +1,57 @@
-async function ADD() {
-  const fullName = $("#fullName").val();
-  const password = $("#password").val();
-  const repassword = $("#repassword").val();
-  const email = $("#email").val();
-  const role = $("#role").val();
-  if (
-    fullName == "" ||
-    password == "" ||
-    repassword == "" ||
-    email == "" ||
-    role == ""
-  ) {
-    $(".note").text("Vui lòng điền đầy đủ thông tin");
-  } else {
-    console.log(fullName, password, repassword, email, role);
-    if (password === repassword) {
-      try {
-        const res = await $.ajax({
-          url: "/user/createadmin",
-          type: "POST",
-          data: {
-            fullName: fullName,
-            password: password,
-            email: email,
-            role: role,
-          },
-        });
-        $("#fullName").val("");
-        $("#password").val("");
-        $("#repassword").val("");
-        $("#email").val("");
-        console.log(res);
-        alert(res.mess)
-      } catch (error) {
-        alert(error.responseJSON.mess);
-      }
-    } else {
-      $("#mk").text("Mật khẩu điền không khớp");
-      $("#remk").text("Mật khẩu điền không khớp");
-    }
+
+async function but(page){
+  const res = await $.ajax({
+    url: `/user/admin/get?page=${page}&limit=5`,
+    type: 'GET'
+  })
+  $('.user').html('')
+  $('.user').html(res)
+}
+
+var idedit = "";
+
+async function edit(id) {
+  $(".modal-body").html("");
+  const res = await $.ajax({
+    url: "/user/" + id,
+    type: "GET",
+  });
+  div = `
+   <table>
+    <tr>
+      <td><img src="${res.avatar}" alt="" class="imgthumbnail"></td>
+      <td>Name: ${res.fullName}</td>
+      <td>Role: ${res.role}</td>
+      <td>
+      <select name="" id="editrole">
+      <option value="user">user</option>
+      <option value="admin">admin</option>
+      </select>
+      </td>
+    </tr>
+   </table>
+  `;
+  $(".modal-body").append(div);
+  idedit = id;
+}
+
+async function save() {
+  try {
+    const role = $("#editrole").val();
+    const res = await $.ajax({
+      url: "/user/" + idedit,
+      type: "PUT",
+      data: {
+        role: role,
+      },
+    });
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
   }
+}
+
+async function back(){
+  const page = $('#page').val()
+  console.log(page);
 }

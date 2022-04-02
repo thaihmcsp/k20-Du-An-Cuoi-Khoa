@@ -17,6 +17,22 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+
+
+router.get('/get',async function(req,res){
+  const listcategory = await Category.find()
+  .skip((req.query.page - 1) * req.query.limit)
+  .limit(req.query.limit)
+  res.render('admin/datacategory',{listcategory})
+})
+
+router.get('/', async function(req,res){
+  const listcategory = await Category.find()
+  // .limit(5)
+  const total = await Category.count()
+  res.render('admin/category', {listcategory, total: total/5})
+})
+
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
     const check = await Category.find({ name: req.body.name });
@@ -34,19 +50,21 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
   }
 });
 
-router.get("/:id", async function (req, res) {
-  const data = await Category.findOne({ _id: req.params.id });
-  res.json(data);
-});
+
 
 router.delete("/:id", async function (req, res) {
   try {
     const data = await Category.deleteOne({ _id: req.params.id });
-    const listcategory = await Category.find();
-    res.render("admin/category", { listcategory });
+    const listcategory = await Category.find()
+    res.render('admin/datacategory',{listcategory})
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });
   }
+});
+
+router.get("/:id", async function (req, res) {
+  const data = await Category.findOne({ _id: req.params.id });
+  res.json(data)
 });
 
 router.put("/:id", upload.single("thumbnail"), async function (req, res) {

@@ -18,6 +18,83 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+router.put("/profile/change-password", async (req, res) => {
+  try {
+    let token = req.cookies.user;
+    const user = await userModel.findOne({
+      token: token,
+    });
+    if (user) {
+      const compare = await bcrypt.compare(
+        req.body.currentPassword,
+        user.password
+      );
+      if (compare) {
+        const hash = await bcrypt.hash(req.body.newPassword, 10);
+        await userModel.updateOne(
+          {
+            token: token,
+          },
+          {
+            password: hash,
+          }
+        );
+        res.status(200).json("Thành công");
+      } else {
+        res.status(400).json({ message: "Mật khẩu hiện tại không chính xác" });
+      }
+    } else {
+      res.status(400).json("User này không tồn tại");
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+});
+
+router.put("/profile/edit", async (req, res) => {
+  try {
+    let token = req.cookies.user;
+    const user = await userModel.findOne({
+      token: token,
+    });
+    if (user) {
+      await userModel.updateOne(
+        {
+          token: token,
+        },
+        {
+          username: req.body.username,
+          address: req.body.address,
+          date: `${req.body.day}/${req.body.month}/${req.body.year}`,
+          gender: req.body.gender,
+        }
+      );
+      res.status(200).json("Edit Successfull");
+    } else {
+      res.status(400).json("User này không tồn tại");
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+});
+
+router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
+  try {
+    let token = req.cookies.user;
+    await userModel.updateOne(
+      {
+        token: token,
+      },
+      {
+        avatar: req.file.path,
+      }
+    );
+    res.status(200).json("Upload thành công");
+  } catch (error) {
+    res.status(500).json("Lỗi Sever");
+  }
+});
+
 router.post("/register", async (req, res) => {
   try {
     console.log(23, req.body);
@@ -67,6 +144,21 @@ router.post("/login", async (req, res) => {
     } else {
       res.status(400).json({ message: "Email hoặc mật khẩu không chính xác" });
     }
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+});
+
+router.put("/logout", async (req, res) => {
+  try {
+    let token = req.cookies.user;
+    await userModel.updateOne(
+      { token: token },
+      {
+        token: "",
+      }
+    );
+    res.status(200).json({ message: "Successfull Logout" });
   } catch (error) {
     res.status(500).json({ message: "Lỗi Server" });
   }

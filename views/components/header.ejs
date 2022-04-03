@@ -153,8 +153,19 @@
   <ul class="heading-list">
     <li><a href="" class="heading-link">chăm sóc khách hàng</a></li>
     <li><a href="" class="heading-link">kiểm tra đơn hàng</a></li>
+    <% if (user) { %>
+    <li>
+      <a href="/profile/info" class="heading-link"
+        >Tài khoản <%= user.username %></a
+      >
+    </li>
+    <li>
+      <a href="/login" class="heading-link" onclick="logout()">Đăng xuất</a>
+    </li>
+    <% } else { %>
     <li><a href="/login" class="heading-link">đăng nhập</a></li>
     <li><a href="/register" class="heading-link">đăng kí</a></li>
+    <% } %>
   </ul>
   <div class="header">
     <div class="header-logo">
@@ -187,3 +198,17 @@
   </div>
 </header>
 <div class="height-empty"></div>
+
+<script>
+  async function logout() {
+    try {
+      await $.ajax({
+        type: "PUT",
+        url: "/user/logout",
+      });
+      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

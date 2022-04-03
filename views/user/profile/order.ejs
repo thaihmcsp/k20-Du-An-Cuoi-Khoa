@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang chủ</title>
+    <title>Quản lí tài khoản</title>
     <link
       rel="shortcut icon"
       href="/public/upload/lazada-logo.png"
@@ -18,14 +18,23 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/profile.css" />
   </head>
+  <style>
+    .active-2 {
+      color: var(--profile-color);
+    }
+  </style>
   <body>
     <%- include('../../components/header') %>
+    <div class="main">
+      <div class="content">
+        <%- include('./general') %>
+        <div class="content-info">
+          <h3>Đơn hàng của tôi</h3>
+        </div>
+      </div>
+    </div>
+    <%- include('../../components/footer') %>
   </body>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
 </html>

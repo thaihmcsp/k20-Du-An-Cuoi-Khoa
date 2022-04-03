@@ -1,0 +1,15 @@
+<table>
+    <% user.map(function(value){%>
+        <tr>
+            <td><img src="<%= value.avatar %>" alt="" class="imgthumbnail"></td>
+            <td>Name: <%= value.fullName %></td>
+            <td>Email: <%= value.email %></td>
+            <td>Role: <%= value.role %></td>
+            <td>
+                <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="edit('<%= value.id %>')">
+                    Edit Role
+                </button>
+            </td>
+        </tr>
+    <%}) %>
+</table>

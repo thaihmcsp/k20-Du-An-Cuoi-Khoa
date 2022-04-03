@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const path = require("path");
 const userModel = require("../models/userModel");
+const category = require("../models/category");
+const productCode = require("../models/productCode");
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkRequire = require("../middleWare/checkRequire");
 
@@ -32,6 +34,17 @@ router.get("/profile/info/edit", checkLogin, (req, res) => {
 
 router.get("/profile/info/change-password", checkLogin, (req, res) => {
   res.render("user/profile/changePassword", { user: req.user });
+});
+
+// Admin
+router.get("/admin", function (req, res) {
+  res.render("admin/admin");
+});
+
+router.get("/admin/productCode", async function (req, res) {
+  const listproductCode = await productCode.find();
+  const listategory = await category.find();
+  res.render("admin/productCode", { listproductCode, listategory });
 });
 
 module.exports = router;

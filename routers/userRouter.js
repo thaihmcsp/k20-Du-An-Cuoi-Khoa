@@ -164,4 +164,42 @@ router.put("/logout", async (req, res) => {
   }
 });
 
+router.get("/admin/get", async function (req, res) {
+  const user = await userModel
+    .find()
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit);
+  res.render("admin/manage", { user });
+});
+
+router.get("/get", async function (req, res) {
+  const user = await userModel.find().limit(5);
+  const total = await userModel.count();
+  const totalPage = Math.ceil(total / 5);
+  res.render("admin/createuser", { user, totalPage: totalPage });
+});
+
+router.get("/:id", async function (req, res) {
+  const profile = await userModel.findOne({ _id: req.params.id });
+  res.json(profile);
+});
+
+router.put("/:idedit", async function (req, res) {
+  try {
+    const profile = await userModel.updateOne(
+      { _id: req.params.idedit },
+      {
+        role: req.body.role,
+      }
+    );
+    const user = await userModel
+      .find()
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
+    res.render("admin/manage", { user });
+  } catch (error) {
+    res.status(500).json({ mess: "Loi server" });
+  }
+});
+
 module.exports = router;

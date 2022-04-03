@@ -38,13 +38,13 @@
                 <h4>Nhấp vào ảnh để thay đổi</h4>
                 <form enctype="multipart/form-data">
                   <input type="file" name="avatar" id="upload-avatar" />
+                  <img
+                    src="<%= user.avatar %>"
+                    id="avatar-edit"
+                    alt=""
+                    style="cursor: pointer"
+                  />
                 </form>
-                <img
-                  src="<%= user.avatar %>"
-                  id="avatar-edit"
-                  alt=""
-                  style="cursor: pointer"
-                />
                 <div class="content-info-detail-name">
                   <p><%= user.username %></p>
                   <i

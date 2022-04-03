@@ -12,3 +12,7 @@ const ProductCodeModel = mongoose.model('productCode', ProductCodeSchema)
 
 module.exports = ProductCodeModel
 
+// ProductCodeModel.find(
+//   {name: {$regex: 'Quan', $options: 'i'}}
+//   )
+//   .then(data=>{console.log(data);})

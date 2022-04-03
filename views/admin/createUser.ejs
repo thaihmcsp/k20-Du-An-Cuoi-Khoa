@@ -17,11 +17,11 @@
     <div class="user">
       <%- include('./manage.ejs') %> 
     </div>
-    <button id="back"><<</button>
+    <button onclick="back('<%= totalPage %>')" class="back" disabled><<</button>
     <% for(let i = 0 ; i < totalPage; i ++){%>
-      <button onclick="but('<%= i + 1 %>')" id="idbutton<%= i + 1 %>" ><%= i + 1 %></button>
+      <button class="Btn" value='<%= i + 1 %>' onclick="but('<%= i + 1 %>', '<%= totalPage %>')" ><%= i + 1 %></button>
     <%} %>
-    <button id="next">>></button>
+    <button onclick="next('<%= totalPage %>')" class="next">>></button>
 </body>
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,7 +35,7 @@
             
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary Close" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" onclick="save()">Save changes</button>
         </div>
       </div>

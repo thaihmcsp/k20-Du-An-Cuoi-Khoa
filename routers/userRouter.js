@@ -14,8 +14,9 @@ router.get('/admin/get',async function(req,res){
 router.get('/get',async function(req,res){
   const user = await UserModel.find()
   .limit(5)
-  const totalPage = await UserModel.count()
-  res.render('admin/createuser',{user, totalPage: totalPage/5})
+  const total = await UserModel.count()
+  const totalPage = Math.ceil(total/5)
+  res.render('admin/createuser',{user, totalPage: totalPage})
 })
 
 router.get("/:id", async function (req, res) {
@@ -31,7 +32,10 @@ router.put("/:idedit", async function (req, res) {
         role: req.body.role,
       }
     );
-    res.json(profile);
+  const user = await UserModel.find()
+  .skip((req.query.page - 1) * req.query.limit)
+  .limit(req.query.limit)
+  res.render('admin/manage',{user})
   } catch (error) {
     res.status(500).json({mess: 'Loi server'})
   }

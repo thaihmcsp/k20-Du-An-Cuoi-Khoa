@@ -6,7 +6,7 @@ const path = require("path");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
+    cb(null, "public/upload");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Profile
 router.put("/profile/change-password", async (req, res) => {
   try {
     let token = req.cookies.user;
@@ -81,20 +82,29 @@ router.put("/profile/edit", async (req, res) => {
 router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
   try {
     let token = req.cookies.user;
-    await userModel.updateOne(
-      {
-        token: token,
-      },
-      {
-        avatar: req.file.path,
-      }
-    );
-    res.status(200).json("Upload thành công");
+    const user = await userModel.findOne({
+      token: token,
+    });
+    if (user) {
+      const avatar = await userModel.updateOne(
+        {
+          token: token,
+        },
+        {
+          avatar: req.file.path,
+        }
+      );
+      res.status(200).json("Upload thành công");
+      console.log(avatar);
+    } else {
+      res.status(400).json("User này không tồn tại");
+    }
   } catch (error) {
-    res.status(500).json("Lỗi Sever");
+    res.status(500).json("Lỗi Sever", error);
   }
 });
 
+// Register + Login
 router.post("/register", async (req, res) => {
   try {
     console.log(23, req.body);
@@ -164,6 +174,7 @@ router.put("/logout", async (req, res) => {
   }
 });
 
+// Admin
 router.get("/admin/get", async function (req, res) {
   const user = await userModel
     .find()

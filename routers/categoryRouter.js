@@ -17,21 +17,19 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-
-
-router.get('/get',async function(req,res){
+router.get("/get", async function (req, res) {
   const listcategory = await Category.find()
-  .skip((req.query.page - 1) * req.query.limit)
-  .limit(req.query.limit)
-  res.render('admin/datacategory',{listcategory})
-})
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit);
+  res.render("admin/datacategory", { listcategory });
+});
 
-router.get('/', async function(req,res){
-  const listcategory = await Category.find()
+router.get("/", async function (req, res) {
+  const listcategory = await Category.find();
   // .limit(5)
-  const total = await Category.count()
-  res.render('admin/category', {listcategory, total: total/5})
-})
+  const total = await Category.count();
+  res.render("admin/category", { listcategory, total: total / 5 });
+});
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
@@ -50,13 +48,11 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
   }
 });
 
-
-
 router.delete("/:id", async function (req, res) {
   try {
     const data = await Category.deleteOne({ _id: req.params.id });
-    const listcategory = await Category.find()
-    res.render('admin/datacategory',{listcategory})
+    const listcategory = await Category.find();
+    res.render("admin/datacategory", { listcategory });
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });
   }
@@ -64,21 +60,27 @@ router.delete("/:id", async function (req, res) {
 
 router.get("/:id", async function (req, res) {
   const data = await Category.findOne({ _id: req.params.id });
-  res.json(data)
+  res.json(data);
 });
 
 router.put("/:id", upload.single("thumbnail"), async function (req, res) {
   try {
-    if(req.file === undefined){
-      const update = await Category.updateOne({ _id: req.params.id },{
-        name: req.body.name
-      });
+    if (req.file === undefined) {
+      const update = await Category.updateOne(
+        { _id: req.params.id },
+        {
+          name: req.body.name,
+        }
+      );
       res.json(update);
-    }else{
-      const update = await Category.updateOne({ _id: req.params.id },{
-        name: req.body.name,
-        thumbnail: req.file.path
-      });
+    } else {
+      const update = await Category.updateOne(
+        { _id: req.params.id },
+        {
+          name: req.body.name,
+          thumbnail: req.file.path,
+        }
+      );
       res.json(update);
     }
   } catch (error) {
@@ -86,4 +88,17 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
   }
 });
 
+router.post("/", function (req, res) {
+  console.log(req.body);
+  CategoryModel.create({
+    name: req.body.name,
+    thumbnail: req.body.thumbnail,
+  })
+    .then(function (data) {
+      res.json({ mess: "ok", data });
+    })
+    .catch(function (err) {
+      res.json({ mess: "thất bại", err });
+    });
+});
 module.exports = router;

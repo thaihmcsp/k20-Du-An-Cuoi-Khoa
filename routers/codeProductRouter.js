@@ -16,6 +16,49 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+router.post("/", function (req, res) {
+  console.log(req.body);
+  ProductCode.create({
+    code: req.body.code,
+    name: req.body.name,
+    price: req.body.price,
+  })
+    .then(function (data) {
+      res.json({ mess: "ok", data });
+    })
+    .catch(function (err) {
+      res.json({ mess: "thất bại", err });
+    });
+});
+
+router.get("/", function (req, res) {
+  console.log(req.query.name);
+  ProductCode.find({ name: { $regex: req.query.name, $options: "i" } })
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit)
+    .then(function (data) {
+      res.json({ mess: "ok", data });
+    })
+    .catch(function (err) {
+      res.json({ mess: "thất bại", err });
+    });
+});
+
+// router.get('/',function(req,res){
+//   console.log(req.query.name);
+//   ProductCode.find(
+//       {name:{$regex:req.query.name,$options:'i'}}
+//     )
+//     .skip((req.query.page-1) *req.query.limit)
+//     .limit(req.query.limit)
+//     .then(function (data) {
+//         res.json({mess:'ok',data})
+//       })
+//       .catch(function (err) {
+//         res.json({mess:'thất bại',err})
+//       });
+// })
+
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
     const create = await ProductCode.create({
@@ -51,22 +94,28 @@ router.get("/:id", async function (req, res) {
 
 router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
   try {
-    if(req.file.path == ''){
-      const create = await ProductCode.updateOne({_id: req.params.idupdate},{
-        code: req.body.code,
-        name: req.body.name,
-        categoryID: req.body.categoryID,
-        price: req.body.price,
-      });
+    if (req.file.path == "") {
+      const create = await ProductCode.updateOne(
+        { _id: req.params.idupdate },
+        {
+          code: req.body.code,
+          name: req.body.name,
+          categoryID: req.body.categoryID,
+          price: req.body.price,
+        }
+      );
       res.json(create);
-    }else{
-      const create = await ProductCode.updateOne({_id: req.params.idupdate},{
-        code: req.body.code,
-        name: req.body.name,
-        thumbnail: req.file.path,
-        categoryID: req.body.categoryID,
-        price: req.body.price,
-      });
+    } else {
+      const create = await ProductCode.updateOne(
+        { _id: req.params.idupdate },
+        {
+          code: req.body.code,
+          name: req.body.name,
+          thumbnail: req.file.path,
+          categoryID: req.body.categoryID,
+          price: req.body.price,
+        }
+      );
       res.json(create);
     }
   } catch (error) {

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/filter.css" />
+  </head>
+  <body>
+    <!-- <h1>thêm category đơn giản</h1>
+    <div class="">
+      <input type="text" name="" id="name" placeholder="name" />
+      <input type="text" name="" id="thumbnail" placeholder="thumbnail" />
+      <button onclick="addcategory()">thêm cateagory</button>
+    </div>
+
+    <h1>thêm productCode đơn giản</h1>
+    <div class="">
+      <img src="" alt="" />
+      <input type="text" name="" id="code" placeholder="code" />
+      <input type="text" name="" id="name1" placeholder="name" />
+      <input type="number" name="" id="price" placeholder="price" />
+      <button onclick="addproductCode()">thêm product</button>
+    </div>
+
+    <h1>thêm sản phẩm (product) đơn giản</h1>
+    <div class="">
+      <img src="" alt="" />
+      <input type="text" name="" id="color" placeholder="color" />
+      <input type="text" name="" id="size" placeholder="size" />
+      <input type="number" name="" id="quantity" placeholder="quantity" />
+      <button onclick="addsanpham()">thêm product</button>
+    </div> -->
+
+    <h1>đây là trang search</h1>
+    <input
+      onblur="oncz()"
+      onkeyup="suggest()"
+      type="text"
+      name=""
+      id="search"
+      placeholder="search ở đây"
+    />
+    <button onclick="search()">search</button>
+    <br />
+    <div class="searchtong">
+      <div class="searchconten"></div>
+    </div>
+
+    <div class="">
+        <table class="tessss"></table>
+    </div>
+    <%- include('./search.ejs'); %>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="/public/js/search.js"></script>
+</html>

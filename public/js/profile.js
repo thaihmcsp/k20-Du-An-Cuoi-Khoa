@@ -108,7 +108,23 @@ async function changeInfo() {
   }
 }
 
-$("#avatar-edit").on("click", () => {
-  $("#upload-avatar").trigger("click");
-  console.log($("#upload-avatar").val());
-});
+function importData() {
+  document.getElementById("upload-avatar").click();
+}
+
+var fileToRead = document.getElementById("upload-avatar");
+
+fileToRead.addEventListener(
+  "change",
+  function () {
+    var files = fileToRead.files;
+    if (files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        $("#avatar-edit").attr("src", fr.result);
+      };
+      fr.readAsDataURL(files[0]);
+    }
+  },
+  false
+);

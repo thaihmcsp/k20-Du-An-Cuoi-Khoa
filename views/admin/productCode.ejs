@@ -1,46 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PRODUCT CODE LAZADA</title>
-    <link rel="icon" href="/public/upload/logo-lazada.png" type="image/x-icon" />
+    <link
+      rel="icon"
+      href="/public/upload/logo-lazada.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="../public/css/admin/productcode.css" />
-</head>
-<body>
+  </head>
+  <body>
     <h1>ProductCode</h1>
-    <%- include('./header.ejs') %> <br>
+    <%- include('./header.ejs') %> <br />
     <div class="change">
-        <h4>Thêm code sản phẩm <i class="fa-solid fa-heart-circle-plus"></i></h4>
-        <form enctype="multipart/form-data">
-            <div class="nhom1">
-                <input type="text" id="code"placeholder="VD: Mã hàng hoá" name="code"/> <br>
-                <input type="number" id="price" name="price" placeholder="VD: 8.000.000"/>
-            </div>
-            <small class="note1"></small> 
-            <small class="note5"></small>
-            <div class="nhom2">
-                <input type="text" id="name" name="name" placeholder="VD: Quần Jean" />
-                <select id="category" name="categoryID">
-                <% listategory.map(function(value){%>
-                    <option value="<%= value.id %>"><%= value.name %></option>
-                <%}) %>
-                </select>
-            </div>
-            <small class="note2"></small> <br>
-            <input id="clickavatar" type="file" name="thumbnail" style="display: none" />
-            <img src="/public/upload/add.jpg" alt="" id="change" onclick="importData()" /><br>
-            <small class="note3"></small>
-            
-        </form>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <button onclick="add()" id="add">ADD <i class="fa-solid fa-circle-plus"></i></button>
+      <h4>Thêm code sản phẩm <i class="fa-solid fa-heart-circle-plus"></i></h4>
+      <form enctype="multipart/form-data">
+        <div class="nhom1">
+          <input
+            type="text"
+            id="code"
+            placeholder="VD: Mã hàng hoá"
+            name="code"
+          />
+          <br />
+          <input
+            type="number"
+            id="price"
+            name="price"
+            placeholder="VD: 8.000.000"
+          />
+        </div>
+        <small class="note1"></small>
+        <small class="note5"></small>
+        <div class="nhom2">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="VD: Quần Jean"
+          />
+          <select id="category" name="categoryID">
+            <% listategory.map(function(value){%>
+            <option value="<%= value.id %>"><%= value.name %></option>
+            <%}) %>
+          </select>
+        </div>
+        <small class="note2"></small> <br />
+        <input
+          id="clickavatar"
+          type="file"
+          name="thumbnail"
+          style="display: none"
+        />
+        <img
+          src="/public/upload/add.jpg"
+          alt=""
+          id="change"
+          onclick="importData()"
+        /><br />
+        <small class="note3"></small>
+      </form>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+      <button onclick="add()" id="add">
+        ADD <i class="fa-solid fa-circle-plus"></i>
+      </button>
     </div>
-    <%- include('./dataproductCode.ejs') %> <br>
-
-    
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="../public/js/admin/productCode.js"></script>
+    <%- include('./dataproductCode.ejs') %> <br />
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="../public/js/admin/productCode.js"></script>
 </html>

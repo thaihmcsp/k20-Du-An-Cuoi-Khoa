@@ -99,6 +99,15 @@ async function changeInfo() {
           gender: gender,
         },
       });
+      const form = $("form")[0];
+      const formData = new FormData(form);
+      await $.ajax({
+        url: "/user/profile/upload",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+      });
       window.location.href = "/profile/info";
     } else {
       alert("Invalid Username");

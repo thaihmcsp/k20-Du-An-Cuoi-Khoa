@@ -86,21 +86,25 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
       token: token,
     });
     if (user) {
-      const avatar = await userModel.updateOne(
-        {
-          token: token,
-        },
-        {
-          avatar: req.file.path,
-        }
-      );
-      res.status(200).json("Upload thành công");
-      console.log(avatar);
+      if (req.file) {
+        const avatar = await userModel.updateOne(
+          {
+            token: token,
+          },
+          {
+            avatar: "/" + req.file.path,
+          }
+        );
+        res.status(200).json("Upload thành công");
+      } else {
+        res.status(200).json({ mess: "Edit thành công" });
+      }
     } else {
       res.status(400).json("User này không tồn tại");
     }
   } catch (error) {
-    res.status(500).json("Lỗi Sever", error);
+    console.log(error);
+    res.status(500).json({ mess: "Lỗi Sever", error });
   }
 });
 

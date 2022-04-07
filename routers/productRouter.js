@@ -38,7 +38,6 @@ router.post("/add", upload.array("listImg", 5), async function (req, res) {
   let arr = req.headers.referer.split("/");
   let length = arr.length;
   var arrimg = [];
-  console.log(41, req.files);
   for (let i = 0; i < req.files.length; i++) {
     arrimg.push(req.files[i].path);
   }

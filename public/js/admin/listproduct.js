@@ -51,39 +51,45 @@ function back(total) {
   but(current - 1, total);
 }
 
-const fileUpload = document.querySelector("#listImg");
+// const fileUpload = document.querySelector("#listImg");
 
-fileUpload.addEventListener("change", (e) => {
-  const files = e.target.files;
-  for (let i = 0; i < files.length; i++) {
-    const img = files[i].name;
-    const div = `
-    <img src="/public/upload/${img}" alt="">
-    `;
-    $(".luong").append(div);
-  }
-});
+// fileUpload.addEventListener("change", (e) => {
+//   const files = e.target.files;
+//   for (let i = 0; i < files.length; i++) {
+//     const img = files[i].name;
+//     const div = `
+//     <img src="/public/upload/${img}" alt="">
+//     `;
+//     $(".luong").append(div);
+//   }
+// });
 
 function importData() {
   document.getElementById("listImg").click();
 }
 
-const fileUp = document.querySelector("#listimgid");
+var fileToRead = document.getElementById("listImg");
 
-fileUp.addEventListener("change", (e) => {
-  const files = e.target.files;
-  for (let i = 0; i < files.length; i++) {
-    const img = files[i].name;
-    const div = `
-    <img src="/public/upload/${img}" alt="" class='chien-anh-day'>
-    `;
-    $(".chien").append(div);
-  }
-});
+fileToRead.addEventListener(
+  "change",
+  function () {
+    var files = fileToRead.files;
+    if (files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        document.getElementById("chien-1").src = fr.result;
+      };
+      fr.readAsDataURL(files[0]);
 
-function importa() {
-  document.getElementById("listimgid").click();
-}
+      // var abc = new FileReader();
+      // abc.onload = function () {
+      //   document.getElementById("chien-2").src = abc.result;
+      // };
+      // abc.readAsDataURL(files[1]);
+    }
+  },
+  false
+);
 
 async function ADD() {
   const listImg = $("#listImg").val();

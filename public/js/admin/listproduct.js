@@ -1,3 +1,58 @@
+
+var current = ''
+
+async function but(page,total){
+  current = page
+  const res = await $.ajax({
+    url: `/product/get?page=${page}&limit=5`,
+    type: 'GET'
+  })
+  $('.button').html('')
+  $('.button').html(res)
+  const pagea = String(page)
+  if(page >= total){
+    $('.next').attr('disabled', true)
+    $('.next').css({opacity: '0.5'})
+  }
+  if(pagea >= total){
+    $('.next').attr('disabled', true)
+    $('.next').css({opacity: '0.5'})
+  }
+  else{
+    $('.next').attr('disabled', false)
+    $('.next').css({opacity: '2'})
+  }
+  if(page === 1){
+    $('.back').attr('disabled', true)
+    $('.back').css({opacity: '0.5'})
+  }
+  if(pagea === '1'){
+    $('.back').attr('disabled', true)
+    $('.back').css({opacity: '0.5'})
+  }else{
+    $('.back').attr('disabled', false)
+    $('.back').css({opacity: '2'})
+  }
+  $('.Btn').css({opacity: '0.5'})
+  $(`.Btn[value=${page}]`).css({opacity: '5.0'})
+}
+
+var number = 1;
+but(number)
+
+function next(total) {
+  number++
+  if(number <= total){
+    but(number,total)
+  }else{
+    but(current+1,total)
+  }
+}
+
+function back(total){
+  but(current-1,total)
+}
+
 const fileUpload = document.querySelector("#listImg");
 
 fileUpload.addEventListener("change", (e) => {
@@ -15,14 +70,38 @@ function importData(){
   document.getElementById("listImg").click();
 }
 
+const fileUp = document.querySelector("#listimgid");
+
+fileUp.addEventListener("change", (e) => {
+	const files = e.target.files;
+	for(let i = 0 ; i < files.length ; i ++) {
+    const img = files[i].name
+    const div = `
+    <img src="/public/upload/${img}" alt="" class='chien-anh-day'>
+    `
+    $('.chien').append(div)
+	}
+})
+
+function importa(){
+  document.getElementById("listimgid").click();
+}
+
 async function ADD() {
   const listImg = $("#listImg").val();
   const color = $("#color").val();
   const size = $("#size").val();
   const quantity = $("#quantity").val();
-  if (listImg == "" || color == "" || size == "" || quantity == "") {
-    alert("Vui lòng điền đầy đủ thông tin");
-  } else {
+  if (listImg == "" ) {
+    $('.note1').text('Vùi lòng nhập ảnh sản phẩm')
+  } 
+  if (color == "" ) {
+    $('.note2').text('Vùi lòng nhập màu sắc sản phẩm')
+  }
+  if (quantity == "" ) {
+    $('.note3').text('Vùi lòng nhập giá sản phẩm')
+  }
+  else {
     try {
       const form = $("form")[0];
       const formData = new FormData(form);
@@ -48,11 +127,12 @@ async function xoaproduct(a) {
 
 async function yes() {
   const res = await $.ajax({
-    url: "/product/" + id,
+    url: `/product/${id}?page=${current}&limit=5`,
     type: "DELETE",
   });
-  console.log(res);
-  window.location.reload();
+  $('.no').trigger('click')
+  $('.button').html('')
+  $('.button').html(res)
 }
 
 var idupdate = "";
@@ -72,13 +152,16 @@ async function update() {
     const form = $("#form")[0];
     const formData = new FormData(form);
     const res = await $.ajax({
-      url: "/product/" + idupdate,
+      url: `/product/${idupdate}?page=${current}&limit=5`,
       type: "PUT",
       data: formData,
       processData: false,
       contentType: false,
     });
-    window.location.reload();
+    console.log(161,res);
+    $('#Close').trigger('click')
+    $('.button').html('')
+    $('.button').html(res)
   } catch (error) {
     console.log(error);
   }

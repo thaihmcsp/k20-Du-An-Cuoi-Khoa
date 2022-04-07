@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const ProductCode = require("../models/productCode");
+const Category = require("../models/category");
 const path = require("path");
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -17,6 +18,7 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
+  console.log(21,req.file.path);
   try {
     const create = await ProductCode.create({
       code: req.body.code,
@@ -34,11 +36,32 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     const listdelete = await ProductCode.deleteOne({ _id: req.params.id });
-    res.json(listdelete);
+    const listproductCode = await ProductCode.find()
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit);
+    res.render("admin/dataproductCode", { listproductCode });
   } catch (error) {
     res.status(500).json({ mess: "Loi Server" });
   }
 });
+
+router.get("/get", async function (req, res) {
+  const listproductCode = await ProductCode.find()
+  .skip((req.query.page - 1) * req.query.limit)
+  .limit(req.query.limit);
+  res.render("admin/dataproductCode", { listproductCode });
+});
+
+router.get('/', async function(req,res){
+  const listproductCode = await ProductCode.find()
+  .limit(12)
+  const totala = await ProductCode.count()
+  const total = Math.ceil(totala/12)
+  const listategory = await Category.find()
+  res.render('admin/productCode', {listproductCode,listategory, total:total})
+})
+
+
 
 router.get("/:id", async function (req, res) {
   try {
@@ -49,16 +72,19 @@ router.get("/:id", async function (req, res) {
   }
 });
 
-router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
+router.put("/:idupdate", upload.single("chien"), async function (req, res) {
   try {
-    if(req.file.path == ''){
+    if(req.file== undefined){
       const create = await ProductCode.updateOne({_id: req.params.idupdate},{
         code: req.body.code,
         name: req.body.name,
         categoryID: req.body.categoryID,
         price: req.body.price,
       });
-      res.json(create);
+      const listproductCode = await ProductCode.find()
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
+      res.render("admin/dataproductCode", { listproductCode });
     }else{
       const create = await ProductCode.updateOne({_id: req.params.idupdate},{
         code: req.body.code,
@@ -67,7 +93,10 @@ router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
         categoryID: req.body.categoryID,
         price: req.body.price,
       });
-      res.json(create);
+      const listproductCode = await ProductCode.find()
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
+      res.render("admin/dataproductCode", { listproductCode });
     }
   } catch (error) {
     res.status(500).json({ mess: "Loi Server" });

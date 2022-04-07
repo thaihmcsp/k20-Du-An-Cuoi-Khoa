@@ -13,9 +13,9 @@ router.get('/admin/get',async function(req,res){
 
 router.get('/get',async function(req,res){
   const user = await UserModel.find()
-  .limit(5)
+  .limit(10)
   const total = await UserModel.count()
-  const totalPage = Math.ceil(total/5)
+  const totalPage = Math.ceil(total/10)
   res.render('admin/createuser',{user, totalPage: totalPage})
 })
 

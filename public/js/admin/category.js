@@ -44,7 +44,7 @@ fileToRea.addEventListener(
 
 async function but(page){
   const res = await $.ajax({
-    url: `/category/get?page=${page}&limit=5`,
+    url: `/category/get?page=${page}&limit=10`,
     type: 'GET'
   })
   $('.category').html('')
@@ -79,23 +79,6 @@ async function addCategory() {
   }
 }
 
-var id = ''
-async function xoa(a) {
-  id = a
-}
-
-async function deletethumbanail() {
-  try {
-    const res = await $.ajax({
-      url: "/category/" + id,
-      type: "DELETE",
-    });
-    window.location.reload()
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 async function update(id) {
   try {
     const res = await $.ajax({
@@ -111,6 +94,63 @@ async function update(id) {
   }
 }
 
+var current = ''
+
+async function but(page,total){
+  current = page
+  const res = await $.ajax({
+    url: `/category/get?page=${page}&limit=10`,
+    type: 'GET'
+  })
+  $('.category').html('')
+  $('.category').html(res)
+  console.log(140, page,total);
+  const pagea = String(page)
+  if(page === total){
+    $('.next').attr('disabled', true)
+    $('.next').css({opacity: '0.5'})
+  }
+  if(pagea === total){
+    $('.next').attr('disabled', true)
+    $('.next').css({opacity: '0.5'})
+  }
+  else{
+    $('.next').attr('disabled', false)
+    $('.next').css({opacity: '2'})
+    
+  }
+  if(page === 1){
+    $('.back').attr('disabled', true)
+    $('.back').css({opacity: '0.5'})
+  }
+  if(pagea === '1'){
+    $('.back').attr('disabled', true)
+    $('.back').css({opacity: '0.5'})
+  }else{
+    $('.back').attr('disabled', false)
+    $('.back').css({opacity: '2'})
+  }
+  $('.Btn').css({opacity: '0.5'})
+  $(`.Btn[value=${page}]`).css({opacity: '5.0'})
+}
+
+var number = 1;
+but(number)
+
+function next(total) {
+  number++
+  if(number <= total){
+    but(number,total)
+  }else{
+    but(current+1,total)
+  }
+}
+
+function back(total){
+  but(current-1,total)
+}
+
+
 async function Up() {
   try {
     const name = $("#nameid").val();
@@ -118,13 +158,35 @@ async function Up() {
       const form = $("#form")[0];
       const formData = new FormData(form);
       const res = await $.ajax({
-        url: "/category/" + idupdate,
+        url: `/category/${idupdate}?page=${current}&limit=10`,
         type: "PUT",
         data: formData,
         processData: false,
         contentType: false,
       });
-      window.location.reload();
+    $('#close').trigger('click')
+    $('.category').html('')
+    $('.category').html(res)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+var id = ''
+async function xoa(a) {
+  id = a
+}
+
+async function deletethumbanail() {
+  try {
+    const res = await $.ajax({
+      url: `/category/${id}?page=${current}&limit=10`,
+      type: "DELETE",
+    });
+    console.log(186,res);
+    $('.close').trigger('click')
+    $('.category').html('')
+    $('.category').html(res)
   } catch (error) {
     console.log(error);
   }

@@ -11,13 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   </head>
   <body>
-    <h1>ListProduct</h1>
     <%- include('./header.ejs') %> <br />
     <div class="bang">
       <form enctype="multipart/form-data">
         <h4>Thêm sản phẩm <i class="fa-solid fa-heart-circle-plus"></i></h4>
         <input type="file" id="listImg" name="listImg" style="display: none;" multiple/>
         <img src="/public/upload/add.jpg" alt="" id="change" onclick="importData()" /> <br>
+        <small class="note1"></small> 
         <div class="luong">
         </div>
         <div class="color-size">
@@ -27,37 +27,24 @@
           <option value="M">M</option>
           <option value="L">L</option>
           <option value="XL">Xl</option>
-          </select>
+          </select> <br>
         </div>
+        <small class="note2"></small> 
         <input type="number" id="quantity" name="quantity" placeholder="VD: 8.000.000"/>
+        <small class="note3"></small> 
       </form>
       <button onclick="ADD()" id="add">ADD</button><br>
     </div>
-    <table>
-      <% listproduct.map(function(value){%>
-        <tr>
-          <td>
-            <% for (item of value.listImg) { %>
-              <img src="/<%= item %>" alt="" class="imgthumbnail">
-            <% } %>
-          </td>
-          <td>Color: <%= value.color %></td>
-          <td>Size: <%= value.size %></td>
-          <td>Quantity: <%= value.quantity %></td>
-          <td>
-            <button type="button"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="up('<%= value.id %>')">
-              ...
-            </button>
-          </td>
-          <td >
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="xoaproduct('<%= value.id %>')">
-              X
-            </button>
-          </td>
-        </tr>
-      <%}) %>
-    </table>
-    
+    <div class="button">
+      <%- include('./product.ejs') %> 
+    </div>
+    <div class="chuyen-trang">
+      <button class="back" onclick="back('<%= total %>')"><<</button>
+      <% for(let i = 0 ; i < total ; i ++){%>
+        <button class="Btn" value="<%= i + 1 %>" onclick="but('<%= i + 1 %>', '<%= total %>')"><%= i + 1 %></button>
+      <%}%>
+      <button class="next" onclick="next('<%= total %>')">>></button>
+    </div>
   </body>
 
 <!-- Modal -->
@@ -65,25 +52,29 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">UpDate Product</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form enctype="multipart/form-data" id="form">
-          <input type="file" id="listimgid" name="listimgid" multiple/>
-          <input type="text" placeholder="Color" id="colorid" name="colorid"/>
-          <select name="sizeid" id="sizeid">
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">Xl</option>
-          </select>
-          <input type="number" id="quantityid" name="quantityid" />
-        </form>
+      <div class="modal-body" id="body-update">
+          <form enctype="multipart/form-data" id="form">
+            <input type="file" id="listimgid" name="listimgid" style="display: none;" multiple/>
+            <img src="/public/upload/add.jpg" alt="" id="change" onclick="importa()" /> <br>
+            <div class="chien"></div>
+            <div class="update-color">
+              <input type="text" placeholder="Color" id="colorid" name="colorid"/>
+              <select name="sizeid" id="sizeid">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">Xl</option>
+              </select>
+            </div>
+            <input type="number" id="quantityid" name="quantityid" />
+          </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="update()">Understood</button>
+      <div class="modal-footer" id="footer-update">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="Close">Close</button>
+        <button type="button" class="btn btn-primary" onclick="update()" id="update-day">UpDate Product</button>
       </div>
     </div>
   </div>
@@ -97,9 +88,9 @@
         <h5 class="modal-title" id="exampleModalLabel">Bạn muốn xoá dữ liệu này?</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <button type="button" data-bs-dismiss="modal">NO</button>
-        <button onclick="yes()">YES</button>
+      <div class="modal-body" id="body-yes-no">
+        <button type="button" data-bs-dismiss="modal" class="no" id="yes-no">NO</button>
+        <button onclick="yes()" id="yes-no">YES</button>
       </div>
     </div>
   </div>

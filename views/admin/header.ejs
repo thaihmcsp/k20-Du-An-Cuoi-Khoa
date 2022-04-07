@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <a href="/admin"><button>Home</button></a>
-    <a href="/user/get"><button>Manage User</button></a>
-    <button>Order</button>
-    <a href="/category"><button>Category</button></a>
-    <a href="/admin/productCode"><button>ProductCode</button></a>
-    <button>Logout</button>
-</body>
+    <link rel="stylesheet" href="../public/css/admin/header.css" />
+  </head>
+  <body>
+    <div class="header-row">
+      <div class="left-col">
+        <img src="/public/upload/logo-lazada.png" alt="" class="avatar" />
+        <a href="/admin" class="the-a"><button class="doi-mau"><h5 >Home</h5></button></a>
+        <a href="/user/get" class="the-a" id="headeruser"><button  class="doi-mau"><h5>Manage User</h5></button></a>
+        <a href="" class="the-a"><button  class="doi-mau"><h5>Order</h5></button></a>
+        <a href="/category"  class="the-a" id="header-category"><button  class="doi-mau"><h5>Category</h5></button></a>
+        <a href="/codeProduct" class="the-a" id="header-code"><button  class="doi-mau"><h5>ProductCode</h5></button></a>
+      </div>
+      <div class="right-col">
+        <div><a href="" class="the-a"><button class="doi-mau"><h5>Logout</h5></button></a></div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </html>

@@ -133,6 +133,9 @@
   margin: auto;
   flex-wrap: wrap;
 }
+.data-day:hover{
+  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.35);
+}
 .the-por{
   width: 15%;
   border: 1px solid orange;
@@ -141,7 +144,8 @@
   text-align: center;
 }
 .the-por:hover{
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+  border: 1px solid #0033a0;
+  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.35);
 }
 #anh-code{
   width: 120px;

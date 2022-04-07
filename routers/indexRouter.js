@@ -7,5 +7,8 @@ router.get('/', function(req,res){
   res.json('okokoko')
 })
 
+router.get("/login", (req, res) => {
+  res.render("user/signIn/signIn", { user: req.user });
+});
 
 module.exports = router

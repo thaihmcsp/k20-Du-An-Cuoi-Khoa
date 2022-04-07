@@ -133,9 +133,6 @@
   margin: auto;
   flex-wrap: wrap;
 }
-.data-day:hover{
-  box-shadow: 0 14px 14px 0 rgba(0, 0, 0, 0.35);
-}
 .the-por{
   width: 15%;
   border: 1px solid orange;

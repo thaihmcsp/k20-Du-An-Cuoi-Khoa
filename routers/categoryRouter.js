@@ -38,6 +38,7 @@ router.get("/", async function (req, res) {
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
+    console.log(41, req.file);
     const check = await Category.find({ name: req.body.name });
     if (check == "") {
       const data = await Category.create({
@@ -57,9 +58,9 @@ router.delete("/:id", async function (req, res) {
   try {
     const data = await Category.deleteOne({ _id: req.params.id });
     const listcategory = await Category.find()
-    .skip((req.query.page - 1) * req.query.limit)
-    .limit(req.query.limit);
-    res.render("admin/datacategory", { listcategory});
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
+    res.render("admin/datacategory", { listcategory });
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });
   }
@@ -75,9 +76,9 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
         }
       );
       const listcategory = await Category.find()
-      .skip((req.query.page - 1) * req.query.limit)
-      .limit(req.query.limit);
-      res.render("admin/datacategory", { listcategory});
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/datacategory", { listcategory });
     } else {
       const update = await Category.updateOne(
         { _id: req.params.id },
@@ -87,9 +88,9 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
         }
       );
       const listcategory = await Category.find()
-      .skip((req.query.page - 1) * req.query.limit)
-      .limit(req.query.limit);
-      res.render("admin/datacategory", { listcategory});
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/datacategory", { listcategory });
     }
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });

@@ -1,8 +1,14 @@
 const router = require("express").Router();
-const { log } = require("console");
 const path = require("path");
 const UserModel = require("../models/userModel");
 
+router.get('/get',async function(req,res){
+  const user = await UserModel.find()
+  .limit(10)
+  const total = await UserModel.count()
+  const totalPage = Math.ceil(total/10)
+  res.render('admin/createUser',{user, totalPage: totalPage})
+})
 
 router.get('/admin/get',async function(req,res){
   const user = await UserModel.find()
@@ -11,13 +17,6 @@ router.get('/admin/get',async function(req,res){
   res.render('admin/manage',{user})
 })
 
-router.get('/get',async function(req,res){
-  const user = await UserModel.find()
-  .limit(10)
-  const total = await UserModel.count()
-  const totalPage = Math.ceil(total/10)
-  res.render('admin/createuser',{user, totalPage: totalPage})
-})
 
 router.get("/:id", async function (req, res) {
   const profile = await UserModel.findOne({ _id: req.params.id });

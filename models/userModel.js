@@ -1,21 +1,23 @@
-const mongoose = require('./connectDB')
+const mongoose = require("./connectDB");
 
-const UserSchema = mongoose.Schema({
-  username:	String,
-  password:	String,
-  email:	String,
-  avatar:	{
-    type: String,
-    default: '/public/upload/avatarDefault.jpg'
+const UserSchema = mongoose.Schema(
+  {
+    username: String,
+    password: String,
+    email: String,
+    avatar: {
+      type: String,
+      default: "/public/upload/avatarDefault.jpg",
+    },
+    role: {
+      type: String,
+      default: "user",
+    },
+    token: String,
   },
-  role:	{
-    type: String,
-    default: 'user'
-  },
-  token:	String,
-}, {collection: 'user'})
+  { collection: "user" }
+);
 
-const UserModel = mongoose.model('user', UserSchema)
+const UserModel = mongoose.model("user", UserSchema);
 
-module.exports = UserModel
-
+module.exports = UserModel;

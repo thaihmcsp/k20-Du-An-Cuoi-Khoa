@@ -16,7 +16,8 @@ const OrderSchema = mongoose.Schema({
   phone:	String,
   status:	{
     type: String,
-    enum: ['pending', 'done', 'cancel']
+    enum: ['pending', 'done', 'cancel'],
+    default: 'pending'
   }
 }, {collection: 'order'})
 

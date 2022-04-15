@@ -1,0 +1,189 @@
+<style>
+  header {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .heading-list {
+    background-color: var(--heading-color);
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    height: var(--heading-height);
+    align-items: center;
+  }
+
+  .heading-link {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--font-heading-color);
+    font-size: 12px;
+    line-height: var(--heading-height);
+    font-weight: 500;
+    padding: 0 12px;
+    transition: ease-in 0.3s;
+  }
+
+  .heading-link:hover {
+    color: var(--btn-color);
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    height: var(--header-height);
+    width: var(--header-width);
+    margin: 0 auto;
+    padding: 10px 0;
+  }
+
+  .header-logo {
+    flex: 1.5;
+  }
+
+  .header-logo img {
+    width: 140px;
+  }
+
+  .header-search {
+    flex: 6;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-search-input {
+    height: var(--search-height);
+    flex: 5;
+    display: flex;
+  }
+
+  .header-search-input input,
+  .header-search-input button {
+    height: 100%;
+    border: none;
+    outline: none;
+  }
+
+  .header-search-input input {
+    padding: 6px 12px;
+    width: 100%;
+    font-size: 15px;
+    background-color: #eff0f5;
+  }
+
+  .header-search-input button {
+    width: var(--search-height);
+    background-color: var(--btn-color);
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .header-search-cart {
+    flex: 0.8;
+    text-align: center;
+  }
+
+  .header-search-cart a img {
+    height: 25px;
+  }
+
+  .header-category {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+  }
+
+  .header-category i {
+    margin-left: 6px;
+  }
+
+  .header-category:hover {
+    color: var(--btn-color);
+  }
+
+  .header-category:hover .header-category-list {
+    display: block;
+  }
+
+  .header-category:hover i {
+    transform: rotate(180deg);
+  }
+
+  .header-category-list {
+    text-align: left;
+    position: absolute;
+    list-style: none;
+    top: 18px;
+    left: 10px;
+    background-color: white;
+    width: calc(100% + 16px);
+    padding: 8px 0 12px;
+    display: none;
+    border: 1px solid #ccc;
+    cursor: default;
+  }
+
+  .header-category-link {
+    cursor: pointer;
+    color: var(--font-heading-color);
+    font-weight: 500;
+    padding: 6px 12px;
+    display: block;
+    text-decoration: none;
+  }
+
+  .header-category-link:hover {
+    background-color: var(--page-color);
+    color: var(--btn-color);
+  }
+
+  .height-empty {
+    height: calc(var(--header-height) + var(--heading-height));
+  }
+</style>
+
+<header>
+  <ul class="heading-list">
+    <li><a href="" class="heading-link">chăm sóc khách hàng</a></li>
+    <li><a href="" class="heading-link">kiểm tra đơn hàng</a></li>
+    <li><a href="/login" class="heading-link">đăng nhập</a></li>
+    <li><a href="/register" class="heading-link">đăng kí</a></li>
+  </ul>
+  <div class="header">
+    <div class="header-logo">
+      <a href="/home">
+        <img src="/public/upload/lazada-icon.png" alt="" />
+      </a>
+    </div>
+    <div class="header-search">
+      <div class="header-search-input">
+        <input
+          type="text"
+          name=""
+          id="search"
+          placeholder="Tìm kiếm trên Lazada"
+        />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+      <div class="header-search-cart">
+        <a href="/cart"><img src="/public/upload/cart-logo.png" alt="" /></a>
+      </div>
+    </div>
+    <div class="header-category">
+      Danh mục <i class="fas fa-angle-down"></i>
+      <ul class="header-category-list">
+        <li><a href="" class="header-category-link">Thể thao</a></li>
+        <li><a href="" class="header-category-link">Điện tử</a></li>
+        <li><a href="" class="header-category-link">Đời sống</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+<div class="height-empty"></div>

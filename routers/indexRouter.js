@@ -1,7 +1,22 @@
-const router = require('express').Router()
+const router = require("express").Router();
+const path = require("path");
+const userModel = require("../models/userModel");
+const { checkUser } = require("../middleWare/checkLogin");
 
-router.get('/', function(req,res){
-  res.json('okokoko')
-})
+router.get("/home", (req, res) => {
+  res.render("user/home/home");
+});
 
-module.exports = router
+router.get("/register", checkUser, (req, res) => {
+  res.render("user/signUp/signUp");
+});
+
+router.get("/login", (req, res) => {
+  res.render("user/signIn/signIn");
+});
+
+router.get("/cart",checkUser, (req, res) => {
+  res.render("user/cart/cart");
+});
+
+module.exports = router;

@@ -16,10 +16,9 @@ router.get('/',checkUser, async (req,res)=>{
         const arrprice = []
         const arrproduct = []
         const arrproductcode = []
+        const arrCode = []
         const data = await CartModel.find({UserID : req.id})
         console.log(17,data);
-        
-
         for (let k = 0; k < data.length; k++) {
             const order = data[k].productList[0].select
             if (order === true) {
@@ -30,8 +29,12 @@ router.get('/',checkUser, async (req,res)=>{
             const productcode = await ProductCodeModel.findOne({_id : product.productCode})
             arrproductcode.push(productcode) 
             sumCart += data[k].productList[0].quantity // số lượng sản phẩm order  
+
+            if (arrCode.indexOf(product.productCode) === -1) {
+                arrCode.push(product.productCode) 
+            }
         }
-        console.log(33,arrorder);
+        // console.log(33,arrorder);
         for (let m = 0; m < arrorder.length; m++) {
             // console.log(33, arrorder[m].productList[0].quantity);
             const productorder = await ProductModel.findOne({_id : arrorder[m].productList[0].productID})
@@ -40,6 +43,7 @@ router.get('/',checkUser, async (req,res)=>{
             arrprice.push(productcodeprice.price * arrorder[m].productList[0].quantity) // giá * số lượng order
             sumarrorder += arrorder[m].productList[0].quantity // số lượng sản phẩm order
         }
+
         for (let u = 0; u < arrprice.length; u++) {
             sumprice += arrprice[u]    
         }
@@ -50,8 +54,9 @@ router.get('/',checkUser, async (req,res)=>{
         // console.log(47,sumprice);
         // console.log(48,arrproductcode);
         // console.log(49,sumCart);
+        console.log(50,arrCode);
         res.render('user/cart/cart',{data: data, arrorder: arrorder, arrprice: arrprice, sumprice, sumarrorder, sumCart,
-            arrproduct: arrproduct, arrproductcode: arrproductcode })
+            arrproduct: arrproduct, arrproductcode: arrproductcode, arrCode: arrCode })
             
     } catch (error) {
         console.log(error);
@@ -73,11 +78,18 @@ router.post('/create',checkUser, async (req,res)=>{
 router.put('/update',checkUser, async (req,res)=>{
     try {
         console.log(70,req.body.productID);
-        const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
+        if (req.body.i) {
+            const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
+            { "productList.$.quantity" : req.body.quantity   } )
+            res.json(data)
+        } else {
+            const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
             {    $inc : { "productList.$.quantity" : req.body.quantity }  } )
-        // Since 'productList ' is an array, you will need to use an array operator for updating just the one element.
-        // In this case, since the query uniquely identifies one element, you can use the $ positional operator, like
-        res.json(data)
+            // Since 'productList ' is an array, you will need to use an array operator for updating just the one element.
+            // In this case, since the query uniquely identifies one element, you can use the $ positional operator, like
+            res.json(data)
+        }
+        
     } catch (error) {
         console.log(error);
     }
@@ -117,8 +129,6 @@ router.put('/testall',checkUser, async (req,res)=>{
     try {
         console.log(82,req.id);
         console.log(83,req.body.select);
-        // const data = await CartModel.updateMany({ UserID: req.id },
-        //        )
         const data = await CartModel.updateMany({ UserID: req.id },
             { "productList.$[].select" : req.body.select } ,
             { "multi": true }  )

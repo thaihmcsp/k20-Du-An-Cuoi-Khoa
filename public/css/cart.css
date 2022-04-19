@@ -9,7 +9,7 @@ body{
 }
 .body-con{
     width: 1188px;
-    margin:15px auto 0 auto ;  
+    margin:30px auto 0 auto ;  
     background: #f4f4f4;
 }
 header{
@@ -45,7 +45,7 @@ header{
     padding: 16px 0;
     background: #ffffff;
     display: flex;
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
 }
 .cart-item-left{
     display: flex;
@@ -63,6 +63,18 @@ header{
 .cart-item-left .content{
     width: 328px;
     height: 59px;
+    display: flex;
+    flex-direction: column;
+}
+.cart-item-left .content a{
+    text-decoration: none;
+    color: #212121;
+    font-size: 14px;
+}
+.content a.color-size{
+    margin-top: 6px;
+    color: #757575;
+    font-size: 12px;
 }
 .cart-item-left{
     padding-left: 10px;
@@ -75,6 +87,8 @@ header{
 }
 .current-price{
     margin-bottom: 4px;
+    color: #f57224;
+    font-size: 18px;
 }
 .operations{
     margin-top: 8px;
@@ -177,6 +191,7 @@ header{
     color: #fff;
     background-color: #f57224;
     border: none;
+    font-size: 14px;
 }
 .rightcontainer{
     background: #ffffff;
@@ -191,4 +206,12 @@ header{
 
 .list-header-operations:hover{
     color: #f57224;
+}
+div.thongbao{
+    position: fixed;
+    /* z-index: 1;  */
+    top: 150px;
+}
+.group-sp{
+    margin-bottom: 12px;
 }

@@ -331,9 +331,9 @@ async function addCart(){
                 url : `/product/check/${mauchon}&${sizechon}&${idchon}&${soluong}`,
                 type : 'GET'
             })
-            if (res._id) {
+            if (res._id) { // check có id ko
                 console.log(325,res._id);
-                const update = await $.ajax({
+                const update = await $.ajax({ // update data đã có
                     url: '/cart/update',
                     type: 'PUT',
                     data: {productID: res._id, quantity: soluong}
@@ -342,7 +342,7 @@ async function addCart(){
                 if (update.modifiedCount) {
                     console.log(341,update);
                 } else {
-                    const data = await $.ajax({
+                    const data = await $.ajax({ // tạo mới data
                     url: '/cart/create',
                     type: 'POST',
                     data: {productID: res._id,  quantity: soluong}

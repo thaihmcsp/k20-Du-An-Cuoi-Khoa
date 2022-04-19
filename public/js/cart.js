@@ -1,12 +1,12 @@
 render()
 console.log(12232132321);
+
+$('.toast').css('display',' none');
 // thêm dấu . vào giá sp
 for (let i = 0; i < $('.current-price').length; i++) {
     const price = Number($(`.price${i}`).html())
     $(`.price${i}`).html(Math.floor( (price).toLocaleString("vi") ).toFixed(3))   
 }
-
-
 // check all tất cả checkbox
 $(`.checkall`).on('click',function(){
     console.log(9, 'checkall' ,$(`.checkall`).prop('checked'));
@@ -19,14 +19,14 @@ $(`.checkall`).on('click',function(){
             $(`.checkbox${i}`).attr('alt', false)
         } 
     }
-    // window.location.href = '/cart'
 })
+
 async function render(){
     try {
         let number = 0
         for (let i = 0; i < $('.cart-item-left').length; i++) {
             $(`.checkbox${i}`).on('click',function () {
-                // console.log(10, `checkbox${i}` ,$(`.checkbox${i}`).prop('checked'));
+                console.log(10, `checkbox${i}` ,$(`.checkbox${i}`).prop('checked'));
             })
             
             const link = $(`.number-sp${i}`).attr('value')
@@ -43,7 +43,6 @@ async function render(){
                 $(`.up${i}`).addClass('disable')
             }
             //lưu checked đã nhận
-            // console.log(37,$(`.checkbox${i}`).attr('alt'));
             if ($(`.checkbox${i}`).attr('alt') === 'true') {
                 $(`.checkbox${i}`).prop('checked', true)
                 number ++
@@ -51,7 +50,12 @@ async function render(){
                 $(`.checkbox${i}`).prop('checked', false)
             }
             // console.log(49,number);
-        
+            for (let j = 0; j < $('.group-sp').length; j++) {
+                if ($(`.gr${j}`).attr('val') !== $(`.sp${j}-${i}`).attr('val')) {
+                    $(`.sp${j}-${i}`).remove();
+                    $(`.sp${j}-${i}`).css('display',' none');
+                }
+            } 
         }
         //check checked của checkall
         if (number === $('.cart-item-left').length & number !== 0) {
@@ -121,11 +125,65 @@ async function up(productID){
         console.log(error);
     }
 }
-async function test(i,productID){
+  
+async function keyup(i,j,productID){
+    try {
+        console.log(152);
+        console.log(152,$(`.gr${j}`).attr('val'));
+        console.log(152,$(`.Number${j}${i}`).attr('val'));
+        if ($(`.gr${j}`).attr('val') === $(`.Number${j}${i}`).attr('val')) {
+            const max = Number($(`.Number${j}${i}`).attr('max'))
+            const min = Number($(`.Number${j}${i}`).attr('min'))
+            console.log(max, min);
+            $(`.Number${j}${i}`).on('keyup',function(){
+                $('.toast').css('display','block');
+                async function timer(){
+                    var quantity = $(`.number-sp${i}`).val();
+                    $(`.number-sp${i}`).attr('value', quantity)
+                    if (Number($(`.number-sp${i}`).attr('value')) <= Number(max) & Number($(`.number-sp${i}`).attr('value')) >= Number(min) ) {
+                        console.log(50,productID);
+                        const res = await $.ajax({
+                            url: '/cart/update',
+                            type: 'PUT',
+                            data: {productID: productID, quantity: quantity, i }
+                        })
+                        console.log(146,res);
+                        window.location.href = '/cart'
+                    } else {
+                        quantity = max
+                        console.log(50,productID);
+                        const res = await $.ajax({
+                            url: '/cart/update',
+                            type: 'PUT',
+                            data: {productID: productID, quantity: quantity, i }
+                        })
+                        console.log(146,res);
+                        
+                        $('.toast').toast('show');
+                        setTimeout(function () {
+                            window.location.href = '/cart'
+                        },2000);                                  
+                    }
+                }
+                setTimeout(timer,1000);   
+
+            });
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function test(i,j,productID){
     try {
         console.log(77,productID);
-        const check = $(`.checkbox${i}`).prop('checked')
-        console.log(78,check);
+        const check = $(`.box${j}${i}`).prop('checked')
+        if (check) {
+            $(`.box${j}${i}`).attr('alt',true)
+        } else {
+            $(`.box${j}${i}`).attr('alt',false)
+        }
+        // console.log(78,check);
         const res = await $.ajax({
             url: '/cart/test',
             type: 'PUT',

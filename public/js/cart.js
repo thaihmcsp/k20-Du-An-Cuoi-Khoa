@@ -1,28 +1,27 @@
 render()
 console.log(12232132321);
 
-$('.toast').css('display',' none');
-// thêm dấu . vào giá sp
-for (let i = 0; i < $('.current-price').length; i++) {
-    const price = Number($(`.price${i}`).html())
-    $(`.price${i}`).html(Math.floor( (price).toLocaleString("vi") ).toFixed(3))   
-}
-// check all tất cả checkbox
-$(`.checkall`).on('click',function(){
-    console.log(9, 'checkall' ,$(`.checkall`).prop('checked'));
-    for (let i = 0; i < $('.cart-item-left').length; i++) {
-        if ($(`.checkall`).prop('checked') === true) {  
-            $(`.checkbox${i}`).prop('checked', true)
-            $(`.checkbox${i}`).attr('alt', true)
-        } else {
-            $(`.checkbox${i}`).prop('checked', false)
-            $(`.checkbox${i}`).attr('alt', false)
-        } 
-    }
-})
-
 async function render(){
     try {
+        $('.toast').css('display',' none');
+        // thêm dấu . vào giá sp
+        for (let i = 0; i < $('.current-price').length; i++) {
+            const price = Number($(`.price${i}`).html())
+            $(`.price${i}`).html(Math.floor( (price).toLocaleString("vi") ).toFixed(3))   
+        }
+        // check all tất cả checkbox
+        $(`.checkall`).on('click',function(){
+            console.log(9, 'checkall' ,$(`.checkall`).prop('checked'));
+            for (let i = 0; i < $('.cart-item-left').length; i++) {
+                if ($(`.checkall`).prop('checked') === true) {  
+                    $(`.checkbox${i}`).prop('checked', true)
+                    $(`.checkbox${i}`).attr('alt', true)
+                } else {
+                    $(`.checkbox${i}`).prop('checked', false)
+                    $(`.checkbox${i}`).attr('alt', false)
+                } 
+            }
+        })
         let number = 0
         for (let i = 0; i < $('.cart-item-left').length; i++) {
             $(`.checkbox${i}`).on('click',function () {
@@ -79,7 +78,9 @@ async function xoa(productID){
             type: 'DELETE',
             data: {productID: productID}
         })
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
     } catch (error) {
         console.log(error);
     }
@@ -90,8 +91,9 @@ async function xoaAll(productID){
             url: '/cart/xoaAll',
             type: 'DELETE',
         })
-        console.log(89, res);
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
     } catch (error) {
         console.log(error);
     }
@@ -105,8 +107,9 @@ async function down(productID){
             type: 'PUT',
             data: {productID: productID}
         })
-        console.log(42, res);
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
     } catch (error) {
         console.log(error);
     }
@@ -119,8 +122,9 @@ async function up(productID){
             type: 'PUT',
             data: {productID: productID}
         })
-        console.log(55,res);
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
     } catch (error) {
         console.log(error);
     }
@@ -147,9 +151,10 @@ async function keyup(i,j,productID){
                             type: 'PUT',
                             data: {productID: productID, quantity: quantity, i }
                         })
-                        console.log(146,res);
-                        window.location.href = '/cart'
-                    } else {
+                        $('.container').html('')
+                        $('.container').html(res)
+                        render()
+                    } else if(Number($(`.number-sp${i}`).attr('value')) > Number(max)){
                         quantity = max
                         console.log(50,productID);
                         const res = await $.ajax({
@@ -157,12 +162,28 @@ async function keyup(i,j,productID){
                             type: 'PUT',
                             data: {productID: productID, quantity: quantity, i }
                         })
-                        console.log(146,res);
                         
                         $('.toast').toast('show');
                         setTimeout(function () {
-                            window.location.href = '/cart'
+                            $('.container').html('')
+                            $('.container').html(res)
+                            render()
                         },2000);                                  
+                    }else{
+                        quantity = min
+                        console.log(50,productID);
+                        const res = await $.ajax({
+                            url: '/cart/update',
+                            type: 'PUT',
+                            data: {productID: productID, quantity: quantity, i }
+                        })
+                        
+                        $('.toast').toast('show');
+                        setTimeout(function () {
+                            $('.container').html('')
+                            $('.container').html(res)
+                            render()
+                        },2000);
                     }
                 }
                 setTimeout(timer,1000);   
@@ -189,8 +210,10 @@ async function test(i,j,productID){
             type: 'PUT',
             data: {productID: productID, select : check}
         })
-        console.log(55,res);
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
+        // window.location.href = '/cart'
     } catch (error) {
         console.log(error);
     }
@@ -204,12 +227,16 @@ async function testall(){
             type: 'PUT',
             data: {select : check}
         })
-        console.log(55,res);
         $(`.checkall`).attr('alt', check)
-        window.location.href = '/cart'
+        $('.container').html('')
+        $('.container').html(res)
+        render()
 
     } catch (error) {
         console.log(error);
     }
 }
 
+// $(`.order-group`).on('click',function () {
+//     window.location.href = '/order'
+// })

@@ -6,9 +6,9 @@ const { checkUser } = require("../middleWare/checkLogin");
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
 
-router.get('/',checkUser, async (req,res)=>{
+async function renderCart(UserID) {
     try {
-        console.log(9,req.id);
+        console.log(9,UserID);
         let sumprice = 0
         let sumCart = 0
         let sumarrorder = 0
@@ -17,7 +17,7 @@ router.get('/',checkUser, async (req,res)=>{
         const arrproduct = []
         const arrproductcode = []
         const arrCode = []
-        const data = await CartModel.find({UserID : req.id})
+        const data = await CartModel.find({UserID : UserID})
         console.log(17,data);
         for (let k = 0; k < data.length; k++) {
             const order = data[k].productList[0].select
@@ -55,8 +55,19 @@ router.get('/',checkUser, async (req,res)=>{
         // console.log(48,arrproductcode);
         // console.log(49,sumCart);
         console.log(50,arrCode);
-        res.render('user/cart/cart',{data: data, arrorder: arrorder, arrprice: arrprice, sumprice, sumarrorder, sumCart,
-            arrproduct: arrproduct, arrproductcode: arrproductcode, arrCode: arrCode })
+        
+        return {data: data, arrorder: arrorder, arrprice: arrprice, sumprice, sumarrorder, sumCart,
+            arrproduct: arrproduct, arrproductcode: arrproductcode, arrCode: arrCode }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+router.get('/',checkUser, async (req,res)=>{
+    try {
+        
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/cart',dataObject)
             
     } catch (error) {
         console.log(error);
@@ -79,9 +90,12 @@ router.put('/update',checkUser, async (req,res)=>{
     try {
         console.log(70,req.body.productID);
         if (req.body.i) {
-            const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
+            const data1 = await CartModel.updateOne({ "productList.productID": req.body.productID },
             { "productList.$.quantity" : req.body.quantity   } )
-            res.json(data)
+            
+            const dataObject = await renderCart(req.id)
+            res.render('user/cart/homecart',dataObject)
+
         } else {
             const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
             {    $inc : { "productList.$.quantity" : req.body.quantity }  } )
@@ -99,7 +113,8 @@ router.put('/up',checkUser, async (req,res)=>{
         console.log(70,req.body.productID);
         const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
             {    $inc : { "productList.$.quantity" : 1 }  } )
-        res.json(data)
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)
     } catch (error) {
         console.log(error);
     }
@@ -109,7 +124,8 @@ router.put('/down',checkUser, async (req,res)=>{
         console.log(70,req.body.productID);
         const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
             {    $inc : { "productList.$.quantity" : -1 }  } )
-        res.json(data)
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)
     } catch (error) {
         console.log(error);
     }
@@ -119,8 +135,8 @@ router.put('/test',checkUser, async (req,res)=>{
         console.log(72,req.body.productID,req.body.select);
         const data = await CartModel.updateOne({ "productList.productID": req.body.productID },
             {     "productList.$.select" : req.body.select }   )
-        console.log(73,data);
-        res.json(data)
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)
     } catch (error) {
         console.log(error);
     }
@@ -129,11 +145,12 @@ router.put('/testall',checkUser, async (req,res)=>{
     try {
         console.log(82,req.id);
         console.log(83,req.body.select);
-        const data = await CartModel.updateMany({ UserID: req.id },
+        const data1 = await CartModel.updateMany({ UserID: req.id },
             { "productList.$[].select" : req.body.select } ,
             { "multi": true }  )
-        console.log(86,data);
-        res.json(data)
+        
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)   
     } catch (error) {
         console.log(error);
     }
@@ -142,8 +159,8 @@ router.delete('/xoa',checkUser, async (req,res)=>{
     try {
         console.log(70,req.body.productID);
         const data = await CartModel.deleteOne({ "productList.productID": req.body.productID } )
-        console.log(135,data);
-        res.json(data)
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)
     } catch (error) {
         console.log(error);
     }
@@ -151,8 +168,8 @@ router.delete('/xoa',checkUser, async (req,res)=>{
 router.delete('/xoaAll',checkUser, async (req,res)=>{
     try {
         const data = await CartModel.deleteMany({ UserID: req.id } )
-        console.log(135,data);
-        res.json(data)
+        const dataObject = await renderCart(req.id)
+        res.render('user/cart/homecart',dataObject)
     } catch (error) {
         console.log(error);
     }

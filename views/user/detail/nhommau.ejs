@@ -6,7 +6,7 @@
     <div class="mau-sp">
         <% for(var i = 0 ; i < listcolor.length ; i += 2) { %>
             <div class="img-sp" >
-                <img class="image-mau" id="mau-sp<%= i %>" alt="<%= listcolor[i] %>" src="<%= listdata[listcolor[i+1]].listImg[0] %>" >
+                <img class="image-mau" id="mau-sp<%= i %>" name="<%= listcolor[i] %>" alt="<%= listcolor[i] %>" src="<%= listdata[listcolor[i+1]].listImg[0] %>" >
             </div>
         <% } %>
     </div>

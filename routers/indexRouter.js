@@ -18,5 +18,8 @@ router.get("/login", (req, res) => {
 router.get("/cart",checkUser, (req, res) => {
   res.render("user/cart/cart");
 });
+router.get("/order",checkUser, (req, res) => {
+  res.render("user/order/order");
+});
 
 module.exports = router;

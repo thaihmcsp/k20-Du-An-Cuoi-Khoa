@@ -32,14 +32,24 @@ header{
     align-items: center;
     margin-bottom: 12px;
 }
-
+.checkbox-wrap{
+    position: relative;
+}
+.checkbox-wrap span{
+    margin-left: 25px;
+}
 .checkbox-wrap input{
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 3px;
 }
 .list-header-operations{
     float: right;
     cursor: pointer;
+}
+.list-header-operations span i{
+    padding-right: 5px;
 }
 .checkout-item{
     padding: 16px 0;
@@ -188,10 +198,14 @@ header{
     padding: 0 36px;
     width: 100%;
     height: 40px;
-    color: #fff;
+    
     background-color: #f57224;
     border: none;
     font-size: 14px;
+}
+.order-group a{
+    color: #fff;
+    text-decoration: none;
 }
 .rightcontainer{
     background: #ffffff;
@@ -214,4 +228,6 @@ div.thongbao{
 }
 .group-sp{
     margin-bottom: 12px;
+    /* border-top: 1px solid #eff0f5; */
+    box-shadow: 0 10px 25px 0 #d7d4ce;
 }

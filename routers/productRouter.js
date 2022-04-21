@@ -9,10 +9,14 @@ router.use(cookieParser())
 router.get('/:id', async (req, res) =>{
     try {
         console.log(7,req.params.id);
+        // console.log(109,req.query.color);
+        // console.log(109,req.query.size);
         const ListCode = await ProductCodeModel.findOne({_id : req.params.id})
         const ListData = await ProductModel.find({productCode : req.params.id})
         let color = []
         let size = []
+        const queryColor = []
+        const querySize = []
         for (let i = 0; i < ListData.length; i++) {
             if (color.indexOf(ListData[i].color) === -1) {
                 color.push(ListData[i].color,i) 
@@ -21,11 +25,18 @@ router.get('/:id', async (req, res) =>{
                 size.push(ListData[i].size,i) 
             }  
         }
+        if (req.query.color) {
+            queryColor.push(req.query.color)
+        }
+        if (req.query.size) {
+            querySize.push(req.query.size)
+        }
         // console.log(200,color);
         // console.log(300,size);
         // console.log(2000,ListCode);
         // console.log(3000,ListData);
-        res.render('user/detail/detail', {listdata : ListData, listcode : ListCode, listcolor: color, listsize: size})  
+        res.render('user/detail/detail', {listdata : ListData, listcode : ListCode, listcolor: color, listsize: size, 
+            queryColor, querySize})  
     } catch (error) {
         console.log(error); 
     }
@@ -98,10 +109,17 @@ router.get('/check/:color&:size&:id&:quantity',checkUser, async (req, res) =>{
                 res.json(ListData)
             }
         }
-        
-        
     } catch (error) {
         console.log(error); 
+    }
+})
+router.get('/:id?color=color&size=size',async (req, res) =>{
+    try {
+        console.log(109,req.params.id);
+        console.log(109,req.query.color);
+        console.log(109,req.query.size);
+    } catch (error) {
+        console.log(error);
     }
 })
 

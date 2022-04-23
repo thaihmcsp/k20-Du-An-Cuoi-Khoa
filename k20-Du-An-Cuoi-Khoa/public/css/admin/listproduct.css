@@ -1,0 +1,57 @@
+.luong {
+  width: 300px;
+  text-align: center;
+}
+
+.luong img {
+  width: 30%;
+  height: 30%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.bang {
+  padding: 20px;
+  text-align: center;
+  width: 500px;
+  margin: auto;
+  border: 1px solid orange;
+  box-shadow: 0 0 5px orange;
+  border-radius: 20px;
+}
+
+.bang h4 {
+  padding: 10px;
+  border-bottom: 1px solid orange;
+  color: orange;
+  font-weight: 600;
+  font-size: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.color-size {
+  display: flex;
+}
+#size {
+  width: 20%;
+  text-align: center;
+  font-size: 15px;
+}
+#color,
+#quantity {
+  border: none;
+  border-bottom: 1px solid orange;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+}
+
+#add {
+  width: 100%;
+  color: white;
+  background: orange;
+  border: 1px solid orange;
+  box-shadow: 0 0 5px orange;
+  border-radius: 20px;
+  margin-top: 20px;
+}

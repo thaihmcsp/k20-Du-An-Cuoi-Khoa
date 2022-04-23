@@ -1,0 +1,29 @@
+<% for(var i=0; i < data.length; i++) { %>
+<div class="checkout-item id<%= data[i] %>" >
+    <div class="cart-item-left">
+        <input type="checkbox" class="checkbox<%= i %>" alt="<%= data[i].productList[0].select %>" onclick="test('<%= i %>','<%= arrproduct[i]._id %>')">
+        <img src="<%= arrproduct[i].listImg[0] %>" alt="" srcset="">
+        <div class="content">
+            <a href="/"><%= arrproductcode[i].name %></a>
+        </div>
+    </div>
+    <div class="cart-item-middle">
+        <p class="current-price"><span class="price<%= i %>"><%= arrproductcode[i].price %></span> đ</p>
+        <div class="operations">
+            <span class="icon">
+                <i class="fa-solid fa-trash-can" onclick="xoa('<%= arrproduct[i]._id %>')"></i>
+            </span>
+        </div>
+    </div>
+    <div class="cart-item-right">
+        <div class="so-luong-sp">
+            <div>
+                <button class="down<%= i %>" onclick="down('<%= arrproduct[i]._id %>')">-</button>
+                <input type="text" min="1" max="<%= arrproduct[i].quantity %>" class="number-sp<%= i %>" value="<%= data[i].productList[0].quantity %>">
+                <button class="up<%= i %>" onclick="up('<%= arrproduct[i]._id %>')">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% } %>

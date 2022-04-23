@@ -1,0 +1,64 @@
+*{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.change{
+  padding: 20px;
+  text-align: center;
+  width: 500px;
+  margin: auto;
+  border: 1px solid orange;
+  box-shadow: 0 0 5px orange;
+  border-radius: 20px;
+}
+.change h4{
+  padding: 10px;
+  border-bottom:  1px solid orange;
+  color: orange;
+  font-weight: 600;
+  font-size: 30px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#bangadd{
+  text-align: center;
+}
+#name{
+  padding: 10px;
+  width: 100%;
+  border: none;
+  height: 50px;
+}
+#change{
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  border-radius: 20px;
+  object-fit: cover;
+  object-position: center;
+}
+#add{
+  width: 100%;
+  color: white;
+  background: orange;
+  border: 1px solid orange;
+  box-shadow: 0 0 5px orange;
+  border-radius: 20px;
+}
+.note1,.note2{
+  color: red;
+}
+ .modal-body {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.imgthumbnail,#changeimg,.anh{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+}
+

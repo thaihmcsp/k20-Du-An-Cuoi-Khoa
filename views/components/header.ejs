@@ -14,6 +14,7 @@
     justify-content: center;
     height: var(--heading-height);
     align-items: center;
+    margin: 0;
   }
 
   .heading-link {
@@ -128,6 +129,7 @@
     display: none;
     border: 1px solid #ccc;
     cursor: default;
+    z-index: 1;
   }
 
   .header-category-link {
@@ -175,12 +177,7 @@
     </div>
     <div class="header-search">
       <div class="header-search-input">
-        <input
-          type="text"
-          name=""
-          id="search"
-          placeholder="Tìm kiếm trên Lazada"
-        />
+        <input type="text" name="" placeholder="Tìm kiếm trên Lazada" />
         <button><i class="fas fa-search"></i></button>
       </div>
       <div class="header-search-cart">

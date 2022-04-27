@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
+const checkRequire = require("../middleWare/checkRequire");
 const UserModel = require("../models/userModel");
 const Category = require("../models/category");
 var multer = require("multer");
@@ -17,6 +18,13 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Home
+router.get("/:id", checkRequire, async (req, res) => {
+  // const listcategory = await Category.find();
+  res.render("user/filter/filter", { user: req.user });
+});
+
+// Admin
 router.get("/get", async function (req, res) {
   const listcategory = await Category.find()
     .skip((req.query.page - 1) * req.query.limit)
@@ -101,4 +109,5 @@ router.post("/", function (req, res) {
       res.json({ mess: "thất bại", err });
     });
 });
+
 module.exports = router;

@@ -1,0 +1,14 @@
+<% listproductCode.forEach(product => { %>
+<li class="product-item col-2">
+  <a class="product-link" href="">
+    <img src="<%= product.thumbnail %>" alt="" />
+    <div class="product-content">
+      <p class="product-name"><%= product.name %></p>
+      <p class="product-price">
+        <span><%= product.price.toLocaleString() %></span>
+        <span>₫</span>
+      </p>
+    </div>
+  </a>
+</li>
+<%}) %>

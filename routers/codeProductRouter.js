@@ -16,6 +16,15 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Home
+router.get("/pagination", async (req, res) => {
+  const listproductCode = await ProductCode.find()
+    .skip((req.query.page - 1) * 4)
+    .limit(4);
+  res.render("user/home/product", { listproductCode });
+});
+
+// Product Code
 router.post("/", function (req, res) {
   console.log(req.body);
   ProductCode.create({

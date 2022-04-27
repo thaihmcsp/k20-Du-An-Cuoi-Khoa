@@ -7,8 +7,24 @@ const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkRequire = require("../middleWare/checkRequire");
 const productModel = require("../models/product");
 
-router.get("/home", checkRequire, (req, res) => {
-  res.render("user/home/home", { user: req.user });
+// Home
+router.get("/home", checkRequire, async (req, res) => {
+  const listcategory = await category.find();
+  const listproductCode = await productCode.find().limit(4);
+  res.render("user/home/home", {
+    user: req.user,
+    listcategory,
+    listproductCode,
+  });
+});
+
+router.get("/pagination", checkRequire, async (req, res) => {
+  const listproductCode = await productCode.find();
+  res.render("user/home/pagination", {
+    user: req.user,
+    listproductCode,
+    listPage: Math.ceil(listproductCode.length / 4),
+  });
 });
 
 // Login & Register

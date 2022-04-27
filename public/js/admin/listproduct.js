@@ -73,19 +73,38 @@ var fileToRead = document.getElementById("listImg");
 fileToRead.addEventListener(
   "change",
   function () {
+    console.log(76);
     var files = fileToRead.files;
+    console.log(78,files);
     if (files.length) {
+      console.log(80);
       var fr = new FileReader();
       fr.onload = function () {
         document.getElementById("chien-1").src = fr.result;
       };
       fr.readAsDataURL(files[0]);
+    }
+  },
+  false
+);
 
-      // var abc = new FileReader();
-      // abc.onload = function () {
-      //   document.getElementById("chien-2").src = abc.result;
-      // };
-      // abc.readAsDataURL(files[1]);
+function importa() {
+  document.getElementById("listimgid").click();
+}
+
+var fileToRead = document.getElementById("listimgid");
+
+fileToRead.addEventListener(
+  "change",
+  function () {
+    var files = fileToRead.files;
+    if (files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        document.getElementsById("anh-chien1").src = fr.result;
+      };
+      fr.readAsDataURL(files[0]);
+      console.log(105,files[0]);
     }
   },
   false

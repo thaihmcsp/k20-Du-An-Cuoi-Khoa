@@ -31,10 +31,12 @@ body {
   width: 100%;
   font-size: 15px;
   border: 1px solid #ddd;
-  margin: 8px 0 32px;
+  margin: 15px 0;
   outline: none;
 }
-
+.note-email,.note-password{
+  color: red;
+}
 .form-message {
   color: var(--error-color);
   font-size: 13px;

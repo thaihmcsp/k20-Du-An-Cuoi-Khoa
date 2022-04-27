@@ -43,7 +43,12 @@ span{
   text-align: start;
 }
 .nguoidungemail{
+  display: flex;
+  align-items: center;
   width: 300px;
+}
+span{
+  margin-right: 5px;
 }
 .back,.next{
   border: none;

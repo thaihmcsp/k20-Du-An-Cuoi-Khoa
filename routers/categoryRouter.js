@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const path = require("path");
-const UserModel = require("../models/userModel");
 const Category = require("../models/category");
+const ProductCode = require("../models/productCode");
+var { checkLogin, checkUser } = require("../checkLogin");
 var multer = require("multer");
 const { log } = require("console");
 var storage = multer.diskStorage({
@@ -25,7 +26,7 @@ router.get("/get", async function (req, res) {
   res.render("admin/datacategory", { listcategory });
 });
 
-router.get("/", async function (req, res) {
+router.get("/",checkLogin, async function (req, res) {
   try {
     const listcategory = await Category.find().limit(10);
     const totala = await Category.count();
@@ -57,6 +58,7 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     const data = await Category.deleteOne({ _id: req.params.id });
+    const datacategory = await ProductCode.deleteOne({ categoryID: req.params.id });
     const listcategory = await Category.find()
       .skip((req.query.page - 1) * req.query.limit)
       .limit(req.query.limit);

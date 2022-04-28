@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Product = require("../models/product");
 const path = require("path");
 var multer = require("multer");
+var { checkLogin, checkUser } = require("../checkLogin");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
@@ -25,7 +26,7 @@ router.get("/get", async function (req, res) {
   res.render("admin/product", { listproduct });
 });
 
-router.get("/:id", async function (req, res) {
+router.get("/:id",checkLogin, async function (req, res) {
   const listproduct = await Product.find({ productCode: req.params.id }).limit(
     5
   );

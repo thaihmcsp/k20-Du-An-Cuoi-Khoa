@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const ProductCode = require("../models/productCode");
 const Category = require("../models/category");
+const Product = require("../models/product");
 const path = require("path");
 var multer = require("multer");
+var { checkLogin, checkUser } = require("../checkLogin");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
@@ -36,6 +38,7 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     const listdelete = await ProductCode.deleteOne({ _id: req.params.id });
+    const deletedata = await Product.deleteOne({ productCode: req.params.id });
     const listproductCode = await ProductCode.find()
     .skip((req.query.page - 1) * req.query.limit)
     .limit(req.query.limit);
@@ -45,7 +48,7 @@ router.delete("/:id", async function (req, res) {
   }
 });
 
-router.get("/get", async function (req, res) {
+router.get("/get",checkLogin, async function (req, res) {
   const listproductCode = await ProductCode.find()
   .skip((req.query.page - 1) * req.query.limit)
   .limit(req.query.limit);

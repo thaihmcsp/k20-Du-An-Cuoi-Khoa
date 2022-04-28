@@ -21,13 +21,13 @@ function checkLogin (req,res,next){
 } 
 
 function checkUser (req,res,next){
+  // console.log(24,req.cookies.user);
   if(req.cookies.user){
     const id = jwt.verify(req.cookies.user, 'thai').id
-    // console.log(29, id);
     UserModel.findOne({_id: id})
     .then(function(data){
       if(data){
-        res.redirect('/admin/login')
+        res.redirect('/user/get')
       }else{
         res.status(400).json({mess:'cookie khong hop le'})
       }
@@ -38,7 +38,6 @@ function checkUser (req,res,next){
   }else{
     next()
   }
-  next()
 }
 
 // function checkRole (req,res, next){

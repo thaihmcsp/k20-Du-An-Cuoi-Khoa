@@ -10,8 +10,7 @@ function querychange() {
                 $('.ten-mau span').html($('.nhom-mau').attr('alt'))
                 checksize($(`#mau-sp${i*2}`).attr('alt'),$('.name-sp').attr('alt')) // check size
                 $('.nhom-mau').attr('alt','')
-            }
-            
+            } 
         }
     }
     if ($('.nhom-size').attr('alt')) {
@@ -25,54 +24,7 @@ function querychange() {
         }
     }
 }
-// xử lý query color & size đã chọn
-$('.mau-chon').on("click", function(){
-    console.log(27);
-    const select = $(this).attr('class')
-    const mau = $(this).attr('alt')
-    // console.log(100,$(this).attr('class'));
-    if (select === 'image-mau') {
-        $('.mau-chon').attr({class:"image-mau"})
-        $('.image-mau').css({ border: "" })
-        $(this).attr({class:"mau-chon"})
-        $('.ten-mau span').html(mau)
-        console.log(1111,mau);
-        change(mau,$('.name-sp').attr('alt')) // đổi link ảnh trên class smallImg
-        checksize(mau,$('.name-sp').attr('alt')) // check size
-        render()
-    } else {
-        $('.mau-chon').attr({class:"image-mau"})
-        $('.ten-mau span').html('Vui lòng chọn')
-        for (let i = 0; i < $('.btn-sp').length; i++) {
-            if ($(`#size-sp${i*2}`).attr('disabled',false) === -1) {
-                $(`#size-sp${i*2}`).attr('disabled',true)
-            }
-        }
-        render()
-    }
-    console.log(107,$(this).attr('class'));
-})
-$('.size-chon').on("click", function(){
-    console.log(34);
-    const select = $(this).attr('class')
-    const mau = $(this).attr('alt')
-    console.log(100,$(this).attr('alt'));
-    if (select === 'btn-size') {
-        $('.size-chon').attr({class:"btn-size"})
-        $('.btn-size').css({ border: "" })
-        $(this).attr({class:"size-chon"})
-        $('.ten-size span').html(mau)
-        checkcolor($(this).attr('alt'),$('.name-sp').attr('alt')) // check color
-    } else {
-        $(this).attr({class:"btn-size"})
-        $('.ten-size span').html('Vui lòng chọn')
-        for (let i = 0; i < $('.img-sp').length; i++) {
-            $(`#mau-sp${i*2}`).show(1000)
-        }
-    }
-    // console.log(107,$(this).attr('class'));
-    render()
-})
+
 // hiệu ứng mouse chuột qua smallImg
 function pointerImg(){
     $('.smallImg').on('mouseover', function(){
@@ -111,8 +63,7 @@ function next(len){
         $('.img-line .back').css({ cursor: 'pointer' })
     }else{
         $('.img-line .next').css({ cursor: 'not-allowed' })
-    }
-    
+    } 
 }
 
 function back(){
@@ -194,6 +145,8 @@ $('.image-mau').on("click", function colorchange(){
     const mau = $(this).attr('alt')
     // console.log(100,$(this).attr('class'));
     if (select === 'image-mau') {
+        $('.mau-chon').off('click')
+        $('.mau-chon').on('click', colorchange)
         $('.mau-chon').attr({class:"image-mau"})
         $('.image-mau').css({ border: "" })
         $(this).attr({class:"mau-chon"})
@@ -261,6 +214,8 @@ $('.btn-size').on("click", function sizechange(){
     const mau = $(this).attr('alt')
     console.log(100,$(this).attr('alt'));
     if (select === 'btn-size') {
+        $('.size-chon').off('click')
+        $('.size-chon').on('click', sizechange)
         $('.size-chon').attr({class:"btn-size"})
         $('.btn-size').css({ border: "" })
         $(this).attr({class:"size-chon"})

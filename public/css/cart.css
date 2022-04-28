@@ -59,6 +59,7 @@ header{
 }
 .cart-item-left{
     display: flex;
+    padding-left: 10px;
 }
 .cart-item-left input{
     width: 16px;
@@ -72,7 +73,7 @@ header{
 }
 .cart-item-left .content{
     width: 328px;
-    height: 59px;
+    /* height: 59px; */
     display: flex;
     flex-direction: column;
 }
@@ -85,9 +86,6 @@ header{
     margin-top: 6px;
     color: #757575;
     font-size: 12px;
-}
-.cart-item-left{
-    padding-left: 10px;
 }
 
 .cart-item-middle{

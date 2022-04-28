@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Received Order</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/order.css" />
+  </head>
+  <body>
+    <%- include('../../components/header.ejs') %> 
+    
+    <div class="body-con">
+      <div class="container">
+        <div class="thank-you">Cám ơn bạn đã mua hàng</div>
+        <div class="page-section">
+            <div class="payment-amount">
+                <div class="wrapper">
+                    <div class="title">Vui lòng chuẩn bị số tiền tương ứng vào ngày giao hàng</div>
+                    <div class="tong-tien"> ₫ 76.100</div>
+                </div>
+            </div>
+            <div class="package-delivery">
+                <div class="title-date">Ngày giao hàng dự kiến</div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="item-img-container">
+                                <img src="https://vn-live.slatic.net/p/18619b06a081386ca362a598271e2e64.jpg" class="item-img">
+                            </div>
+                        </td>
+                        <td class="pk-des">Est.02 thg 5-05 thg 5</td>
+                    </tr>
+                    <tr>
+                        <td class="pk-item-line" colspan="2"><div></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="tip">
+                                <div class="package-delivery-text-content">
+                                    <div class="package-delivery-text-line" data-spm-anchor-id="a2o4n.transaction_result.0.i1.4430705bCptTyQ">
+                                        <span>Để biết thêm chi tiết về trạng thái đơn hàng của bạn, vui lòng vào </span>
+                                        <span class="package-delivery-strong-text">Tài khoản &gt; Đơn hàng của tôi</span>
+                                    </div>
+                                </div>
+                                <button id="package-delivery-view-order-btn" type="button" class="next-btn next-btn-secondary next-btn-small">
+                                    Xem đơn đặt
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="payment-information">
+                <div class="payment-1">
+                    <div class="payment-2">
+                        <span class="icon">
+
+                        </span>
+                        <div class="payment-3 ">
+                            <div class="payment-4">
+                                <div class="text-line">
+                                    <span>
+                                        Thông báo về việc tiếp nhận Yêu cầu đặt hàng của bạn đã được gửi đến 
+                                    </span>
+                                    <span class="strong-text">
+                                        thachkh1993@gmail.com
+                                    </span>
+                                    <span>. </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-message">
+                - Chỉ nhận hàng khi đơn hàng ở trạng thái "ĐANG GIAO HÀNG".
+
+                - Lưu ý kiểm tra mã đơn hàng, mã vận đơn và người gửi TRƯỚC KHI THANH TOÁN.
+            </div>
+            <div class="order-summary">
+                <div class="checkout-summary">
+                    <div>
+                        <div class="checkout-summary-heading">
+                            <div class="checkout-summary-title">
+                                Chi tiết đơn hàng
+                            </div>
+                            <span class="lazada lazada-ic-Arrow-Up lazada-icon checkout-summary-icon">
+
+                            </span>
+                        </div>
+                        <div class="checkout-summary-rows">
+                            <div class="checkout-summary-row">
+                                <div class="checkout-summary-label">
+                                    Tạm tính (1 sản phẩm) 
+                                </div>
+                                <div class="checkout-summary-value">₫ 26.000</div>
+                            </div>
+                            <div class="checkout-summary-row">
+                                <div class="checkout-summary-label">
+                                    Phí giao hàng 
+                                </div>
+                                <div class="checkout-summary-value">
+                                    ₫ 50.100
+                                </div>
+                            </div>
+                            <div class="checkout-summary-row order-summary-row-total">
+                                <div class="checkout-summary-label">
+                                    Tổng cộng  
+                                </div>
+                                <div class="checkout-summary-value">
+                                    ₫ 76.100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <a href="###" class="">Tiếp tục mua</a>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../components/footer.ejs') %>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+  <script src="/public/js/order.js"></script>
+</html>

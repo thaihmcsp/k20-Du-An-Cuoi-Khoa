@@ -113,14 +113,6 @@ router.get('/check/:color&:size&:id&:quantity',checkUser, async (req, res) =>{
         console.log(error); 
     }
 })
-router.get('/:id?color=color&size=size',async (req, res) =>{
-    try {
-        console.log(109,req.params.id);
-        console.log(109,req.query.color);
-        console.log(109,req.query.size);
-    } catch (error) {
-        console.log(error);
-    }
-})
+
 
 module.exports = router

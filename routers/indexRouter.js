@@ -7,7 +7,7 @@ router.get("/home", (req, res) => {
   res.render("user/home/home");
 });
 
-router.get("/register", checkUser, (req, res) => {
+router.get("/register", (req, res) => {
   res.render("user/signUp/signUp");
 });
 
@@ -20,6 +20,9 @@ router.get("/cart",checkUser, (req, res) => {
 });
 router.get("/order",checkUser, (req, res) => {
   res.render("user/order/order");
+});
+router.get("/receivedOrder",checkUser, (req, res) => {
+  res.render("user/order/receivedOrder");
 });
 
 module.exports = router;

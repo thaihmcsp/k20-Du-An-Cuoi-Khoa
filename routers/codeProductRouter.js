@@ -24,6 +24,8 @@ router.get("/pagination", async (req, res) => {
   res.render("user/home/product", { listproductCode });
 });
 
+router.get("/:id", async (req, res) => {});
+
 // Product Code
 router.post("/", function (req, res) {
   console.log(req.body);

@@ -11,10 +11,12 @@ const productModel = require("../models/product");
 router.get("/home", checkRequire, async (req, res) => {
   const listcategory = await category.find();
   const listproductCode = await productCode.find().limit(4);
+  const countProduct = await productCode.count();
   res.render("user/home/home", {
     user: req.user,
     listcategory,
     listproductCode,
+    countProduct,
   });
 });
 
@@ -66,7 +68,7 @@ router.get("/admin/productCode", async function (req, res) {
 
 // Search
 router.get("/search", function (req, res) {
-  res.render("user/filter/filter.ejs");
+  res.render("user/filter/search.ejs");
 });
 
 router.post("/search/?size", function (req, res) {
@@ -83,6 +85,14 @@ router.post("/search/?size", function (req, res) {
     .catch(function (err) {
       res.json({ mess: "thất bại", err });
     });
+});
+
+router.get("/cart", checkUser, (req, res) => {
+  res.render("user/cart/cart");
+});
+
+router.get("/order", checkUser, (req, res) => {
+  res.render("user/order/order");
 });
 
 module.exports = router;

@@ -5,6 +5,8 @@ function btnView() {
 async function btnPage(page, listPage) {
   let numPage = page * 1;
   try {
+    $(".page-number").removeClass("active");
+    $("#page-" + page).addClass("active");
     // Previous
     $(".page-pre").on("click", () => {
       numPage = numPage - 1;

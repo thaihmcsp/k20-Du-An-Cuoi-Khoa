@@ -20,8 +20,10 @@ const upload = multer({ storage: storage });
 
 // Home
 router.get("/:id", checkRequire, async (req, res) => {
-  // const listcategory = await Category.find();
-  res.render("user/filter/filter", { user: req.user });
+  const category = await Category.findOne({
+    _id: req.params.id,
+  });
+  res.render("user/filter/filter", { user: req.user, category });
 });
 
 // Admin

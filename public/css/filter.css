@@ -1,59 +1,60 @@
-
-.searchconten{
-    width: 333px;
-}
-.searchtong{
-    display: flex;
-    flex-direction: column;
+body {
+  background-color: #f5f5f5;
 }
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-.buttomhome{
-    border-bottom: 1px solid rgb(185, 185, 185);
-    ;
-}
-.tong2manhinhdoc{
-    display: flex;
-    flex-direction: row;
-}
-.khoibentrai{
-    width: 150px
-    ;
-    max-width: 100%;
-}
-.khoibenphai{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-}
-.headerkhoiphai{
-    border: 1px solid rgb(185, 185, 185);
+main {
+  width: var(--header-width);
+  margin: 0 auto;
 }
 
-.noidungbenphai{
-    border: 1px solid rgb(185, 185, 185);
+.searchconten {
+  width: 333px;
 }
-.phantrang{
-    border: 1px solid rgb(185, 185, 185);
-    display: flex;
+.searchtong {
+  display: flex;
+  flex-direction: column;
 }
 
-#search{
+.buttomhome {
+  border-bottom: 1px solid rgb(185, 185, 185);
+}
+.tong2manhinhdoc {
+  display: flex;
+  flex-direction: row;
+}
+.khoibentrai {
+  width: 150px;
+  max-width: 100%;
+}
+.khoibenphai {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
+.headerkhoiphai {
+  border: 1px solid rgb(185, 185, 185);
+}
+
+.noidungbenphai {
+  border: 1px solid rgb(185, 185, 185);
+}
+.phantrang {
+  border: 1px solid rgb(185, 185, 185);
+  display: flex;
+}
+
+#search {
   width: 285px;
 }
-.buttomhome{
+.buttomhome {
   font-size: 28px;
 }
-.searchtong{
-    display: flex;
-    position: absolute;
+.searchtong {
+  display: flex;
+  position: absolute;
 }
-.searchconten{
-    background-color: white;
-    position: relative;
+.searchconten {
+  background-color: white;
+  position: relative;
 }

@@ -109,9 +109,11 @@
           </li>
           <%}) %>
         </ul>
+        <% if (countProduct > 10) { %>
         <div class="product-view" onclick="btnView()">
           <button>Xem thêm</button>
         </div>
+        <% } %>
       </div>
     </main>
     <%- include('../../components/footer') %>

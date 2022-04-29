@@ -24,18 +24,18 @@ const CartModel = mongoose.model('cart', CartSchema)
 
 module.exports = CartModel
 
-CartModel.create({
-  UserID: 'asdasd',
-  productList:	[
-    {
-      productID: 'asdasdasd',
-      quantity: 1,
-    } 
-  ]
-})
-.then(function(data){
-  console.log(data);
-})
-.catch(function(err){
-  console.log(err);
-})
+// CartModel.create({
+//   UserID: 'asdasd',
+//   productList:	[
+//     {
+//       productID: 'asdasdasd',
+//       quantity: 1,
+//     } 
+//   ]
+// })
+// .then(function(data){
+//   console.log(data);
+// })
+// .catch(function(err){
+//   console.log(err);
+// })

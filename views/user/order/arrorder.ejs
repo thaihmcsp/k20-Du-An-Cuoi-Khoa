@@ -61,9 +61,9 @@
                 </div>
             </div>
             <div class="cart-item-middle">
-                <p class="current-price"><span class="price"><%= arrproductcode[arrCode[i][j]].price %></span> ₫</p>
-                <strike><p class="origin-price"><span class="numbers"><%= arrproductcode[arrCode[i][j]].price %></span> ₫</p></strike>
-                <p class="promotion-ratio"><span class="phan-tram-giam">-0</span>%</p>
+                <p class="current-price"><span class="price<%= i %><%= j %>"><%= arrproductcode[arrCode[i][j]].price %></span> ₫</p>
+                <strike><p class="origin-price"><span class="numbers<%= i %><%= j %>"><%= arrproductcode[arrCode[i][j]].price %></span> ₫</p></strike>
+                <p class="promotion-ratio"><span class="phan-tram-giam<%= i %><%= j %>">-0</span>%</p>
                 <div class="operations">
                 <span class="automation-btn-delete">
                     <span><i class="fa-solid fa-trash-can" onclick="xoa('<%= arrproduct[arrCode[i][j]]._id %>')"></i> </span>

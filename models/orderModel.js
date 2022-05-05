@@ -15,11 +15,7 @@ const OrderSchema = mongoose.Schema({
   address:	String,
   phone:	String,
   name: String,
-  type: {
-    type: String,
-    enum:['Nhà Riêng', 'Văn Phòng'],
-    default: 'Nhà Riêng'
-  },
+  type: String,
   status:	{
     type: String,
     enum: ['pending', 'done', 'cancel'],

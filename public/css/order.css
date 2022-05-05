@@ -306,7 +306,7 @@ header{
     border: 1px solid #1a9cb7;
     border-radius: 5px;
 }
-.payment-card-container,.additional-info-wrapper{
+.payment-card-container{
     padding: 16px 14px;
 }
 .summary-section{
@@ -370,6 +370,7 @@ header{
     padding: 16px 14px;
     display: flex;
     justify-content: space-between;
+    height: 38px;
 }
 .additional-info-title{
     color: #212121;
@@ -384,6 +385,9 @@ header{
     color: #212121;
     font-size: 18px;
     margin: 0 0 14px;
+}
+.checkout-summary{
+    color: #757575;
 }
 .checkout-summary-main{
     display: flex;
@@ -467,6 +471,7 @@ header{
     margin-left: 12px;
     padding: 0 36px;
     border: none;
+    border-radius: 5px;
     height: 40px;
     width: 168px;
 }
@@ -514,6 +519,129 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 /*  */
-
-
-
+.offcanvas{
+    width: 500px;
+}
+.offcanvas-body{
+    padding: 20px 22px;
+    
+}
+.formItem{
+    margin-top: 30px;
+}
+.title{
+    margin: 0 0 6px;
+}
+.title input{
+    width: 100%;
+}
+.title span{
+    color: #000000D9;
+    font-size: 14px;
+}
+.title .edit{
+    color: #189CB7;
+    font-size: 14px;
+}
+.edit{
+    cursor: pointer;
+}
+.next1 input{
+    padding: 0 8px;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+.next1 input:focus
+{
+    border: 1px solid #1670BE;
+    box-shadow: 0 0 3px #1670BE;
+    outline-offset: 0px;
+    outline: none;
+}
+.title .required{
+    color: #ff4d4f;
+}
+.tip{
+    color: #9da2ae;
+    font-size: 12px;
+    margin: 4px 0 0;
+}
+.address-wrapper{
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+.address-wrapper span{
+    font-size: 14px;
+    color: #212121;
+}
+.address-mobile{
+    margin-left: 8px;
+}
+.address-info{
+    color: #212121;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.footer-off{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.footer-off div{
+    width: 40%;
+    height: 39px;
+    text-align: center;
+    padding: 10px 0;
+}
+.footerBtn{
+    color: #808080;
+    font-size: 14px;
+    background: #eff0f5;  
+    cursor: pointer;
+}
+.saveBtn{
+    color: #ffffff;
+    font-size: 14px;
+    background: #189cb7;
+    cursor: pointer;
+}
+.address{
+    display: flex;
+}
+.action{
+    margin-right: 12px;
+}
+.address-wrapper span.add-diachi-one{
+    color: #ffffff;
+    margin: 10px;
+}
+.modal-dialog{
+    position: relative;
+}
+.modal-content{
+    position: absolute;
+    left: -200px;
+    width: 840px;
+    height: 604px;
+}
+.offcanvas-header button{
+    background: #ffffff;
+    color: #1a9cb7;
+    border: none;
+    font-size: 14px;
+}
+.btn-secondary{
+    font-size: 14px;
+    width: 168px;
+    height: 40px;
+    color: #757575;
+    background: #eff0f5;
+    margin-left: 12px;
+    padding: 0 24px;
+    border: none;
+}
+.scroll{
+    max-height:700px;
+    overflow-y: scroll; 
+}

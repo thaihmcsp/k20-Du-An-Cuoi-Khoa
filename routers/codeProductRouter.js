@@ -18,13 +18,24 @@ const upload = multer({ storage: storage });
 
 // Home
 router.get("/pagination", async (req, res) => {
+  let page = 1;
+  if (req.query.page) {
+    page = req.query.page;
+  }
   const listproductCode = await ProductCode.find()
-    .skip((req.query.page - 1) * 4)
+    .skip((page - 1) * 4)
     .limit(4);
-  res.render("user/home/product", { listproductCode });
+  res.render("user/home/pagination", { listproductCode });
 });
 
-router.get("/:id", async (req, res) => {});
+router.get("/count", async (req, res) => {
+  try {
+    const total = await ProductCode.count();
+    res.json(total);
+  } catch (error) {
+    res.json(error);
+  }
+});
 
 // Product Code
 router.post("/", function (req, res) {
@@ -41,34 +52,6 @@ router.post("/", function (req, res) {
       res.json({ mess: "thất bại", err });
     });
 });
-
-router.get("/", function (req, res) {
-  console.log(req.query.name);
-  ProductCode.find({ name: { $regex: req.query.name, $options: "i" } })
-    .skip((req.query.page - 1) * req.query.limit)
-    .limit(req.query.limit)
-    .then(function (data) {
-      res.json({ mess: "ok", data });
-    })
-    .catch(function (err) {
-      res.json({ mess: "thất bại", err });
-    });
-});
-
-// router.get('/',function(req,res){
-//   console.log(req.query.name);
-//   ProductCode.find(
-//       {name:{$regex:req.query.name,$options:'i'}}
-//     )
-//     .skip((req.query.page-1) *req.query.limit)
-//     .limit(req.query.limit)
-//     .then(function (data) {
-//         res.json({mess:'ok',data})
-//       })
-//       .catch(function (err) {
-//         res.json({mess:'thất bại',err})
-//       });
-// })
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {

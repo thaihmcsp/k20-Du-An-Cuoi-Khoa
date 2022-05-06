@@ -4,9 +4,9 @@ const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
 const { checkUser } = require("../middleWare/checkLogin");
-var multer = require("multer");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
+var multer = require("multer");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
@@ -21,17 +21,13 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.get("/:id", async (req, res) => {
+router.get("/detail/:id", async function (req, res) {
   try {
     console.log(7, req.params.id);
-    // console.log(109,req.query.color);
-    // console.log(109,req.query.size);
     const ListCode = await ProductCodeModel.findOne({ _id: req.params.id });
     const ListData = await ProductModel.find({ productCode: req.params.id });
     let color = [];
     let size = [];
-    const queryColor = [];
-    const querySize = [];
     for (let i = 0; i < ListData.length; i++) {
       if (color.indexOf(ListData[i].color) === -1) {
         color.push(ListData[i].color, i);
@@ -39,12 +35,6 @@ router.get("/:id", async (req, res) => {
       if (size.indexOf(ListData[i].size) === -1) {
         size.push(ListData[i].size, i);
       }
-    }
-    if (req.query.color) {
-      queryColor.push(req.query.color);
-    }
-    if (req.query.size) {
-      querySize.push(req.query.size);
     }
     // console.log(200,color);
     // console.log(300,size);
@@ -55,12 +45,15 @@ router.get("/:id", async (req, res) => {
       listcode: ListCode,
       listcolor: color,
       listsize: size,
-      queryColor,
-      querySize,
     });
   } catch (error) {
-    console.log(error);
+    console.log(45, error);
   }
+});
+
+router.get("/:id", async function (req, res) {
+  const listproduct = await ProductModel.find({ productCode: req.params.id });
+  res.render("admin/listproduct", { listproduct });
 });
 
 router.get("/change/mau", async (req, res) => {
@@ -74,7 +67,7 @@ router.get("/change/mau", async (req, res) => {
     console.log(39, ListData);
     res.render("user/detail/zoomImg.ejs", { listdata: ListData });
   } catch (error) {
-    console.log(error);
+    console.log(56, error);
   }
 });
 router.get("/check/size", async (req, res) => {
@@ -150,22 +143,8 @@ router.get("/check/:color&:size&:id&:quantity", checkUser, async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    console.log(119, error);
   }
-});
-router.get("/:id?color=color&size=size", async (req, res) => {
-  try {
-    console.log(109, req.params.id);
-    console.log(109, req.query.color);
-    console.log(109, req.query.size);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/:id", async function (req, res) {
-  const listproduct = await ProductModel.find({ productCode: req.params.id });
-  res.render("admin/listproduct", { listproduct });
 });
 
 router.post("/add", upload.array("listImg", 5), async function (req, res) {

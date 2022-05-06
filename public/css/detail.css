@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 body{
     /* text-align: center; */
     width: 1188px;
@@ -17,6 +18,8 @@ body{
     border: 1px solid red;
     background: rgb(212, 212, 230);
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 
 * {
     margin: 0;
@@ -50,7 +53,10 @@ header{
 .img-zoom-lens {
     position: absolute;
     background: rgb(151, 151, 231);
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     opacity: 0.1;
     /*đặt kích thước của ống kính:*/
     width: 200px;
@@ -58,32 +64,44 @@ header{
 }
 .img-ssss{
 <<<<<<< HEAD
+<<<<<<< HEAD
       width: 100px;
       height: 100px;
 =======
     width: 100px;
     height: 100px;
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+    width: 100px;
+    height: 100px;
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 .img-zoom-result {
     position: absolute;
     right: 5px;
     top: 5px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     border: 1px solid blue;
     /*đặt kích thước của div kết quả*/
 =======
     box-shadow:  0 5px 5px rgba(0, 0, 0, 0.3); /* hiệu ứng đổ bóng*/
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+    box-shadow:  0 5px 5px rgba(0, 0, 0, 0.3); /* hiệu ứng đổ bóng*/
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     width: 99%;
     height: 79%;
     /* z-index: 1; */
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .lienket div{
     height: 48px;   
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 .lienket{
     margin-top: 20px;
 }
@@ -92,7 +110,10 @@ header{
 }
 .lienket div{
     height: 25px;   
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 .lienket a{
     text-decoration: none;
@@ -106,6 +127,7 @@ header{
     padding-bottom: 16px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .block-left,.block-center{
     position: relative;
     /* margin: 0 5px; */
@@ -115,13 +137,18 @@ header{
     padding: 0 20px;
     /* margin: 0 5px; */
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 .block-center{
     position: relative;
     
 }
 .block-center-left{
     padding: 0 20px;
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 
 .block .block-center{
@@ -132,29 +159,41 @@ header{
 .block-left{
     width: 25%;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     position: relative; 
     padding: 5px 0;   
 }
 
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 .block-left img{
     width: 100%;
 }
 .block-left .img1{
     cursor: zoom-in;
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 300px;
     height: 300px;
     margin-bottom: 5px;
     padding-left: 5px;
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     width: 280px;
     height: 280px;
     margin-bottom: 5px;
     margin-left: 5px;
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     border-bottom: 1px solid #eff0f5;
 }
 .img-line{
@@ -163,12 +202,17 @@ header{
 .img-line button{
     background: #ffffff;
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* color: red; */
     border: none;
 =======
     border: none;
     width: 20px;
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+    border: none;
+    width: 20px;
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 .img-line .img-next-slick{
     display: flex;
@@ -181,9 +225,12 @@ header{
     margin: 0 5px;
     position: relative;
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* left: 50px; */
 =======
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 .block-center-left{
     background: #ffffff;
@@ -194,12 +241,15 @@ header{
     background: #fafafa;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .block-center-left .name-sp{
     color: #212121;
     font-size: 12px;
     text-align: left;
 }
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 
 div#namesp h1{
     color: #212121;
@@ -208,7 +258,10 @@ div#namesp h1{
     margin: 15px 0;
 }
 
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 .danh-gia-sao, .thuong-hieu{
     display: flex;
     padding: 10px 0;
@@ -264,6 +317,7 @@ div#namesp h1{
     font-size: 30px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* .nhom-mau,.so-luong{
     text-align: left;
     display: flex;
@@ -271,6 +325,8 @@ div#namesp h1{
 } */
 =======
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 .selection-mau,.selection-size{
     display: flex;
     flex-direction: column;
@@ -398,9 +454,12 @@ div#namesp h1{
 }
 .danh-gia{
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* border-left: 1px solid #eff0f5; */
 =======
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
     display: flex;
     flex-direction: column;
     width: 33,33%;
@@ -429,11 +488,17 @@ div#namesp h1{
     border-bottom: 1px solid #eff0f5;
     border-top: 1px solid #eff0f5;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84
 }
 .modal-body span,.modal-body i{
     font-size: 18px;
 }
 
+<<<<<<< HEAD
 >>>>>>> 3a39c21ce02fa43b4499c1f9a0bb9b856b01e548
+=======
+>>>>>>> ed50f50db5d3be2e55b139d1b3d2b6d71ff55c84

@@ -109,6 +109,7 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
 });
 
 // Register + Login
+
 router.post("/register", async (req, res) => {
   try {
     console.log(23, req.body);
@@ -179,6 +180,25 @@ router.put("/logout", async (req, res) => {
 });
 
 // Admin
+router.get("/admin/get", async function (req, res) {
+  const user = await userModel
+    .find()
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit);
+  res.render("admin/manage", { user });
+});
+
+router.get("/get", async function (req, res) {
+  const user = await userModel.find().limit(5);
+  const total = await userModel.count();
+  const totalPage = Math.ceil(total / 5);
+  res.render("admin/createuser", { user, totalPage: totalPage });
+});
+
+router.get("/:id", async function (req, res) {
+  const profile = await userModel.findOne({ _id: req.params.id });
+});
+
 router.get("/admin/get", async function (req, res) {
   const user = await userModel
     .find()

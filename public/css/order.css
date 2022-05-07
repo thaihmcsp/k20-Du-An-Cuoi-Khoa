@@ -645,3 +645,6 @@ input[type=number]::-webkit-outer-spin-button {
     max-height:700px;
     overflow-y: scroll; 
 }
+.clearfix1{
+    padding: 14px;
+}

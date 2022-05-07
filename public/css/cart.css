@@ -129,7 +129,9 @@ header{
 }
 .summary-section{
     padding: 16px 12px 0;
-    
+}
+.address{
+    display: none;
 }
 .location-label{
     margin: 0 0 11px;

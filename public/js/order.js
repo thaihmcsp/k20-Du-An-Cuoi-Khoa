@@ -52,7 +52,6 @@ async function findaddress(){
     }
 }
 
-
 async function chonTinh(obj){
     try {
         if ($('.adress_tinh').val() !== '') {
@@ -208,6 +207,7 @@ function phone() {
     }
 }
 function diachi() {
+    console.log(211,$('.diachi7').html());
     if ($('.diachi').val() !== '') {
         $('.mod-input-adress span').html('')
         $('.diachi').css('border','1px solid #ddd')
@@ -275,6 +275,7 @@ async function luuadress() {
 async function luuadress1() {
     try {
         console.log($('.hoten7').val(), $('.phone7').val(), $('.diachi7').val(),$('.adress_tinh7').val(),$('.adress_quan7').val() );
+        
         if ($('.hoten7').val() === '') {
             $('.mod-input-name span').html('Thông tin bắt buộc')
             $('.hoten7').css('border','1px solid #f44336')
@@ -297,6 +298,7 @@ async function luuadress1() {
         }
         if ($('.hoten7').val() !== '' & $('.phone7').val() !== '' & $('.diachi7').val() !== '' & $('.adress_tinh7').val() !== '' & $('.adress_quan7').val() !== '') {
             console.log(228);
+            $('.btn-luu-adress').attr('data-dismiss','modal')
             const name = $('.hoten7').val()
             const phone = $('.phone7').val()
             const address = $('.diachi7').val() + ' , ' + $('.adress_phuong7').val() + ' , ' + ($('.adress_quan7').val()).split('_')[0] + ' , ' + $('.adress_tinh7').val() 
@@ -323,7 +325,9 @@ async function luuadress1() {
             })
             $('.scroll').html('')
             $('.scroll').html(data)
-            van_phong()
+            van_phong()   
+        }else{
+            $('.btn-luu-adress').attr('data-dismiss','')
         }
     } catch (error) {
         console.log(error);
@@ -440,8 +444,7 @@ async function saveadd(){
             if ($(`.add-diachi`).html() === 'VĂN PHÒNG') {
                 $(`.add-diachi`).css({'background' : '#189cb7', 'border-radius' : '99px'})
                 $(`.dc`).css({'background' : '#189cb7'})
-            }
-            if ($(`.add-diachi`).html() === 'Nhà Riêng'){
+            }else{
                 $(`.add-diachi`).css({'background' : 'linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)'})
                 $(`.dc`).css({'background' : 'linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)'})
             }
@@ -487,8 +490,15 @@ async function luu1(){
 }
 async function luu2(){
     try {
+        // ('.btn-luu-adress').attr('data-dismiss','')
+        $('.hoten7').val('')
+        $('.phone7').val('')
+        $('.diachi7').val('')
+        $('.adress_tinh7').val('')
+        $('.adress_quan7').val('')
+        $('.adress_phuong7').val('')
         for (let j = 0; j < $(`.add`).length; j++) {
-            if ($('.v2-address-title').html() === $(`.ten${j}`).html()) {
+            if ($('.v2-address-title').html() === $(`.ten${j}`).html() & $('.v2-mobile').html() === $(`.sdt${j}`).html()) {
                 $(`.checkAddress${j}`).attr('checked','true')
                 $(`.checkAddress${j}`).attr('aria-checked','true')
             }

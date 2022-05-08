@@ -8,7 +8,7 @@ $('.v2-title-wrapper-edit').on('click',function(){
     $('.offchangeaddress').show()
     $('.onEdit').hide()
 })
-
+$('.toast').css('display','none');
 async function findaddress(){
     try {
         // lấy địa chi các tỉnh thành việt nam
@@ -397,6 +397,7 @@ async function xoa(productID){
 // update order
 async function updateOrder(){
     try {
+        $('.toast').css('display','block');
         const total = Number($('.bill-total').text().split('.').join(''))
         console.log(309,total);
         const name = $('.v2-address-title').html()
@@ -410,7 +411,11 @@ async function updateOrder(){
             data: {total: total, name: name,  phone: phone,type: type, address: address}
         })
         // console.log(data);
-        window.location.href = '/receivedOrder'
+        
+        $('.toast').toast('show');
+        setTimeout(function () {
+            window.location.href = '/cart'
+        },2000); 
     } catch (error) {
         console.log(error);
     }

@@ -648,3 +648,11 @@ input[type=number]::-webkit-outer-spin-button {
 .clearfix1{
     padding: 14px;
 }
+div.thongbao{
+    position: fixed;
+    /* z-index: 1;  */
+    top: 150px;
+}
+.me-auto, .toast-body{
+    color: rgb(76, 175, 80);
+}

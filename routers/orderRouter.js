@@ -151,8 +151,7 @@ router.post('/Neworder',checkUser, async (req,res)=>{
         console.log(data);
         const datadeleteCart = await CartModel.deleteMany({ UserID: req.id, "productList.select": true } )
         console.log(datadeleteCart);
-        res.render('user/order/receivedOrder',data)
-        // res.json(data)
+        res.json(data)
     } catch (error) {
         console.log(error);
     }

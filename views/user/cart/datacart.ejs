@@ -6,8 +6,8 @@
                     <input type="checkbox" class="checkbox<%= i %> box<%= j %><%= i %>" alt="<%= data[i].productList[0].select %>"  val="<%= arrproductcode[i]._id %>" onclick="test('<%= i %>','<%= j %>','<%= arrproduct[i]._id %>')">
                     <img src="<%= arrproduct[i].listImg[0] %>" alt="" srcset="">
                     <div class="content">
-                        <a href="/product/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>"><%= arrproductcode[i].name %></a>
-                        <a href="/product/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>" class="color-size">Nhóm Màu: <%= arrproduct[i].color %>, Size: <%= arrproduct[i].size %></a>
+                        <a href="/product/detail/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>"><%= arrproductcode[i].name %></a>
+                        <a href="/product/detail/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>" class="color-size">Nhóm Màu: <%= arrproduct[i].color %>, Size: <%= arrproduct[i].size %></a>
                     </div>
                 </div>
                 <div class="cart-item-middle">

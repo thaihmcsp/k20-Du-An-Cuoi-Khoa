@@ -6,7 +6,7 @@ const { checkUser } = require("../middleWare/checkLogin");
 const cookieParser = require('cookie-parser')
 router.use(cookieParser())
 
-router.get('/:id', async (req, res) =>{
+router.get('/detail/:id', async (req, res) =>{
     try {
         console.log(7,req.params.id);
         // console.log(109,req.query.color);

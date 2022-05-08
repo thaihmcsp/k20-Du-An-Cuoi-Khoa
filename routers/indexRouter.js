@@ -21,8 +21,6 @@ router.get("/cart",checkUser, (req, res) => {
 router.get("/order",checkUser, (req, res) => {
   res.render("user/order/order");
 });
-router.get("/receivedOrder",checkUser, (req, res) => {
-  res.render("user/order/receivedOrder");
-});
+
 
 module.exports = router;

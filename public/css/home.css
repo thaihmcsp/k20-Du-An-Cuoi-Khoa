@@ -100,6 +100,7 @@ main {
   text-decoration: none;
   background-color: #fff;
   display: block;
+  z-index: 1;
 }
 
 .product-link:hover {

@@ -26,15 +26,15 @@ router.get("/pagination", async (req, res) => {
     page = req.query.page;
   }
   const listproductCode = await ProductCode.find()
-    .skip((page - 1) * 4)
-    .limit(4);
+    .skip((page - 1) * 24)
+    .limit(24);
   res.render("user/home/pagination", { listproductCode });
 });
 
 router.get("/count", async (req, res) => {
   try {
     const total = await ProductCode.count();
-    res.json(total);
+    res.json(Math.ceil(total / 20));
   } catch (error) {
     res.json(error);
   }

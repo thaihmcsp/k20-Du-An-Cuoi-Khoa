@@ -1,279 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/public/css/base.css">
-    <link rel="stylesheet" href="/public/css/order.css">
-</head>
-<body>
-    <%- include('../../components/header.ejs') %>
-
+    <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/order.css" />
+  </head>
+  <body>
+    <%- include('../../components/header.ejs') %> 
+    
     <div class="body-con">
-        <div class="container">
-            
-                <div class="container_left">
-                    <div class="leftContainer_1000">
-                        <div class="checkout_adress">
-                            <div class="v2-title-wrapper">
-                                <p class="v2-title-wrapper">
-                                    <p class="v2-address-hat">Địa chỉ giao hàng</p>
-                                    <a href="#" class="v2-title-wrapper-edit">Chỉnh sửa</a>
-                                </p>
-                            </div>
-                            <div class="v2-checkout-address-inner">
-                                <div class="v2-address-title-container">
-                                    <span class="v2-address-title">ádas</span>
-                                    <span class="v2-mobile">0358468542</span>
-                                </div>
-                                <div class="v2-address-info-item">
-                                    <span>NHÀ RIÊNG</span>
-                                    <span>nha trang, Phường Vĩnh Phước, Thành Phố Nha Trang, Khánh Hòa</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="package">
-                            <div class="package-title clearfix">
-                                <div class="package-title-left">
-                                    <span class="package-title-name">Gói hàng 1 của 6</span>
-                                </div>
-                                <div class="package-title-right">
-                                    <span class="package-title-tips">Được giao bởi</span>
-                                    <span class="package-title-brand">Elnidofashion</span>
-                                </div>
-                            </div>
-                            <div id="delivery_4acfac8290a1c19fd29f1a91b7228054_delivery" class="delivery-option">
-                                <div class="delivery-option-body">
-                                    <div class="delivery-slider">
-                                        <div class="delivery-slider-content">
-                                            <p class="delivery-slider-title">Tùy chọn giao hàng</p>
-                                        </div>
-                                        <div class="delivery-slider-wrap without-arrow">
-                                            <div class="delivery-item-inner delivery-item-selected">
-                                                <div class="delivery-item-top">
-                                                    <div class="delivery-item-content">
-                                                        <div class="delivery-item-first-line">
-                                                            <span></span>
-                                                            <div class="delivery-item-price">
-                                                                <span class="delivery-item-current-price">132.700 ₫</span>
-                                                                <span class="delivery-item-origin-price"></span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="delivery-item-name-wrap">
-                                                            <span class="delivery-item-name">GH tiêu chuẩn</span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="delivery-item-bottom" data-spm="confirm">
-                                                    <p class="delivery-item-time">Nhận vào: 22-26 thg 4</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="padding-left: 10px; padding-right: 10px;">
-                            <div id="item_0603907ea1877fbc6282a803a0c13582" class="cart-item">
-                                <div class="cart-item-inner"><div class="cart-item-left">
-                                    <div class="img-wrap">
-                                        <a href="#" id="automation-link-from-image-to-prod-item_0603907ea1877fbc6282a803a0c13582" class="automation-link-from-image-to-prod">
-                                            <img class="img" src="https://sg-live-01.slatic.net/p/b467a48b4aeb8e589d358981d36d0b17.jpg" alt="item"></a>
-                                        </div>
-                                        <div class="content">
-                                            <a id="automation-link-from-title-to-prod-item_0603907ea1877fbc6282a803a0c13582" href="#" class="automation-link-from-title-to-prod title">
-                                                <img src="https://gcp-img.slatic.net/lazada/e5f9fdeb-dea9-4747-bd69-1dadbc2e428a_ALL-100-18.png#width=100&amp;height=18" alt="" class="promoted-icon">
-                                                Quần âu nam cao cấp đai chun co giãn công sở Hàn Quốc ống suông, quần baggy nam ống rộng dáng âu phong cách ulzzang
-                                            </a>
-                                                <a id="automation-link-from-sub-title-to-prod-item_0603907ea1877fbc6282a803a0c13582" href="#" class="automation-link-from-sub-title-to-prod sku">
-                                                    No Brand, Nhóm Màu:Đen, Size:Int:M
-                                                </a>
-                                                0
-                                            </div>
-                                        </div>
-                                        <div class="cart-item-middle">
-                                            <p class="current-price">129.000 ₫</p>
-                                            <p class="origin-price">250.000 ₫</p>
-                                            <p class="promotion-ratio">-48%</p>
-                                            <div class="operations">
-                                                <span class="automation-btn-delete">
-                                                    <span> </span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="cart-item-right">
-                                            <div class="quantity automation-item-quantity">
-                                                <span class="item-quantity-prefix">Số lượng: </span>
-                                                <span class="item-quantity-value">4</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="width: 100%; height: 1px; background-color: rgb(218, 218, 218);">
-                                </div>
-                            </div>
-                            
-                        </div>
-                </div>
-
-                <div class="container_right" >
-                    <div class="clearfix" >
-                        <div class="dat-hang">
-                            ĐẶT HÀNG
-                        </div>
-                    </div>
-                    <div class="payment-card-container">
-                        <div class="payment-card-header-wrapper">
-                            <span class="payment-card-header-title">
-                                Chọn phương thức thanh toán
-                            </span>
-                            <span class="payment-card-header-action">
-                                Xem tất cả &gt;
-                            </span>
-                        </div>
-                        <div class="card-list-wrapper">
-                            <div class="card-container selected">
-                                <div>
-                                    <span class="lazada lazada-ic-sucess lazada-icon checked-icon checked">
-                                    </span>
-                                <div class="card-main-content">
-                                    <img class="card-icon" src="https://laz-img-cdn.alicdn.com/tfs/TB1ZP8kM1T2gK0jSZFvXXXnFXXa-96-96.png">
-                                    <div class="card-main-content-text-container">
-                                        <p class="card-title">
-                                            Thanh toán khi nhận hàng
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="card-footer-left">
-                                        <div class="card-complex-description-wrapper">
-                                            <p class="card-complex-description-head-text">
-                                                Thanh toán khi nhận hàng
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-container">
-                            <div>
-                                <span class="lazada lazada-__btn-check-unselect lazada-icon checked-icon">
-                                </span>
-                                <div class="card-main-content">
-                                    <img class="card-icon" src="https://img.alicdn.com/tfs/TB17BAYE7L0gK0jSZFAXXcA9pXa-80-80.png">
-                                    <div class="card-main-content-text-container">
-                                        <p class="card-title">Ví ZaloPay</p>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="card-footer-left">
-                                        <div class="card-complex-description-wrapper">
-                                            <p class="card-complex-description-head-text">Kết nối TK ZaloPay</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-promotion-container">
-                                    <span class="card-promotion-text"> Voucher sẵn có</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="voucher-input">
-                            <p class="voucher-title">Mã giảm giá</p>
-                            <div class="voucher-input-inner">
-                                <div class="voucher-input-col">
-                                    <span class="next-input">
-                                        <input type="text"  placeholder="Nhập mã giảm giá (mã chỉ áp dụng 1 lần)" value="" height="100%">
-                                    </span>
-                                </div>
-                                <div class="voucher-input-col">
-                                    <button type="button" class="next-btn ">
-                                            Áp dụng
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="additional-info-wrapper" id="additional-info">
-                                <p class="additional-info-title">
-                                    Thông tin liên hệ và hóa đơn
-                                </p>
-                                <p class="additional-info-action">
-                                    Edit
-                                </p>
-                            </div>
-                            <div id="additional-detail" class="additional-detail-wrapper">
-
-                            </div>
-                            <div class="summary-section">
-                                <div class="summary-section-heading">
-                                    Thông tin đơn hàng
-                                </div
-                                ><div class="summary-section-content">
-                                    <div class="  checkout-summary">
-                                        <div class="checkout-summary-rows">
-                                            <div class="checkout-summary-row">
-                                                <div class="checkout-summary-main">
-                                                    <div class="checkout-summary-label">Tạm tính (64 Sản phẩm)</div>
-                                                    <div class="checkout-summary-value">
-                                                        <span class="checkout-summary-noline-value">9.612.415 ₫</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="checkout-summary-row">
-                                                <div class="checkout-summary-main">
-                                                    <div class="checkout-summary-label">Phí giao hàng </div>
-                                                    <div class="checkout-summary-value">
-                                                        <span class="checkout-summary-noline-value">502.500 ₫</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="checkout-summary-row">
-                                                <div class="checkout-summary-main">
-                                                    <div class="checkout-summary-label">Giảm phí vận chuyển </div>
-                                                    <div class="checkout-summary-value">
-                                                        <span class="checkout-summary-noline-value">-11.000 ₫</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="checkout-summary-row">
-                                                <div class="checkout-summary-main">
-                                                    <div class="checkout-summary-label">Khuyến mãi </div>
-                                                    <div class="checkout-summary-value">
-                                                        <span class="checkout-summary-noline-value">-14.585 ₫</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="undefined checkout-order-total">
-                                <div class="checkout-order-total-row">
-                                    <div class="checkout-order-total-title">Tổng cộng:</div>
-                                    <div class="checkout-order-total-fee">
-                                        10.089.330 ₫
-                                        <small class="checkout-order-total-fee-tip"></small>
-                                    </div>
-                                </div>
-                                <div class="dat-hang">
-                                    ĐẶT HÀNG
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            
-        </div>
-
+      <div class="container">
+        <%- include('./homeorder.ejs'); %> 
+      </div>
     </div>
 
-    <%- include('../../components/footer.ejs') %>
     
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <div class="offcanvas offcanvas-end" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="body-offcanvans-1">
+        <div class="offcanvas-body">
+          <div class="additional-detail-drawer">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">Thông tin liên hệ và hóa đơn</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="content">
+              <div class="formItem">
+                <div class="title">
+                  <span>Email</span>
+                </div>
+                <span class="next1 ">
+                  <input type="text" value="<%= email %>" height="100%">
+                </span>
+                <div class="tip">
+                  Vui lòng nhập email của bạn để cập nhật trạng thái giao hàng
+                </div>
+              </div>
+              <div class="formItem">
+                <div class="title" style="display: flex; justify-content: space-between;">
+                  <div>
+                    <span class="required">*</span>
+                    <span>Địa chỉ thanh toán</span>
+                  </div>
+                  <span class="edit" data-bs-toggle="offcanvas" data-bs-dismiss="offcanvas" data-bs-target="#dia-chi-thanh-toan" aria-controls="dia-chi-thanh-toan" onclick="luu2()">
+                    Chỉnh sửa
+                  </span>
+                </div>
+                <div class="address-wrapper">
+                  <div>
+                    <span class="address-title name-nhan"> </span>
+                    <span class="address-mobile mobile-nhan"> </span>
+                  </div>
+                  <div class="address-info address-nhan">
+                    nha trang
+                  </div>
+                </div>
+                <div class="tip">
+                  Vui lòng điều chỉnh địa chỉ thanh toán
+                </div>
+              </div>
+              
+            </div>
+            <div class="footer-off">
+              <div class="footerBtn" data-bs-dismiss="offcanvas">
+                Hủy
+              </div>
+              <div class="saveBtn" onclick="saveadd()" data-bs-dismiss="offcanvas">
+                SAVE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+    
+    <!-- Flexbox container for aligning the toasts -->
+    <div aria-live="polite" aria-atomic="true" class="thongbao d-flex justify-content-center align-items-center w-100">
 
-<script src="/public/js/order.js"></script>
+      <!-- Then put toasts within -->
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+          <!-- <img src="..." class="rounded me-2" alt="..."> -->
+          <strong class="me-auto">Thông báo !</strong>
+          <small>30 mins ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+          Đặt đơn hàng thành công !
+      </div>
+      </div>
+  </div>
+
+    <%- include('../../components/footer.ejs') %>
+  </body>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+
+  <script src="/public/js/order.js"></script>
 </html>

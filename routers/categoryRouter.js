@@ -42,6 +42,14 @@ router.get("/", checkLogin, async function (req, res) {
   }
 });
 
+// Home
+router.get("/:id", checkRequire, async (req, res) => {
+  const category = await Category.findOne({
+    _id: req.params.id,
+  });
+  res.render("user/filter/filter", { user: req.user, category });
+});
+
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
     console.log(41, req.file);
@@ -148,14 +156,6 @@ router.post("/", function (req, res) {
     .catch(function (err) {
       res.json({ mess: "thất bại", err });
     });
-});
-
-// Home
-router.get("/:id", checkRequire, async (req, res) => {
-  const category = await Category.findOne({
-    _id: req.params.id,
-  });
-  res.render("user/filter/filter", { user: req.user, category });
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const checkRequire = require("../middleWare/checkRequire");
 // Home
 router.get("/home", checkRequire, async (req, res) => {
   const listcategory = await category.find();
-  const listproductCode = await productCode.find().limit(4);
+  const listproductCode = await productCode.find().limit(12);
   const countProduct = await productCode.count();
   res.render("user/home/home", {
     user: req.user,
@@ -28,13 +28,13 @@ router.get("/pagination", checkRequire, async (req, res) => {
     }
     const listproductCode = await productCode
       .find()
-      .skip((page - 1) * 4)
-      .limit(4);
+      .skip((page - 1) * 24)
+      .limit(24);
     const total = await productCode.count();
     res.render("user/home/pagination", {
       user: req.user,
       listproductCode,
-      listPage: Math.ceil(total / 4),
+      listPage: Math.ceil(total / 24),
       currentPage: page,
       total,
     });
@@ -126,7 +126,7 @@ router.get("/home", (req, res) => {
   res.render("user/home/home");
 });
 
-router.get("/register", checkUser, (req, res) => {
+router.get("/register", (req, res) => {
   res.render("user/signUp/signUp");
 });
 

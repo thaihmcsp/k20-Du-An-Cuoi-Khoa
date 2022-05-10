@@ -94,7 +94,7 @@
       <div class="product">
         <h3 class="title">Sản phẩm dành cho bạn</h3>
         <ul class="product-list">
-          <% listproductCode.forEach(product => { %>
+          <% listproductCode.reverse().forEach(product => { %>
           <li class="product-item col-2">
             <a class="product-link" href="">
               <img src="<%= product.thumbnail %>" alt="" />
@@ -109,7 +109,7 @@
           </li>
           <%}) %>
         </ul>
-        <% if (countProduct > 4) { %>
+        <% if (countProduct > 12) { %>
         <div class="product-view" onclick="btnView()">
           <button>Xem thêm</button>
         </div>

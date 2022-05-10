@@ -2,8 +2,11 @@ function btnView() {
   window.location.href = "/pagination";
 }
 
-const link = window.location.href;
+let link = window.location.href;
 let numPage = link.split("=")[1];
+if (link.split("/")[link.split("/").length - 1] == "pagination") {
+  numPage = 1;
+}
 $(`#page-${numPage}`).addClass("active");
 
 $.ajax({
@@ -29,7 +32,6 @@ $.ajax({
     $(".page-next").attr("style", "opacity : 1; ");
     $(".page-next").on("click", () => {
       numPage = numPage * 1 + 1;
-      console.log(32, numPage);
       $(`#page-${numPage}`).trigger("click");
     });
   }
@@ -52,16 +54,16 @@ async function btnPage(page, listPage) {
     //   $(".page-pre").attr("style", "opacity : 1; ");
     // }
     // Next
-    $(".page-next").on("click", () => {
-      numPage = numPage + 1;
-      $(`#page-${numPage}`).trigger("click");
-    });
-    if (numPage == listPage) {
-      $(".page-next").off("click");
-      $(".page-next").attr("style", "opacity : 0.5 ; pointer-events: none");
-    } else {
-      $(".page-next").attr("style", "opacity : 1; ");
-    }
+    // $(".page-next").on("click", () => {
+    //   numPage = numPage + 1;
+    //   $(`#page-${numPage}`).trigger("click");
+    // });
+    // if (numPage == listPage) {
+    //   $(".page-next").off("click");
+    //   $(".page-next").attr("style", "opacity : 0.5 ; pointer-events: none");
+    // } else {
+    //   $(".page-next").attr("style", "opacity : 1; ");
+    // }
     // const res = await $.ajax({
     //   type: "GET",
     //   url: `/codeProduct/pagination?page=${numPage}`,

@@ -1,9 +1,75 @@
 render();
 console.log(12232132321);
-// thêm dấu . vào giá sp
-for (let i = 0; i < $(".current-price").length; i++) {
-  const price = Number($(`.price${i}`).html());
-  $(`.price${i}`).html(Math.floor(price.toLocaleString("vi")).toFixed(3));
+$(".order-group").on("click", function () {
+  window.location.href = "/order";
+});
+async function render() {
+  try {
+    $(".toast").css("display", " none");
+    // thêm dấu . vào giá sp
+    for (let i = 0; i < $(".current-price").length; i++) {
+      const price = Number($(`.price${i}`).html());
+      $(`.price${i}`).html(Math.floor(price.toLocaleString("vi")).toFixed(3));
+    }
+    // check all tất cả checkbox
+    $(`.checkall`).on("click", function () {
+      console.log(9, "checkall", $(`.checkall`).prop("checked"));
+      for (let i = 0; i < $(".cart-item-left").length; i++) {
+        if ($(`.checkall`).prop("checked") === true) {
+          $(`.checkbox${i}`).prop("checked", true);
+          $(`.checkbox${i}`).attr("alt", true);
+        } else {
+          $(`.checkbox${i}`).prop("checked", false);
+          $(`.checkbox${i}`).attr("alt", false);
+        }
+      }
+    });
+    let number = 0;
+    for (let i = 0; i < $(".cart-item-left").length; i++) {
+      $(`.checkbox${i}`).on("click", function () {
+        console.log(10, `checkbox${i}`, $(`.checkbox${i}`).prop("checked"));
+      });
+
+      const link = $(`.number-sp${i}`).attr("value");
+      const max = $(`.number-sp${i}`).attr("max");
+      // console.log(26,link);
+      // console.log(27,max);
+      if (link == 1) {
+        $(`.down${i}`).attr("disabled", true);
+        $(`.down${i}`).addClass("disable");
+      }
+      if (link == max) {
+        $(`.up${i}`).attr("disabled", true);
+        // thêm lệnh tắt hover button
+        $(`.up${i}`).addClass("disable");
+      }
+      //lưu checked đã nhận
+      if ($(`.checkbox${i}`).attr("alt") === "true") {
+        $(`.checkbox${i}`).prop("checked", true);
+        number++;
+      } else {
+        $(`.checkbox${i}`).prop("checked", false);
+      }
+      // console.log(49,number);
+      for (let j = 0; j < $(".group-sp").length; j++) {
+        if ($(`.gr${j}`).attr("val") !== $(`.sp${j}-${i}`).attr("val")) {
+          $(`.sp${j}-${i}`).remove();
+          $(`.sp${j}-${i}`).css("display", " none");
+        }
+      }
+    }
+    //check checked của checkall
+    if ((number === $(".cart-item-left").length) & (number !== 0)) {
+      $(".checkall").attr("alt", true);
+    } else {
+      $(".checkall").attr("alt", false);
+    }
+    if ($(".checkall").attr("alt") === "true") {
+      $(".checkall").attr("checked", true);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // check all tất cả checkbox
@@ -145,6 +211,23 @@ async function testall() {
     console.log(55, res);
     $(`.checkall`).attr("alt", check);
     window.location.href = "/cart";
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function testall() {
+  try {
+    const check = $(`.checkall`).prop("checked");
+    console.log(99, check);
+    const res = await $.ajax({
+      url: "/cart/testall",
+      type: "PUT",
+      data: { select: check },
+    });
+    $(`.checkall`).attr("alt", check);
+    $(".container").html("");
+    $(".container").html(res);
+    render();
   } catch (error) {
     console.log(error);
   }

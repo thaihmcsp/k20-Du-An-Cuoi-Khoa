@@ -14,6 +14,8 @@ const OrderSchema = mongoose.Schema({
   total:	Number,
   address:	String,
   phone:	String,
+  name: String,
+  type: String,
   status:	{
     type: String,
     enum: ['pending', 'done', 'cancel'],

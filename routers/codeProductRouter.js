@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const ProductCode = require("../models/productCode");
+const Category = require("../models/category");
+const Product = require("../models/product");
 const path = require("path");
 var multer = require("multer");
+var { checkLogin, checkUser } = require("../checkLogin");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
@@ -54,6 +57,7 @@ router.post("/", function (req, res) {
 });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
+  console.log(21, req.file.path);
   try {
     const create = await ProductCode.create({
       code: req.body.code,
@@ -71,10 +75,33 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     const listdelete = await ProductCode.deleteOne({ _id: req.params.id });
-    res.json(listdelete);
+    const deletedata = await Product.deleteOne({ productCode: req.params.id });
+    const listproductCode = await ProductCode.find()
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
+    res.render("admin/dataproductCode", { listproductCode });
   } catch (error) {
     res.status(500).json({ mess: "Loi Server" });
   }
+});
+
+router.get("/get", checkLogin, async function (req, res) {
+  const listproductCode = await ProductCode.find()
+    .skip((req.query.page - 1) * req.query.limit)
+    .limit(req.query.limit);
+  res.render("admin/dataproductCode", { listproductCode });
+});
+
+router.get("/", async function (req, res) {
+  const listproductCode = await ProductCode.find().limit(12);
+  const totala = await ProductCode.count();
+  const total = Math.ceil(totala / 12);
+  const listategory = await Category.find();
+  res.render("admin/productCode", {
+    listproductCode,
+    listategory,
+    total: total,
+  });
 });
 
 router.get("/:id", async function (req, res) {
@@ -86,9 +113,9 @@ router.get("/:id", async function (req, res) {
   }
 });
 
-router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
+router.put("/:idupdate", upload.single("chien"), async function (req, res) {
   try {
-    if (req.file.path == "") {
+    if (req.file == undefined) {
       const create = await ProductCode.updateOne(
         { _id: req.params.idupdate },
         {
@@ -98,7 +125,10 @@ router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
           price: req.body.price,
         }
       );
-      res.json(create);
+      const listproductCode = await ProductCode.find()
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/dataproductCode", { listproductCode });
     } else {
       const create = await ProductCode.updateOne(
         { _id: req.params.idupdate },
@@ -110,7 +140,10 @@ router.put("/:idupdate", upload.single("thumbnail"), async function (req, res) {
           price: req.body.price,
         }
       );
-      res.json(create);
+      const listproductCode = await ProductCode.find()
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/dataproductCode", { listproductCode });
     }
   } catch (error) {
     res.status(500).json({ mess: "Loi Server" });

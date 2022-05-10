@@ -3,7 +3,10 @@ const path = require("path");
 const checkRequire = require("../middleWare/checkRequire");
 const UserModel = require("../models/userModel");
 const Category = require("../models/category");
+const ProductCode = require("../models/productCode");
+var { checkLogin, checkUser } = require("../checkLogin");
 var multer = require("multer");
+const { log } = require("console");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
@@ -18,31 +21,30 @@ var storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// Home
-router.get("/:id", checkRequire, async (req, res) => {
-  const category = await Category.findOne({
-    _id: req.params.id,
-  });
-  res.render("user/filter/filter", { user: req.user, category });
-});
-
 // Admin
 router.get("/get", async function (req, res) {
+  console.log(345);
   const listcategory = await Category.find()
     .skip((req.query.page - 1) * req.query.limit)
     .limit(req.query.limit);
   res.render("admin/datacategory", { listcategory });
 });
 
-router.get("/", async function (req, res) {
-  const listcategory = await Category.find();
-  // .limit(5)
-  const total = await Category.count();
-  res.render("admin/category", { listcategory, total: total / 5 });
+router.get("/", checkLogin, async function (req, res) {
+  try {
+    const listcategory = await Category.find().limit(10);
+    const totala = await Category.count();
+    const total = Math.ceil(totala / 10);
+    console.log(totala);
+    res.render("admin/category", { listcategory, total: total });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
+    console.log(41, req.file);
     const check = await Category.find({ name: req.body.name });
     if (check == "") {
       const data = await Category.create({
@@ -61,8 +63,44 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     const data = await Category.deleteOne({ _id: req.params.id });
-    const listcategory = await Category.find();
+    const datacategory = await ProductCode.deleteOne({
+      categoryID: req.params.id,
+    });
+    const listcategory = await Category.find()
+      .skip((req.query.page - 1) * req.query.limit)
+      .limit(req.query.limit);
     res.render("admin/datacategory", { listcategory });
+  } catch (error) {
+    res.status(500).json({ mess: "Lỗi server" });
+  }
+});
+
+router.put("/:id", upload.single("thumbnail"), async function (req, res) {
+  try {
+    if (req.file === undefined) {
+      const update = await Category.updateOne(
+        { _id: req.params.id },
+        {
+          name: req.body.name,
+        }
+      );
+      const listcategory = await Category.find()
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/datacategory", { listcategory });
+    } else {
+      const update = await Category.updateOne(
+        { _id: req.params.id },
+        {
+          name: req.body.name,
+          thumbnail: req.file.path,
+        }
+      );
+      const listcategory = await Category.find()
+        .skip((req.query.page - 1) * req.query.limit)
+        .limit(req.query.limit);
+      res.render("admin/datacategory", { listcategory });
+    }
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });
   }
@@ -110,6 +148,14 @@ router.post("/", function (req, res) {
     .catch(function (err) {
       res.json({ mess: "thất bại", err });
     });
+});
+
+// Home
+router.get("/:id", checkRequire, async (req, res) => {
+  const category = await Category.findOne({
+    _id: req.params.id,
+  });
+  res.render("user/filter/filter", { user: req.user, category });
 });
 
 module.exports = router;

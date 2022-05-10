@@ -52,6 +52,9 @@ router.get("/login", checkUser, (req, res) => {
   res.render("user/signIn/signIn", { user: req.user });
 });
 
+router.get("/admin/login", checkUser, (req, res) => {
+  res.render("admin/signIn/signIn", { user: req.user });
+});
 // Profile
 router.get("/profile/info", checkLogin, (req, res) => {
   res.render("user/profile/info", { user: req.user });
@@ -182,4 +185,5 @@ router.get("/search", async function (req, res) {
 router.get("/cart", checkUser, (req, res) => {
   res.render("user/cart/cart");
 });
+
 module.exports = router;

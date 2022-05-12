@@ -30,7 +30,8 @@ router.get("/:id",checkLogin, async function (req, res) {
   const listproduct = await Product.find({ productCode: req.params.id }).limit(
     5
   );
-  const totala = await Product.count();
+  const a = await (await Product.find({ productCode: req.params.id }))
+  const totala = a.length
   const total = Math.ceil(totala / 5);
   res.render("admin/listproduct", { listproduct, total: total });
 });

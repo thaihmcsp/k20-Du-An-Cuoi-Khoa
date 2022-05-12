@@ -19,5 +19,11 @@ const UserModel = mongoose.model('user', UserSchema)
 
 module.exports = UserModel
 
+// UserModel.create({
+//   email: 'admin',
+//   password: 'admin',
+//   role: 'admin'
+// }).then(data=>{console.log(data);})
+
 
 

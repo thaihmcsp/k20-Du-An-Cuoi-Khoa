@@ -24,3 +24,17 @@ const OrderModel = mongoose.model('order', OrderSchema)
 
 module.exports = OrderModel
 
+// OrderModel.create({
+//   UserID:	'dfaddfsd',
+//   productList:	[
+//     {
+//       productID: 'sdfsdfsd',
+//       quantity: 1965
+//     }
+//   ],
+//   total:	5857,
+//   address:	'sdfsd',
+//   phone:	'dfasdsdsda',
+//   status:	'done'})
+//   .then(data=>{console.log(data);})
+

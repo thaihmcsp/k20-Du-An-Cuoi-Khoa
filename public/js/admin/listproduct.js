@@ -64,29 +64,52 @@ function back(total) {
 //   }
 // });
 
-function importData() {
-  document.getElementById("listImg").click();
+function importimg() {
+  document.getElementById("clickimg").click();
 }
 
-var fileToRead = document.getElementById("listImg");
+var fileToRea = document.getElementById("clickimg");
 
-fileToRead.addEventListener(
+fileToRea.addEventListener(
   "change",
-  function () {
-    console.log(76);
-    var files = fileToRead.files;
-    console.log(78,files);
+  async function () {
+    var files = fileToRea.files;
     if (files.length) {
-      console.log(80);
-      var fr = new FileReader();
-      fr.onload = function () {
-        document.getElementById("chien-1").src = fr.result;
-      };
-      fr.readAsDataURL(files[0]);
+      // console.log(78, files);
+      // var fr = new FileReader();
+      // for (var i = 0; i < files.length; i++) {
+      //   fr.onload = function () {
+      //     let img = `<img src='${fr.result}' >`;
+      //     $(".chien").append(img);
+      //   };
+      //   fr.readAsDataURL(files[i]);
+      // }
+      const test = await readAsDataURL(files);
+      console.log(88, test);
+      for (var i = 0; i < test.length; i++) {
+        let img = `<img src='${test[i]}' >`;
+        $(".luong").append(img);
+      }
     }
   },
   false
 );
+
+function readAsDataURL(files) {
+  // target => <input type="file" id="file">
+  var filesArray = Array.prototype.slice.call(files);
+  return Promise.all(filesArray.map(fileToDataURL));
+}
+
+function fileToDataURL(file) {
+  var reader = new FileReader();
+  return new Promise(function (resolve, reject) {
+    reader.onload = function (event) {
+      resolve(event.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 function importa() {
   document.getElementById("listimgid").click();
@@ -101,10 +124,9 @@ fileToRead.addEventListener(
     if (files.length) {
       var fr = new FileReader();
       fr.onload = function () {
-        document.getElementsById("anh-chien1").src = fr.result;
+        document.getElementsByClassName("changeimg").src = fr.result;
       };
       fr.readAsDataURL(files[0]);
-      console.log(105,files[0]);
     }
   },
   false
@@ -181,7 +203,7 @@ async function update() {
       processData: false,
       contentType: false,
     });
-    console.log(161, res);
+    // console.log(161, res);
     $("#Close").trigger("click");
     $(".button").html("");
     $(".button").html(res);

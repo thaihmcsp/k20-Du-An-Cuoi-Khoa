@@ -7,6 +7,7 @@ var { checkLogin, checkUser } = require("../checkLogin");
 router.post("/finduser", async function (req, res) {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
+    // console.log(10,user);
     if (user) {
       const password = await UserModel.findOne({ password: req.body.password });
       if (password) {

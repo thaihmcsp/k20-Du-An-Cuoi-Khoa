@@ -1,7 +1,8 @@
 <div class="the-product">
   <% listproduct.map(function(value){%>
   <div class="the-aaa">
-    <div class="end">
+    <div class="product">
+      <div class="end">
         <div>
             <button
               type="button"
@@ -30,10 +31,12 @@
         <img src="/<%= item %>" alt="" class="imgthumbnail" />
         <% } %>
       </div>
-      <div><span class="khac-mau">Color:</span> <%= value.color %></div>
-      <div><span class="khac-mau">Size:</span> <%= value.size %></div>
-      <div><span class="khac-mau">Quantity:</span> <%= value.quantity %> VNĐ</div>
-      
+      <div class="bottom">
+        <div><span class="khac-mau">Color:</span> <%= value.color %></div>
+        <div><span class="khac-mau">Size:</span> <%= value.size %></div>
+        <div><span class="khac-mau">Quantity:</span> <%= value.quantity %> VNĐ</div>
+      </div>
+    </div>
   </div>
   <%}) %>
 </div>

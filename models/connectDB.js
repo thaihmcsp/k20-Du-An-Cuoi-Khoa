@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://chien0111:chien0111@cluster0.bsh9g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://sang1409:sang1234@cluster0.0kwab.mongodb.net/sang1?retryWrites=true&w=majority');
 
 module.exports = mongoose

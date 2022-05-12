@@ -31,6 +31,7 @@ router.get("/",checkLogin, async function (req, res) {
     const listcategory = await Category.find().limit(10);
     const totala = await Category.count();
     const total = Math.ceil(totala / 10);
+    console.log(total);
     res.render("admin/category", { listcategory, total: total });
   } catch (error) {
     console.log(error);

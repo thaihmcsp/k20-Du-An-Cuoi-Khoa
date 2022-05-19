@@ -24,7 +24,7 @@ const upload = multer({ storage: storage });
 
 router.get("/detail/:id", async function (req, res) {
   try {
-    console.log(7,req.params.id);
+    
     const ListCode = await ProductCodeModel.findOne({_id : req.params.id})
     const ListData = await ProductModel.find({productCode : req.params.id})
     let color = []

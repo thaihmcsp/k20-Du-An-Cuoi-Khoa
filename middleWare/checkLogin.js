@@ -6,6 +6,7 @@ async function checkUser(req, res, next) {
       const account = await userModel.findOne({
         token: req.cookies.user,
       });
+      req.id = account._id
       if (account) {
         res.redirect("/home");
       } else {

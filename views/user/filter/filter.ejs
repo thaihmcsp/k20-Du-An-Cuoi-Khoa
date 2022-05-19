@@ -23,6 +23,7 @@
   </head>
   <body>
     <div class="z111111">
+      <%  %>
       <%- include('../../component/header') %>
     </div>
     
@@ -49,40 +50,43 @@
               Tìm theo giá
             </button>
           </div>
+        
+
           <div class="_9xWFp"> <b>Mầu sắc</b> </div>
           <div class="chieudoc">
             <div class="">
-              <span class=""><input type="checkbox" /> </span><span>red</span>
+              <%=  %>
+              <span class="" ><input type="checkbox" /> </span><span>red</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" /> </span><span>blue</span>
+              <span class=""><input type="checkbox" onchange="colorSS('<%= url %>','blue')"/> </span><span>blue</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" /> </span><span>white</span>
+              <span class=""><input type="checkbox" onchange="colorSS('<%= url %>','white')"/> </span><span>white</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" /> </span><span>mixcolor</span>
+              <span class=""><input type="checkbox" onchange="colorSS('<%= url %>','mixcolor')"/> </span><span>mixcolor</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" /> </span><span>black</span>
+              <span class=""><input type="checkbox" onchange="colorSS('<%= url %>','black')"/> </span><span>black</span>
             </div>
           </div>
           <div class="_9xWFp"><b>Size</b></div>
           <div class="chieudoc">
             <div class="">
-              <span class=""><input type="checkbox" class="" /></span
+              <span class=""><input type="checkbox" class="" onchange="sizeSS()"/></span
             ><span>S</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" class="" /></span
+              <span class=""><input type="checkbox" class="" onchange="sizeSS('<%= url %>','M')"/></span
             ><span>M</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" class="" /></span
+              <span class=""><input type="checkbox" class="" onchange="sizeSS('<%= url %>','L')"/></span
             ><span>L</span>
             </div>
             <div class="">
-              <span class=""><input type="checkbox" class="" /></span
+              <span class=""><input type="checkbox" class="" onchange="sizeSS('<%= url %>','XL')"/></span
             ><span>XL</span>
             </div>
             
@@ -96,48 +100,95 @@
             
             <% if(dktimkiem.color){%>
               <% listproduct.map(function(value,index){ %>
-                
-
-
-                  <%= value %>
-                  
-
-                
-               
+                  <% list.map(function(value11,index11){ %>
+                    <% if(value11._id === value.productCode){%>
+                    <div class="khoi0">
+                      <div class="khoi1">
+                        <div class="khoi11">
+                          <a href="product/detail/<%= value11._id %>">
+                            <div class="xephang123">
+                              <div class="">
+                                <img src="<%= value11.thumbnail %>" alt="" />
+                              </div>
+                              <div class="chubinhthuong">tên sản phẩm: <%= value11.name %></div>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="khoi12">
+                          <div class="">sản phẩm có giá là <%= value11.price %></div>
+                        </div>
+                      </div>
+                    </div>
+                    <% }%>
+                    <% }) %>
                 <% })%>
               <% }%>
-            
             <% list123.map(function(value,index){ %> <% total =
             index %> <% }) %> <% if(total>0){%> Có <%= total+1 %> kết quả tìm
             được theo " <%= ten %> "<% } else{%> Không có kết quả tìm được theo
             : <%= ten %> <% }%>
-
-
-
           </div>
           <div class="noidungbenphai">
             <div class=""></div>
+            <% let tknangcao =[] %> 
 
-            <% list.map(function(value,index){ %>
-            <div class="khoi0">
-              <div class="khoi1">
-                <div class="khoi11">
-                  <a href="product/detail/<%= value._id %>">
-                    <div class="xephang123">
-                      <div class="">
-                        <img src="<%= value.thumbnail %>" alt="" />
+            <% if(dktimkiem.color){%>
+              <% listproduct.map(function(value,index){ %>
+                <% if(value.color == dktimkiem.color ){%>
+                  <% tknangcao.push(value.productCode) %> 
+                    <% }%>
+              <% }) %>
+            <% }else{%> 
+              <% list.map(function(value,index){ %>
+              <div class="khoi0">
+                <div class="khoi1">
+                  <div class="khoi11">
+                    <a href="product/detail/<%= value._id %>">
+                      <div class="xephang123">
+                        <div class="">
+                          <img src="<%= value.thumbnail %>" alt="" />
+                        </div>
+                        <div class="chubinhthuong">tên sản phẩm: <%= value.name %></div>
                       </div>
-                      <div class="chubinhthuong">tên sản phẩm: <%= value.name %></div>
-                    </div>
-                  </a>
-                </div>
-                <div class="khoi12">
-                  <div class="">sản phẩm có giá là <%= value.price %></div>
+                    </a>
+                  </div>
+                  <div class="khoi12">
+                    <div class="">sản phẩm có giá là <%= value.price %></div>
+                  </div>
                 </div>
               </div>
-            </div>
+              <% })%>
+              <% }%>
+                    <% let uniquetknangcao = [...new Set(tknangcao)];%>x
+            <% for (let i = 0; i < uniquetknangcao.length; i++) {%>
+              <% list.map(function(value,index){ %>
+                <%  if(uniquetknangcao[i] == value._id){%>
+                            <div class="khoi0">
+                              <div class="khoi1">
+                                <div class="khoi11">
+                                  <a href="product/detail/<%= value._id %>">
+                                    <div class="xephang123">
+                                      <div class="">
+                                        <img src="<%= value.thumbnail %>" alt="" />
+                                      </div>
+                                      <div class="chubinhthuong">tên sản phẩm: <%= value.name %></div>
+                                    </div>
+                                  </a>
+                                </div>
+                                <div class="khoi12">
+                                  <div class="">sản phẩm có giá là <%= value.price %></div>
+                                </div>
+                              </div>
+                            </div>
+                          
+                          <% }%>
 
-            <% }) %>
+                      <% })%>
+                      <% }%>
+
+
+
+              
           </div>
 
           <!-- phân trang -->

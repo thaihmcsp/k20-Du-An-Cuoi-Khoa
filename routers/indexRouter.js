@@ -4,19 +4,39 @@ const userModel = require("../models/userModel");
 const category = require("../models/category");
 const productCode = require("../models/productCode");
 const productModel = require("../models/product");
+const orderModel = require('../models/orderModel')
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkRequire = require("../middleWare/checkRequire");
 
 // Home
 router.get("/home", checkRequire, async (req, res) => {
   const listcategory = await category.find();
-  const listproductCode = await productCode.find().limit(12);
+  let listproductCode = (await productCode.find().sort({createdAt : 1}).limit(12));
+  const listProduct = await productModel.find();
   const countProduct = await productCode.count();
+  const listCode = listProduct.filter(function(product, index){
+    return index === listProduct.findIndex((value)=>{
+      return value.productCode === product.productCode
+    })
+  })
+
+  listproductCode = listproductCode.map((product, i) => { 
+    for(let j = 0;j<listCode.length;j++){
+      if(listCode[j].productCode == product._id){
+        const newProduct = {...product._doc}
+        newProduct.hasData = true
+        return newProduct
+      }
+    }
+    return product
+  })
+
   res.render("user/home/home", {
     user: req.user,
     listcategory,
-    listproductCode,
+    listproductCode : listproductCode.reverse(),
     countProduct,
+    listCode
   });
 });
 
@@ -26,14 +46,33 @@ router.get("/pagination", checkRequire, async (req, res) => {
     if (req.query.page) {
       page = req.query.page;
     }
-    const listproductCode = await productCode
+    let listproductCode = await productCode
       .find()
+      .sort({createdAt : 1})
       .skip((page - 1) * 24)
       .limit(24);
     const total = await productCode.count();
+    const listProduct = await productModel.find();
+    const listCode = listProduct.filter(function(product, index){
+      return index === listProduct.findIndex((value)=>{
+        return value.productCode === product.productCode
+      })
+    })
+  
+    listproductCode = listproductCode.map((product, i) => { 
+      for(let j = 0;j<listCode.length;j++){
+        if(listCode[j].productCode == product._id){
+          const newProduct = {...product._doc}
+          newProduct.hasData = true
+          return newProduct
+        }
+      }
+      return product
+    })
+
     res.render("user/home/pagination", {
       user: req.user,
-      listproductCode,
+      listproductCode : listproductCode,
       listPage: Math.ceil(total / 24),
       currentPage: page,
       total,
@@ -48,21 +87,52 @@ router.get("/register", checkUser, (req, res) => {
   res.render("user/signUp/signUp", { user: req.user });
 });
 
-router.get("/login", checkUser, (req, res) => {
+router.get("/login", (req, res) => {
   res.render("user/signIn/signIn", { user: req.user });
 });
 
 router.get("/admin/login", checkUser, (req, res) => {
   res.render("admin/signIn/signIn", { user: req.user });
 });
+
 // Profile
 router.get("/profile/info", checkLogin, (req, res) => {
   res.render("user/profile/info", { user: req.user });
 });
 
-router.get("/profile/order", checkLogin, (req, res) => {
-  res.render("user/profile/order", { user: req.user });
+router.get("/profile/order", checkLogin, async (req, res) => {
+  const listOrder = await orderModel.find({
+    UserID : req.user._id
+  })
+  res.render("user/profile/myOrder", { user: req.user , listOrder : listOrder.reverse() });
 });
+
+router.get('/profile/order/:id' ,checkLogin, async (req,res) => {
+  try {
+    let detailOrder = await orderModel.findOne({
+      _id : req.params.id,
+      UserID : req.user._id,
+    }).populate({path : 'productList.productID', populate : {path : 'productCode'}})
+    console.log(detailOrder.productList[0]);  
+      // let hour = Math.round( (new Date() - detailOrder.createdAt ) / 3600000)
+      // let newOrder = {...detailOrder._doc}
+      // if( hour < 24){
+      //   newOrder.time = `${hour} giờ`
+      // }else if((hour/24/30) < 1){
+      //   newOrder.time = `${Math.round(hour/24)} ngày`
+      // }else{
+      //   newOrder.time = `${Math.round(hour/24/30)} tháng`
+      // }
+    // console.log(112, {...detailOrder});
+    res.render('user/profile/detailOrder', {
+      user : req.user,
+      detailOrder
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({mess : 'That bai',error })
+  }
+})
 
 router.get("/profile/info/edit", checkLogin, (req, res) => {
   res.render("user/profile/edit", { user: req.user });
@@ -104,8 +174,10 @@ router.post("/search/?size", function (req, res) {
     });
 });
 
-router.get("/cart", checkUser, (req, res) => {
-  res.render("user/cart/cart");
+router.get("/cart", checkLogin, (req, res) => {
+  res.render("user/cart/cart", {
+    user : req.user,
+  });
 });
 
 router.get("/order", checkUser, (req, res) => {
@@ -182,8 +254,8 @@ router.get("/search", async function (req, res) {
   }
 });
 
-router.get("/cart", checkUser, (req, res) => {
-  res.render("user/cart/cart");
-});
+// router.get("/cart", checkUser, (req, res) => {
+//   res.render("user/cart/cart");
+// });
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const fs = require('fs')
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
@@ -87,6 +88,11 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
     });
     if (user) {
       if (req.file) {
+        fs.unlink(path.join(__dirname, '../' + user.avatar) ,(err) => {
+          if (err) {
+            console.log(err);
+          }
+        })
         const avatar = await userModel.updateOne(
           {
             token: token,

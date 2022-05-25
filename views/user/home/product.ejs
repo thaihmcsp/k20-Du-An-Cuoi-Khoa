@@ -1,6 +1,6 @@
 <% listproductCode.reverse().forEach(product => { %>
 <li class="product-item col-2">
-  <a class="product-link" href="">
+  <a class="product-link" <%= product.hasData ? 'href=/product/detail/' + product._id : null  %>>
     <img src="<%= product.thumbnail %>" alt="" />
     <div class="product-content">
       <p class="product-name"><%= product.name %></p>

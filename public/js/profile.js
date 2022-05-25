@@ -1,3 +1,11 @@
+let url = window.location.href
+
+if (url.includes('info')) {
+  $('#info').addClass('active')
+} else {
+  $('#order').addClass('active')
+}
+
 // Change Password
 function checkEmpty(data) {
   data.forEach((item) => {
@@ -137,3 +145,17 @@ fileToRead.addEventListener(
   },
   false
 );
+
+//* Cancel Order
+async function cancelOrder() {
+  let orderID = url.split('/')[url.split('/').length - 1]
+  try {
+    await $.ajax({
+      type : 'PUT',
+      url : '/order/' + orderID
+    })
+    window.location.reload()
+  } catch (error) {
+    console.log(error);
+  }
+}

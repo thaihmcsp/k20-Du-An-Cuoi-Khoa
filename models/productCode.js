@@ -8,7 +8,7 @@ const ProductCodeSchema = mongoose.Schema(
     categoryID: { type: String, ref: "category" },
     price: Number,
   },
-  { collection: "productCode" }
+  { collection: "productCode",timestamps: true }
 );
 
 const ProductCodeModel = mongoose.model("productCode", ProductCodeSchema);

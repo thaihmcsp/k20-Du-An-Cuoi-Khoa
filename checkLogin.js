@@ -23,6 +23,7 @@ function checkLogin (req,res,next){
 function checkUser (req,res,next){
   // console.log(24,req.cookies.user);
   if(req.cookies.user){
+    // console.log(26);
     const id = jwt.verify(req.cookies.user, 'thai').id
     UserModel.findOne({_id: id})
     .then(function(data){

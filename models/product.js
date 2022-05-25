@@ -3,13 +3,8 @@ const mongoose = require("./connectDB");
 const ProductSchema = mongoose.Schema(
   {
     listImg: [{ type: String }],
-    color: [
-      {
-        name: String,
-        colorImg: String,
-      },
-    ],
-    size: [{ type: String }],
+    color: String,
+    size: String,
     productCode: { ref: "productCode", type: String },
     quantity: Number,
   },

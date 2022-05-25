@@ -7,27 +7,30 @@ async function checkUser(req, res, next) {
         token: req.cookies.user,
       });
       if (account) {
-        res.redirect("/home");
-      } else {
+        req.id = account._id;
         next();
+      } else {
+        res.redirect("/login");
       }
     } else {
-      next();
+      res.redirect("/login");
     }
   } catch (error) {
-    res.status(500).json(error);
+    res.redirect("/login");
   }
 }
 
 async function checkLogin(req, res, next) {
   try {
     if (req.cookies.user) {
+      console.log(26);
       const account = await userModel.findOne({
         token: req.cookies.user,
       });
       if (!account) {
         res.redirect("/login");
       } else {
+        console.log(32);
         req.id = account._id;
         req.user = account;
         next();

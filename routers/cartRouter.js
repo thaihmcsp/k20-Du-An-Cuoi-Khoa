@@ -2,13 +2,13 @@ const router = require("express").Router();
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
-const { checkUser } = require("../middleWare/checkLogin");
+const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
-router.get("/", checkUser, async (req, res) => {
+async function renderCart(UserID) {
   try {
-    console.log(9, req.id);
+    console.log(9, UserID);
     let sumprice = 0;
     let sumCart = 0;
     let sumarrorder = 0;
@@ -16,9 +16,8 @@ router.get("/", checkUser, async (req, res) => {
     const arrprice = [];
     const arrproduct = [];
     const arrproductcode = [];
-    const data = await CartModel.find({ UserID: req.id });
-    console.log(17, data);
-
+    const arrCode = [];
+    const data = await CartModel.find({ UserID: UserID });
     for (let k = 0; k < data.length; k++) {
       const order = data[k].productList[0].select;
       if (order === true) {
@@ -53,6 +52,7 @@ router.get("/", checkUser, async (req, res) => {
       ); // giá * số lượng order
       sumarrorder += arrorder[m].productList[0].quantity; // số lượng sản phẩm order
     }
+
     for (let u = 0; u < arrprice.length; u++) {
       sumprice += arrprice[u];
     }
@@ -63,7 +63,9 @@ router.get("/", checkUser, async (req, res) => {
     // console.log(47,sumprice);
     // console.log(48,arrproductcode);
     // console.log(49,sumCart);
-    res.render("user/cart/cart", {
+    console.log(50, arrCode);
+
+    return {
       data: data,
       arrorder: arrorder,
       arrprice: arrprice,
@@ -72,7 +74,22 @@ router.get("/", checkUser, async (req, res) => {
       sumCart,
       arrproduct: arrproduct,
       arrproductcode: arrproductcode,
-    });
+      arrCode: arrCode,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+router.get("/",checkLogin, checkUser, async (req, res) => {
+  try {
+    const dataObject = await renderCart(req.id);
+    for (var j = 0; j < dataObject.arrCode.length; j++) {
+      for (var i = 0; i < dataObject.data.length; i++) {
+        console.log(90, dataObject.arrproductcode[i].price);
+      }
+    }
+    res.render("user/cart/cart", {...dataObject, user: req.user});
   } catch (error) {
     console.log(error);
   }

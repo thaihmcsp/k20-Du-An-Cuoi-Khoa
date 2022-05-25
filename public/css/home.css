@@ -101,6 +101,7 @@ main {
   background-color: #fff;
   display: block;
   z-index: 1;
+  cursor: pointer;
 }
 
 .product-link:hover {
@@ -132,7 +133,7 @@ main {
 
 .product-price {
   color: var(--btn-color);
-  font-size: 18px;
+  font-size: 17px;
   position: absolute;
   bottom: 18px;
   margin: 0;

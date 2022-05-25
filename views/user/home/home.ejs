@@ -94,19 +94,20 @@
       <div class="product">
         <h3 class="title">Sản phẩm dành cho bạn</h3>
         <ul class="product-list">
-          <% listproductCode.reverse().forEach(product => { %>
-          <li class="product-item col-2">
-            <a class="product-link" href="">
-              <img src="<%= product.thumbnail %>" alt="" />
-              <div class="product-content">
-                <p class="product-name"><%= product.name %></p>
-                <p class="product-price">
-                  <span><%= product.price.toLocaleString() %></span>
-                  <span>₫</span>
-                </p>
-              </div>
-            </a>
-          </li>
+          <% listproductCode.forEach((product, i) => { %>
+              <li class="product-item col-2">
+                <a class="product-link" <%= product.hasData ? 'href=/product/detail/' + product._id : null  %> >
+                    <img src="<%= product.thumbnail %>" alt="" />
+                  <div class="product-content">
+                    <p class="product-name"><%= product.name %> <%= product.hasData ?  '' : '(Hết hàng)' %>  </p>
+                    <p class="product-price">
+                      <span><%= product.price.toLocaleString() %> 
+                      </span>
+                      <span>₫</span>
+                    </p>
+                  </div>
+                </a>
+              </li>  
           <%}) %>
         </ul>
         <% if (countProduct > 12) { %>

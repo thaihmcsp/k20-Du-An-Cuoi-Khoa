@@ -14,6 +14,7 @@ body {
 .content-list {
   flex: 1;
   list-style: none;
+  padding: 0;
 }
 
 .content-list p {
@@ -271,4 +272,276 @@ body {
 
 .btn-change:hover {
   background-color: var(--hover-btn-color);
+}
+
+/* My Order */
+.content-order {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.content-order-link {
+  padding: 12px;
+  background-color: rgb(250, 222, 181);
+  border-radius: 10px;
+  position: relative;
+  transition: ease-in-out 0.25s;
+  display: block;
+  text-decoration: none;
+  color: var(--font-color);
+  height: 100%;
+}
+
+.content-order-item {
+  margin-bottom: 30px;
+  height: 200px;
+  padding: 0 15px;
+  width: 33.33333%;
+}
+
+.content-order-link:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 12px;
+  color: var(--font-color);
+}
+
+.content-order-item p {
+  margin-bottom: 0;
+}
+
+.content-order-item-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.content-order-item-title h5 {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+
+.content-order-item-status {
+  display: flex;
+  align-items: center;
+}
+
+.content-order-item-status img {
+  width: 25px;
+  height: 25px;
+  margin-left: 4px;
+}
+
+.content-order-item-status p {
+  font-size: 15px;
+  margin-right: 4px;
+}
+
+.content-order-item-address {
+  padding: 3px 6px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 450;
+  width: fit-content;
+  margin-top: 10px;
+}
+
+.content-order-item-address i {
+  margin-right: 6px;
+}
+
+.home {
+  border: 1px solid var(--error-color);
+  color: var(--error-color);
+}
+
+.working {
+  border: 1px solid var(--profile-color);
+  color: var(--profile-color);
+}
+
+.content-order-item-qty {
+  position: absolute;
+  width: 100%;
+  bottom: 12px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.content-order-item-qty p:first-child {
+  color: red;
+  font-weight: 600;
+}
+
+/* Order Detail */
+.content-order-detail {
+  background-color: white;
+  padding: 16px 24px;
+  display: flex;
+  margin-top: 10px;
+}
+
+.content-order-detail-img {
+  flex: 0.8;
+}
+
+.content-order-detail-img img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+.content-order-detail-name {
+  flex: 3;
+  font-size: 16px;
+  line-height: 1.2rem;
+  overflow: hidden;
+  color: #212121;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  height: fit-content;
+}
+
+.content-order-detail-quantity,
+.content-order-detail-price {
+  flex: 1;
+  text-align: center;
+}
+
+.content-order-info {
+  display: flex;
+  margin: 16px -8px 0;
+}
+
+.content-order-info-address,
+.content-order-info-total {
+  flex: 1;
+  background-color: white;
+  margin: 0 8px;
+}
+
+.content-order-info-address {
+  padding: 16px 12px;
+}
+
+.content-order-info-address h5 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.content-order-info-address p {
+  line-height: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.content-order-info-home,
+.content-order-info-working {
+  font-size: 15px;
+  padding: 2px 4px;
+}
+
+.content-order-info-home {
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+}
+
+.content-order-info-working {
+  color: var(--link-color);
+  border: 1px solid var(--link-color);
+}
+
+.content-order-info-total {
+  padding: 5px 10px;
+}
+
+.content-order-info-total h3 {
+  font-size: 18px;
+}
+
+.content-order-info-total p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.cancel-order {
+  text-align: right;
+  margin: 8px 0;
+}
+
+.cancel-order button {
+  border: none;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  color: white;
+  background-color: var(--profile-color);
+  cursor: pointer;
+  transition: ease-in-out 0.25s;
+}
+
+.cancel-order button:hover {
+  background-color: var(--profile-hover-color);
+}
+
+.cancel-order p {
+  font-size: 14px;
+}
+
+/* Modal Confirm */
+@keyframes showModal {
+  from { 
+    opacity: 0;
+    transform: scale(0.3);
+  } to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  animation: showModal linear 0.2s;
+}
+
+.modal-header {
+  border: none;
+  padding: 10px 16px;
+}
+
+.modal-body {
+  padding: 10px 16px;
+}
+
+.modal-footer {
+  border: none;
+  padding: 8px 12px;
+} 
+
+.btn-primary {
+  background-color: var(--btn-color);
+  border: none;
+  transition: ease-in-out .25s;
+}
+
+.btn-primary:hover {
+  background-color: var(--hover-btn-color);
+}
+
+.btn-secondary {
+  background-color: var(--font-heading-color);
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--font-heading-color);
 }

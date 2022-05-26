@@ -47,7 +47,14 @@ router.get("/:id", checkRequire, async (req, res) => {
   const category = await Category.findOne({
     _id: req.params.id,
   });
-  res.render("user/filter/filter", { user: req.user, category });
+  res.render("user/filter/filter", {
+    user: req.user, 
+    category , 
+    pagenow: req.query.page,
+    ten: req.query.search,
+    min: req.query.pricemin,
+    max: req.query.pricemax,
+  });
 });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {

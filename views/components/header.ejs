@@ -179,8 +179,8 @@
     </div>
     <div class="header-search">
       <div class="header-search-input">
-        <input type="text" name="" placeholder="Tìm kiếm trên Lazada" />
-        <button><i class="fas fa-search"></i></button>
+        <input type="text" name="" onkeyup="suggest()" id="search" placeholder="Tìm kiếm trên Lazada" />
+        <button onclick="search()"><i class="fas fa-search"></i></button>
       </div>
       <div class="header-search-cart">
         <a href="/cart"><img src="/public/icon/cart-logo.png" alt="" /></a>
@@ -198,6 +198,7 @@
 </header>
 <div class="height-empty"></div>
 
+<script src="/public/js/search.js"></script>
 <script>
   async function logout() {
     try {

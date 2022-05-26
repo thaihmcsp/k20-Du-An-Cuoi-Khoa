@@ -224,4 +224,24 @@ router.put('/:id' ,async (req,res) => {
   }
 })
 
+// router.get("/dataorder", checkUser, async (req, res) => {
+//   try {
+//     const dataOrder = [];
+//     const data = await OrderModel.find();
+//     console.log(230,data);
+    
+//     for (let i = 0; i < data.length; i++) {
+//       // console.log(232,data[i].productList.length);
+//       if (data[i].productList.length) {
+//         dataOrder.push(data[i])
+//       }
+//     }
+//     console.log(239,dataOrder);
+//     // res.json(dataOrder);
+//     res.render("admin/dataorder", {listdata : dataOrder});
+//   } catch (error) {
+//     console.log(243,error);
+//   }
+// });
+
 module.exports = router;

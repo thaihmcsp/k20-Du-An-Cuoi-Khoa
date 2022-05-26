@@ -147,6 +147,23 @@ router.get("/admin", function (req, res) {
   res.render("admin/admin");
 });
 
+router.get("/orderadmin",async function (req, res) {
+  try {
+    const dataOrder = [];
+    const data = await orderModel.find();
+    // console.log(230,data);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].productList.length) {
+        dataOrder.push(data[i])
+      }
+    }
+    console.log(239,dataOrder);
+    res.render("admin/orderAdmin", {listdata : dataOrder});
+  } catch (error) {
+    console.log(243,error);
+  }
+});
+
 router.get("/admin/productCode", async function (req, res) {
   const listproductCode = await productCode.find();
   const listategory = await category.find();

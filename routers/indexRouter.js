@@ -51,6 +51,7 @@ router.get("/search", async function (req, res) {
   }
     try {
     const listproduct1 = await ProductModel.find();
+    const listSearchNoLimit = await ProductCodeModel.find(dktimkiem1)
     const listSearch = await ProductCodeModel.find(dktimkiem1)
       .limit(req.query.limit)
       .skip((req.query.page - 1) * req.query.limit);
@@ -66,6 +67,7 @@ router.get("/search", async function (req, res) {
       pagenow: req.query.page,
       ten: req.query.search,
       list: listSearch,
+      listNoLimit: listSearchNoLimit,
       list123: listSearch1,
     });
   } catch (error) {

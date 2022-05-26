@@ -22,7 +22,7 @@ function suggest() {
           let div = `
           <a href="http://localhost:3000/product/detail/${data[i]._id}">
        <div class="searchconten">
-       tên sản phẩm là :  ${data[i].name},giá là :  ${data[i].price}
+       tên sản phẩm là :  ${data[i].name}
     </div> </a>
        `;
           $(".searchtong").append(div);
@@ -76,9 +76,25 @@ function timtheogia(page, name) {
 for (let i = 0; i < array.length; i++) {
   const element = array[i];
 }
-function colorSS(url, color) {
-  window.location.href = `${url}&color=${color}`;
-}
+
+
 function sizeSS(url, size) {
   window.location.href = `${url}&size=${size}`;
+}
+function themMau(color) {
+  let arrduochienthi=[]
+  arrduochienthi.push(`${color}`)
+  
+ 
+}
+function xoamaudo(color) {
+  if(color == $("#color") ){
+    this.htlm("")
+  }
+  
+}
+
+for (let index = 0; index < array.length; index++) {
+  const element = array[index];
+  
 }

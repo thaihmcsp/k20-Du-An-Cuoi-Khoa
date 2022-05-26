@@ -232,7 +232,6 @@ router.get("/search", async function (req, res) {
 });
 
 router.get("/cart", checkUser, (req, res) => {
-  
   res.render("user/cart/cart");
 });
 

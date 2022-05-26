@@ -237,6 +237,7 @@ router.get("/cart", checkUser, (req, res) => {
 
 router.get('/' , (req,res) => {
   res.json({mess : 'Thanh cong'})
+  console.log(123);
 })
 
 module.exports = router;

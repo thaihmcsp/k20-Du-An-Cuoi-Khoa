@@ -115,7 +115,6 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
 });
 
 // Register + Login
-
 router.post("/register", async (req, res) => {
   try {
     console.log(23, req.body);

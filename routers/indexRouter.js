@@ -235,4 +235,8 @@ router.get("/cart", checkUser, (req, res) => {
   res.render("user/cart/cart");
 });
 
+router.get('/' , (req,res) => {
+  res.json({mess : 'Thanh cong'})
+})
+
 module.exports = router;

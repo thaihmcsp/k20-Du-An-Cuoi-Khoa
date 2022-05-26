@@ -6,6 +6,7 @@ const productCode = require("../models/productCode");
 const productModel = require("../models/product");
 const orderModel = require('../models/orderModel')
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
+const checkAdmin = require('../middleWare/checkAdmin')
 const checkRequire = require("../middleWare/checkRequire");
 
 // Home
@@ -87,7 +88,7 @@ router.get("/register", checkUser, (req, res) => {
   res.render("user/signUp/signUp", { user: req.user });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login",checkUser, (req, res) => {
   res.render("user/signIn/signIn", { user: req.user });
 });
 
@@ -143,23 +144,22 @@ router.get("/profile/info/change-password", checkLogin, (req, res) => {
 });
 
 // Admin
-router.get("/admin", function (req, res) {
+router.get("/admin" ,checkAdmin , function (req, res) {
   res.render("admin/admin");
 });
 
-router.get("/admin/productCode", async function (req, res) {
+router.get("/admin/productCode",checkAdmin, async function (req, res) {
   const listproductCode = await productCode.find();
   const listategory = await category.find();
   res.render("admin/productCode", { listproductCode, listategory });
 });
 
 // Search
-router.get("/search", function (req, res) {
+router.get("/search",checkRequire, function (req, res) {
   res.render("user/filter/search.ejs");
 });
 
-router.post("/search/?size", function (req, res) {
-  console.log(req.body);
+router.post("/search/?size",checkRequire, function (req, res) {
   productModel
     .create({
       quantity: req.body.quantity,
@@ -180,30 +180,8 @@ router.get("/cart", checkLogin, (req, res) => {
   });
 });
 
-router.get("/order", checkUser, (req, res) => {
+router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order");
-});
-
-router.get("/admin", function (req, res) {
-  res.render("admin/admin");
-});
-
-router.get("/admin/productCode", async function (req, res) {
-  const listproductCode = await productCode.find();
-  const listategory = await category.find();
-  res.render("admin/productCode", { listproductCode, listategory });
-});
-
-router.get("/home", (req, res) => {
-  res.render("user/home/home");
-});
-
-router.get("/register", (req, res) => {
-  res.render("user/signUp/signUp");
-});
-
-router.get("/login", checkUser, (req, res) => {
-  res.render("user/signIn/signIn");
 });
 
 router.get("/search", async function (req, res) {

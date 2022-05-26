@@ -173,13 +173,18 @@ router.post("/login", async (req, res) => {
 router.put("/logout", async (req, res) => {
   try {
     let token = req.cookies.user;
-    await userModel.updateOne(
-      { token: token },
-      {
-        token: "",
-      }
-    );
-    res.status(200).json({ message: "Successfull Logout" });
+    if (token) {
+      await userModel.updateOne(
+        { token: token },
+        {
+          token: "",
+        }
+      );
+      res.status(200).json({ message: "Successfull Logout" });
+      
+    } else {
+      res.status(400).json({ message: "Error" });
+    }
   } catch (error) {
     res.status(500).json({ message: "Lỗi Server" });
   }

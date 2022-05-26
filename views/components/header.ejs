@@ -27,6 +27,7 @@
     font-weight: 500;
     padding: 0 12px;
     transition: ease-in 0.3s;
+    cursor: pointer;
   }
 
   .heading-link:hover {
@@ -163,7 +164,7 @@
       >
     </li>
     <li>
-      <a href="/login" class="heading-link" onclick="logout()">Đăng xuất</a>
+      <a class="heading-link" onclick="logout()">Đăng xuất</a>
     </li>
     <% } else { %>
     <li><a href="/login" class="heading-link">đăng nhập</a></li>
@@ -205,6 +206,7 @@
         url: "/user/logout",
       });
       document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = '/login'
     } catch (error) {
       console.log(error);
     }

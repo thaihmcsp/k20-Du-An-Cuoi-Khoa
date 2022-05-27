@@ -12,7 +12,7 @@ function suggest() {
     const data = $("#search").val();
     $.ajax({
       type: "get",
-      url: "/codeProduct/?limit=8",
+      url: "/codeProduct/find/?limit=8",
       data: { name: data },
     })
       .then(function (data) {
@@ -20,9 +20,9 @@ function suggest() {
         $(".searchtong").html("");
         for (let i = 0; i < data.length; i++) {
           let div = `
-          <a href="http://localhost:3000/product/${data[i]._id}">
+          <a href="http://localhost:3000/product/detail/${data[i]._id}">
        <div class="searchconten">
-       tên sản phẩm là :  ${data[i].name},giá là :  ${data[i].price}
+       tên sản phẩm là :  ${data[i].name}
     </div> </a>
        `;
           $(".searchtong").append(div);
@@ -60,6 +60,7 @@ function changepagesau(page, name, max) {
     window.location.href = `/search?search=${name}&page=${page2 + 1}&limit=8`;
   }
 }
+
 // function changepagesau(page,name) {
 //  console.log(page,name);
 //   window.location.href = `/search?search=${name}&page=${page}&limit=8`
@@ -70,5 +71,30 @@ function timtheogia(page, name) {
   const maxprice = $("#giatoida").val();
   console.log(minprice, maxprice);
   window.location.href = `/search?search=${name}&page=1&limit=8&pricemin=${minprice}&pricemax=${maxprice}`;
+  
+}
+for (let i = 0; i < array.length; i++) {
+  const element = array[i];
+}
+
+
+function sizeSS(url, size) {
+  window.location.href = `${url}&size=${size}`;
+}
+function themMau(color) {
+  let arrduochienthi=[]
+  arrduochienthi.push(`${color}`)
+  
+ 
+}
+function xoamaudo(color) {
+  if(color == $("#color") ){
+    this.htlm("")
+  }
+  
+}
+
+for (let index = 0; index < array.length; index++) {
+  const element = array[index];
   
 }

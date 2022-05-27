@@ -83,7 +83,7 @@ router.get("/pagination", checkRequire, async (req, res) => {
 });
 
 // Login & Register
-router.get("/register", checkUser, (req, res) => {
+router.get("/register", (req, res) => {
   res.render("user/signUp/signUp", { user: req.user });
 });
 
@@ -172,7 +172,7 @@ router.get("/admin/productCode", async function (req, res) {
 
 // Search
 router.get("/search", function (req, res) {
-  res.render("user/filter/search.ejs");
+  res.render("user/filter/filter");
 });
 
 router.post("/search/?size", function (req, res) {

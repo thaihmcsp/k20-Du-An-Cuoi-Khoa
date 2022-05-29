@@ -84,7 +84,7 @@ router.get("/pagination", checkRequire, async (req, res) => {
 });
 
 // Login & Register
-router.get("/register", checkUser, (req, res) => {
+router.get("/register", (req, res) => {
   res.render("user/signUp/signUp", { user: req.user });
 });
 
@@ -172,8 +172,8 @@ router.get("/admin/productCode", async function (req, res) {
 });
 
 // Search
-router.get("/search",checkRequire, function (req, res) {
-  res.render("user/filter/search.ejs");
+router.get("/search", function (req, res) {
+  res.render("user/filter/filter");
 });
 
 router.post("/search/?size",checkRequire, function (req, res) {
@@ -201,12 +201,10 @@ router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order");
 });
 
-router.get("/search", async function (req, res) {
-  // console.log(22222222222222,req.headers.referer);
+router.get("/search", checkRequire, async function (req, res) {
 
   let dktimkiem = {};
   let dktimkiem1 = { name: { $regex: req.query.search, $options: "i" } };
-  console.log(388888, req.query.price);
   if (req.query.pricemax) {
     dktimkiem1.price = {
       $lte: req.query.pricemax * 1,
@@ -232,6 +230,7 @@ router.get("/search", async function (req, res) {
       name: { $regex: req.query.search, $options: "i" },
     });
     res.render("user/filter/filter", {
+      user : req.user,
       dktimkiem: dktimkiem,
       listproduct: listproduct1,
       min: req.query.pricemin,

@@ -1,6 +1,6 @@
 const userModel = require("../models/userModel");
 
-async function isNotRequire(req, res, next) {
+async function checkRequire(req, res, next) {
   try {
     const account = await userModel.findOne({
       token: req.cookies.user,
@@ -12,4 +12,4 @@ async function isNotRequire(req, res, next) {
   }
 }
 
-module.exports = isNotRequire;
+module.exports = checkRequire;

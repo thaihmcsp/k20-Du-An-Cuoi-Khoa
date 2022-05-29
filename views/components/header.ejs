@@ -1,4 +1,15 @@
 <style>
+  .classname a {
+  color: #ffffff;
+  text-decoration: none;
+}
+a:visited,
+a:link,
+a:active {
+  text-decoration: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
   header {
     background-color: #fff;
     position: fixed;
@@ -151,6 +162,27 @@
   .height-empty {
     height: calc(var(--header-height) + var(--heading-height));
   }
+  .searchtong{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+  }
+  .searchconten:hover{
+    color: orange;
+    background-color: white;
+    opacity: 90%;
+  }
+  .searchconten{
+      padding: 0 16px;
+      text-decoration: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      top:40px;
+      width: 714px;
+      background-color: white;
+      position: relative;
+      color: black;
+  }
 </style>
 
 <header>
@@ -179,13 +211,24 @@
     </div>
     <div class="header-search">
       <div class="header-search-input">
-        <input type="text" name="" onkeyup="suggest()" id="search" placeholder="Tìm kiếm trên Lazada" />
-        <button onclick="search()"><i class="fas fa-search"></i></button>
+        <input
+      onkeyup="suggest()"
+      type="text"
+      name=""
+      id="search"
+      placeholder="Tìm kiếm"
+    />
+    <button onclick="search()"> <i class="fas fa-search"></i> </button>
+    <div class="searchtong">
+      
+    </div>
       </div>
       <div class="header-search-cart">
-        <a href="/cart"><img src="/public/icon/cart-logo.png" alt="" /></a>
+        <a href=""><img src="/public/upload/cart-logo.png" alt="" /></a>
       </div>
     </div>
+
+    
     <div class="header-category">
       Danh mục <i class="fas fa-angle-down"></i>
       <ul class="header-category-list">
@@ -213,3 +256,4 @@
     }
   }
 </script>
+<script src="/public/js/search.js"></script>

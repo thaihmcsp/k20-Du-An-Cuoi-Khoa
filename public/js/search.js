@@ -12,7 +12,7 @@ function suggest() {
     const data = $("#search").val();
     $.ajax({
       type: "get",
-      url: "/codeProduct/?limit=8",
+      url: "/codeProduct/find/?limit=8",
       data: { name: data },
     })
       .then(function (data) {

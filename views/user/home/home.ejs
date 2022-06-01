@@ -84,7 +84,7 @@
         <h3 class="title">Danh mục ngành hàng</h3>
         <div class="category-list">
           <% listcategory.map((item) => { %>
-          <a class="category-item" href="/category/<%= item._id %>?pagenow=1">
+          <a class="category-item" href="search?search=<%= item.name %>&page=1&limit=8">
             <img src="<%= item.thumbnail %>" alt="" />
             <p><%= item.name %></p>
           </a>

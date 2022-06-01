@@ -3,7 +3,9 @@ const path = require("path");
 const userModel = require("../models/userModel");
 const category = require("../models/category");
 const productCode = require("../models/productCode");
+const ProductCodeModel = require("../models/productCode");
 const productModel = require("../models/product");
+const ProductModel = require("../models/product");
 const orderModel = require('../models/orderModel')
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkAdmin = require('../middleWare/checkAdmin')
@@ -171,10 +173,6 @@ router.get("/admin/productCode", async function (req, res) {
   res.render("admin/productCode", { listproductCode, listategory });
 });
 
-// Search
-router.get("/search", function (req, res) {
-  res.render("user/filter/filter");
-});
 
 router.post("/search/?size",checkRequire, function (req, res) {
   productModel
@@ -201,59 +199,52 @@ router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order");
 });
 
-router.get("/search", checkRequire, async function (req, res) {
-
-  let dktimkiem = {};
-  let dktimkiem1 = { name: { $regex: req.query.search, $options: "i" } };
-  if (req.query.pricemax) {
-    dktimkiem1.price = {
-      $lte: req.query.pricemax * 1,
-      $gte: req.query.pricemin * 1,
-    };
-  }
-
-  if (req.query.color) {
-    dktimkiem.color = req.query.color;
-  // if (req.query.color) {
-  //   dktimkiem.color = [req.query.color];
-  }
-  if (req.query.size) {
-    dktimkiem.size = req.query.size;
-  }
-    try {
-    const listproduct1 = await ProductModel.find();
-    const listSearchNoLimit = await ProductCodeModel.find(dktimkiem1)
-    const listSearch = await ProductCodeModel.find(dktimkiem1)
-      .limit(req.query.limit)
-      .skip((req.query.page - 1) * req.query.limit);
-    const listSearch1 = await ProductCodeModel.find({
-      name: { $regex: req.query.search, $options: "i" },
-    });
-    res.render("user/filter/filter", {
-      user : req.user,
-      dktimkiem: dktimkiem,
-      listproduct: listproduct1,
-      min: req.query.pricemin,
-      max: req.query.pricemax,
-      url:req.url,
-      pagenow: req.query.page,
-      ten: req.query.search,
-      list: listSearch,
-      listNoLimit: listSearchNoLimit,
-      list123: listSearch1,
-    });
-  } catch (error) {
-    res.status(500).json({ mess: "zz,thất bại", err });
-  }
-});
+router.get("/search",checkUser, async function (req, res) {
+  
+    let dktimkiem = {};
+    let dktimkiem1 = { name: { $regex: req.query.search, $options: "i" } };
+    
+    if (req.query.pricemax) {
+      dktimkiem1.price = {
+        $lte: req.query.pricemax * 1,
+        $gte: req.query.pricemin * 1,
+      };
+    }
+    if (req.query.color) {
+      dktimkiem.color = [req.query.color];
+    }
+    if (req.query.size) {
+      dktimkiem.size = req.query.size;
+    }
+      try {
+      const listproduct1 = await ProductModel.find();
+      const listSearchNoLimit = await ProductCodeModel.find(dktimkiem1)
+      const listSearch = await ProductCodeModel.find(dktimkiem1)
+        .limit(req.query.limit)
+        .skip((req.query.page - 1) * req.query.limit);
+      const listSearch1 = await ProductCodeModel.find({
+        name: { $regex: req.query.search, $options: "i" },
+      });
+      res.render("user/filter/filter", {
+        user: req.user,
+        dktimkiem: dktimkiem,
+        listproduct: listproduct1,
+        min: req.query.pricemin,
+        max: req.query.pricemax,
+        url:req.url,
+        pagenow: req.query.page,
+        ten: req.query.search,
+        list: listSearch,
+        listNoLimit: listSearchNoLimit,
+        list123: listSearch1,
+      });
+    } catch (err) {
+      res.status(500).json({ mess: "zz,thất bại", err });
+    }
+  });
 
 router.get("/cart", checkUser, (req, res) => {
   res.render("user/cart/cart");
 });
-
-router.get('/' , (req,res) => {
-  res.json({mess : 'Thanh cong'})
-  console.log(123);
-})
 
 module.exports = router;

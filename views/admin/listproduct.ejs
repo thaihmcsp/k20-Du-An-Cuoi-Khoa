@@ -7,11 +7,12 @@
     <title>LIST PRODUCT LAZADA</title>
     <link
       rel="icon"
-      href="/public/upload/logo-lazada.png"
+      href="/public/icon/lazada-logo.png"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="../public/css/admin/category.css" />
-    <link rel="stylesheet" href="../public/css/admin/listproduct.css" />
+    <link rel="stylesheet" href="/public/css/base.css">
+    <link rel="stylesheet" href="/public/css/admin/category.css" />
+    <link rel="stylesheet" href="/public/css/admin/listproduct.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -32,7 +33,7 @@
           multiple
         />
         <img
-          src="/public/upload/add.jpg"
+          src="/public/icon/add.png"
           alt=""
           id="change"
           onclick="importimg()"
@@ -54,7 +55,7 @@
           type="number"
           id="quantity"
           name="quantity"
-          placeholder="VD: 8.000.000"
+          placeholder="Số lượng"
         />
         <small class="note3"></small>
       </form>
@@ -157,36 +158,6 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Bạn muốn xoá dữ liệu này?
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body" id="body-yes-no">
-          <button type="button" data-bs-dismiss="modal" class="no" id="yes-no">
-            NO
-          </button>
-          <button onclick="yes()" id="yes-no">YES</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"

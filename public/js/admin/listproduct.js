@@ -171,19 +171,16 @@ async function ADD() {
   }
 }
 
-var id = "";
-async function xoaproduct(a) {
-  id = a;
-}
-
-async function yes() {
-  const res = await $.ajax({
-    url: `/product/${id}?page=${current}&limit=5`,
-    type: "DELETE",
-  });
-  $(".no").trigger("click");
-  $(".button").html("");
-  $(".button").html(res);
+async function xoaproduct(id) {
+  try {
+    const res = await $.ajax({
+      url : '/product/' + id,
+      type : 'DELETE'
+    })
+    window.location.reload()
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 var idupdate = "";

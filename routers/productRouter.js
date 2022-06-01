@@ -166,17 +166,17 @@ router.get("/:id", async function (req, res) {
 router.get("/get", async function (req, res) {
   let arr = req.headers.referer.split("/");
   let length = arr.length;
-  const listproduct = await Product.find({ productCode: arr[length - 1] })
+  const listproduct = await ProductModel.find({ productCode: arr[length - 1] })
     .skip((req.query.page - 1) * req.query.limit)
     .limit(req.query.limit);
   res.render("admin/product", { listproduct });
 });
 
 router.get("/:id", checkLogin, async function (req, res) {
-  const listproduct = await Product.find({ productCode: req.params.id }).limit(
+  const listproduct = await ProductModel.find({ productCode: req.params.id }).limit(
     5
   );
-  const a = await await Product.find({ productCode: req.params.id });
+  const a = await await ProductModel.find({ productCode: req.params.id });
   const totala = a.length;
   const total = Math.ceil(totala / 5);
   res.render("admin/listproduct", { listproduct, total: total });
@@ -292,15 +292,11 @@ router.post("/add", upload.array("listImg", 5), async function (req, res) {
 
 router.delete("/:id", async function (req, res) {
   try {
-    let arr = req.headers.referer.split("/");
-    let length = arr.length;
-    const data = await Product.deleteOne({ _id: req.params.id });
-    const listproduct = await Product.find({ productCode: arr[length - 1] })
-      .skip((req.query.page - 1) * req.query.limit)
-      .limit(req.query.limit);
+    await ProductModel.deleteOne({ _id: req.params.id });
+    const listproduct = await ProductModel.find()
     res.render("admin/product", { listproduct });
   } catch (error) {
-    console.log(47, error);
+    res.status(400).json({mess : 'Failed'})
   }
 });
 
@@ -328,9 +324,9 @@ router.put(
           quantity: req.body.quantityid,
         }
       );
-      const listproduct = await Product.find({ productCode: arr[length - 1] })
-        .skip((req.query.page - 1) * req.query.limit)
-        .limit(req.query.limit);
+      const listproduct = await ProductModel.find({ productCode: arr[length - 1] })
+        // .skip((req.query.page - 1) * req.query.limit)
+        // .limit(req.query.limit);
       res.render("admin/product", { listproduct });
     } else {
       const update = await ProductModel.updateOne(
@@ -342,7 +338,7 @@ router.put(
           quantity: req.body.quantityid,
         }
       );
-      const listproduct = await Product.find({ productCode: arr[length - 1] })
+      const listproduct = await ProductModel.find({ productCode: arr[length - 1] })
         .skip((req.query.page - 1) * req.query.limit)
         .limit(req.query.limit);
       res.render("admin/product", { listproduct });

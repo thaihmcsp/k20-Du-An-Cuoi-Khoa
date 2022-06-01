@@ -4,9 +4,8 @@ const checkRequire = require("../middleWare/checkRequire");
 const UserModel = require("../models/userModel");
 const Category = require("../models/category");
 const ProductCode = require("../models/productCode");
-const { checkLogin, checkUser } = require("../checkLogin");
+const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 var multer = require("multer");
-const { log } = require("console");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");

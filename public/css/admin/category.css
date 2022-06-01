@@ -53,11 +53,11 @@
 #change {
   width: 150px;
   height: 150px;
-  border: 1px solid black;
   border-radius: 20px;
   object-fit: cover;
   object-position: center;
   margin: 20px 20px;
+  cursor: pointer;
 }
 #add {
   width: 100%;

@@ -16,6 +16,7 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "user",
     },
+    searchHistory : [{type : String}],
     token: String,
   },
   { collection: "user" }

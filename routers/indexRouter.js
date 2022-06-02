@@ -3,9 +3,7 @@ const path = require("path");
 const userModel = require("../models/userModel");
 const category = require("../models/category");
 const productCode = require("../models/productCode");
-const ProductCodeModel = require("../models/productCode");
 const productModel = require("../models/product");
-const ProductModel = require("../models/product");
 const orderModel = require('../models/orderModel')
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkAdmin = require('../middleWare/checkAdmin')
@@ -86,7 +84,7 @@ router.get("/pagination", checkRequire, async (req, res) => {
 });
 
 // Login & Register
-router.get("/register", (req, res) => {
+router.get("/register",checkUser,  (req, res) => {
   res.render("user/signUp/signUp", { user: req.user });
 });
 
@@ -174,20 +172,20 @@ router.get("/admin/productCode", async function (req, res) {
 });
 
 
-router.post("/search/?size",checkRequire, function (req, res) {
-  productModel
-    .create({
-      quantity: req.body.quantity,
-      size: req.body.size,
-      color: req.body.color,
-    })
-    .then(function (data) {
-      res.json({ mess: "ok", data });
-    })
-    .catch(function (err) {
-      res.json({ mess: "thất bại", err });
-    });
-});
+// router.post("/search/?size",checkRequire, function (req, res) {
+//   productModel
+//     .create({
+//       quantity: req.body.quantity,
+//       size: req.body.size,
+//       color: req.body.color,
+//     })
+//     .then(function (data) {
+//       res.json({ mess: "ok", data });
+//     })
+//     .catch(function (err) {
+//       res.json({ mess: "thất bại", err });
+//     });
+// });
 
 router.get("/cart", checkLogin, (req, res) => {
   res.render("user/cart/cart", {
@@ -199,8 +197,7 @@ router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order");
 });
 
-router.get("/search",checkUser, async function (req, res) {
-  
+router.get("/search",checkRequire, async function (req, res) {
     let dktimkiem = {};
     let dktimkiem1 = { name: { $regex: req.query.search, $options: "i" } };
     
@@ -216,13 +213,13 @@ router.get("/search",checkUser, async function (req, res) {
     if (req.query.size) {
       dktimkiem.size = req.query.size;
     }
-      try {
-      const listproduct1 = await ProductModel.find();
-      const listSearchNoLimit = await ProductCodeModel.find(dktimkiem1)
-      const listSearch = await ProductCodeModel.find(dktimkiem1)
+    try {
+      const listproduct1 = await productModel.find();
+      const listSearchNoLimit = await productCode.find(dktimkiem1)
+      const listSearch = await productCode.find(dktimkiem1)
         .limit(req.query.limit)
         .skip((req.query.page - 1) * req.query.limit);
-      const listSearch1 = await ProductCodeModel.find({
+      const listSearch1 = await productCode.find({
         name: { $regex: req.query.search, $options: "i" },
       });
       res.render("user/filter/filter", {

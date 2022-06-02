@@ -48,11 +48,6 @@ router.get("/:id", checkRequire, async (req, res) => {
   });
   res.render("user/filter/filter", {
     user: req.user, 
-    category , 
-    pagenow: req.query.page,
-    ten: req.query.search,
-    min: req.query.pricemin,
-    max: req.query.pricemax,
   });
 });
 
@@ -118,11 +113,6 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
   } catch (error) {
     res.status(500).json({ mess: "Lỗi server" });
   }
-});
-
-router.get("/:id", async function (req, res) {
-  const data = await Category.findOne({ _id: req.params.id });
-  res.json(data);
 });
 
 router.put("/:id", upload.single("thumbnail"), async function (req, res) {

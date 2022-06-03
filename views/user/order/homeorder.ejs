@@ -1,0 +1,383 @@
+<div class="container_left">
+    <div class="leftContainer_1000">
+      <div class="mod-guest-register">
+        <div class="mod-guest-register-hd">Thông tin giao hàng</div>
+        
+          <div class="mod-address-form">
+            <div class="mod-address-form-bd">
+              <div class="mod-address-form-left">
+                <div class="mod-input mod-input-name">
+                  <label>Họ tên</label
+                  ><input class="hoten" onkeyup="hoten()"
+                    type="text"
+                    placeholder="Họ Tên"
+                    data-meta="Field"
+                    value=""
+                  /><b></b><span></span>
+                </div>
+                <div class="mod-input mod-input-phone">
+                  <label>Số điện thoại</label
+                  ><input class="phone" onkeyup="phone()"
+                    type="number"
+                    placeholder="Xin vui lòng nhập số điện thoại của bạn"
+                    data-meta="Field"
+                    value=""
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    data-spm-anchor-id="a2o4n.shipping.0.i2.4b61705b5xcJn8"
+                  /><b></b><span></span>
+                </div>
+              </div>
+              <div class="mod-address-form-right">
+                <div class="mod-input mod-input-adress">
+                  <label>Địa chỉ nhận hàng</label
+                  ><input class="diachi" onkeyup="diachi()"
+                    type="text"
+                    placeholder="Vui lòng nhập địa chỉ của bạn"
+                    data-meta="Field"
+                    value=""
+                    data-spm-anchor-id="a2o4n.shipping.0.i4.4b61705b5xcJn8"
+                  /><b></b><span></span>
+                </div>
+                <div
+                  class="mod-select tinh" 
+                >
+                  <label>Tỉnh/ Thành phố</label
+                  ><div>
+                    <select class="adress_tinh enabled" alt="" onclick="chonTinh(this)">
+                      <option value="">Tỉnh / Thành phố</option>
+                    </select>
+                    </div
+                  ><b></b><span></span>
+                </div>
+                <div
+                  class="mod-select quan"
+                >
+                  <label>Quận/ Huyện</label
+                  >
+                    <div>
+                    <select class="adress_quan disable" alt="" code="" onclick="chonQuan(this)">
+                      <option value="">Quận / Huyện</option>
+                    </select>
+                  </div>
+                  <b></b><span></span>
+                </div>
+                <div
+                  class="mod-select phuong"
+                >
+                  <label>Phường/ Xã</label
+                  ><div>
+                    <select class="adress_phuong disable" alt="" onclick="chonPhuong(this)">
+                      <option value="">Phường/ Xã</option>
+                    </select>
+                  </div>
+                  <b></b>
+                </div>
+                <div class="mod-address-tag">
+                  <p class="mod-address-tag-title">
+                    Lựa chọn tên cho địa chỉ thường dùng:
+                  </p>
+                  <div class="mod-address-tag-content">
+                    <div
+                      class="mod-address-tag-item mod-address-tag-work" onclick="vanphong()"
+                    >
+                      <span
+                        class="mod-address-tag-icon-1"
+                      > <i class="fa-solid fa-briefcase"></i> </span
+                      ><span class="vp">VĂN PHÒNG</span>
+                    </div>
+                    <div
+                      class="mod-address-tag-item" onclick="nharieng()"
+                    >
+                      <span class="mod-address-tag-icon-2"><i class="fa-solid fa-house"></i></span
+                      ><span class="nr">NHÀ RIÊNG</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mod-address">
+              <button class="btn-luu-adress" onclick="luuadress()"> 
+                LƯU
+              </button>
+            </div>
+          </div>
+        
+      </div>
+
+      <div class="checkout_adress">
+        <div class="v2-title-wrapper" alt="">
+          <p class="v2-address-hat">Địa chỉ giao hàng</p>
+          <a href="#" class="v2-title-wrapper-edit" data-bs-toggle="offcanvas" data-bs-dismiss="offcanvas" data-bs-target="#dia-chi-thanh-toan" aria-controls="dia-chi-thanh-toan" onclick="luu2()">
+            Chỉnh sửa
+          </a>
+        </div>
+        <div class="v2-checkout-address-inner">
+          <div class="v2-address-title-container">
+            <span class="v2-address-title"></span>
+            <span class="v2-mobile"></span>
+          </div>
+          <div class="v2-address-info-item">
+            <span class="total dc"><span class="add-diachi">NHÀ RIÊNG</span></span>
+            <span class="address-user"></span>
+          </div>
+        </div>
+      </div>
+
+      
+      <%- include('./arrorder.ejs'); %> 
+      
+    </div>
+  </div>
+
+  <div class="container_right">
+    <div class="container_right_con">
+      <div class="clearfix1">
+        <div class="dat-hang" onclick="updateOrder()">ĐẶT HÀNG</div>
+      </div>
+      <div class="payment-card-container">
+        <div class="payment-card-header-wrapper">
+          <span class="payment-card-header-title">
+            Chọn phương thức thanh toán
+          </span>
+          <span class="payment-card-header-action" >
+            Xem tất cả &gt;
+          </span>
+        </div>
+        <div class="card-list-wrapper">
+          <div class="card-container">
+            <div>
+              <div class="card-main-content">
+                <div class="card-main-content-text-container">
+                  <img
+                    class="card-icon"
+                    src="https://laz-img-cdn.alicdn.com/tfs/TB1ZP8kM1T2gK0jSZFvXXXnFXXa-96-96.png"
+                  />
+                  <p class="card-title">Thanh toán khi nhận hàng</p>
+                </div>
+                <span class="checked-icon"
+                  ><i class="fa-solid fa-circle-check"></i
+                ></span>
+              </div>
+              <div class="card-footer">
+                <p class="card-complex">Thanh toán khi nhận hàng</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="additional-info-wrapper">
+        <p class="additional-info-title">Thông tin liên hệ và hóa đơn</p>
+        <p class="additional-info-action" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="luu1()">
+          Edit
+        </p>
+      </div>
+      <div id="additional-detail" class="additional-detail-wrapper"></div>
+      <div class="summary-section">
+        <div class="summary-section-heading">Thông tin đơn hàng</div>
+        <div class="summary-section-content">
+          <div class="checkout-summary">
+            <div class="checkout-summary-row">
+              <div class="checkout-summary-main">
+                <div class="checkout-summary-label">
+                  Tạm tính (<%= sumCart %> Sản phẩm)
+                </div>
+                <div class="checkout-summary-value">
+                  <span class="checkout-summary-noline-value">
+                    <span class="bill"><%= sumprice %></span> ₫
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="checkout-summary-row">
+              <div class="checkout-summary-main">
+                <div class="checkout-summary-label">Phí giao hàng</div>
+                <div class="checkout-summary-value">
+                  <span class="checkout-summary-noline-value"
+                    ><span class="price-ship">502.500</span> ₫</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="checkout-summary-row">
+              <div class="checkout-summary-main">
+                <div class="checkout-summary-label">Khuyến mãi</div>
+                <div class="checkout-summary-value">
+                  <span class="checkout-summary-noline-value">0 ₫</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            width: 100%;
+            height: 1px;
+            background-color: rgb(218, 218, 218);
+          "
+        ></div>
+      </div>
+      <div class="checkout-order-total">
+        <div class="checkout-order-total-row">
+          <div class="checkout-order-total-title">Tổng cộng:</div>
+          <div class="checkout-order-total-fee">
+            <span class="bill-total"><%= sumprice %></span> ₫</div>
+        </div>
+        <div class="dat-hang" onclick="updateOrder()">ĐẶT HÀNG</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="offcanvas offcanvas-end"  data-bs-backdrop="false" tabindex="-2" id="dia-chi-thanh-toan" aria-labelledby="offcanvasRightLabel">
+      <div class="body-offcanvans-1">
+        <div class="offcanvas-body">
+          <div class="additional-detail-drawer">
+            <div class="offcanvas-header">
+              <h5 >Địa chỉ thanh toán</h5>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" data-bs-dismiss="offcanvas">
+                Thêm địa chỉ mới
+              </button>
+            </div>
+            <div class="content scroll">
+              <%- include('./addressorder.ejs'); %> 
+              
+            </div>
+            <div class="footer-off">
+              <div class="footerBtn onEdit" data-bs-toggle="offcanvas" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                Hủy
+              </div>
+              <div class="footerBtn offchangeaddress" data-bs-dismiss="offcanvas">
+                Hủy
+              </div>
+              <div class="saveBtn onEdit" onclick="saveadd1()" data-bs-toggle="offcanvas" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                SAVE
+              </div>
+              <div class="saveBtn offchangeaddress" onclick="saveadd()" data-bs-dismiss="offcanvas">
+                SAVE
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Thêm địa chỉ nhận hàng mới</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mod-address-form">
+          <div class="mod-address-form-bd">
+            <div class="mod-address-form-left">
+              <div class="mod-input mod-input-name">
+                <label>Họ tên</label
+                ><input class="hoten hoten7" onkeyup="hoten()"
+                  type="text"
+                  placeholder="Họ Tên"
+                  data-meta="Field"
+                  value=""
+                /><b></b><span></span>
+              </div>
+              <div class="mod-input mod-input-phone">
+                <label>Số điện thoại</label
+                ><input class="phone phone7" onkeyup="phone()"
+                  type="number"
+                  placeholder="Xin vui lòng nhập số điện thoại của bạn"
+                  data-meta="Field"
+                  value=""
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  data-spm-anchor-id="a2o4n.shipping.0.i2.4b61705b5xcJn8"
+                /><b></b><span></span>
+              </div>
+            </div>
+            <div class="mod-address-form-right">
+              <div class="mod-input mod-input-adress">
+                <label>Địa chỉ nhận hàng</label
+                ><input class="diachi diachi7" onkeyup="diachi()"
+                  type="text"
+                  placeholder="Vui lòng nhập địa chỉ của bạn"
+                  data-meta="Field"
+                  value=""
+                  data-spm-anchor-id="a2o4n.shipping.0.i4.4b61705b5xcJn8"
+                /><b></b><span></span>
+              </div>
+              <div
+                class="mod-select tinh" 
+              >
+                <label>Tỉnh/ Thành phố</label
+                ><div>
+                  <select class="adress_tinh adress_tinh7 enabled" alt="" onclick="chonTinh(this)">
+                    <option value="">Tỉnh / Thành phố</option>
+                  </select>
+                  </div
+                ><b></b><span></span>
+              </div>
+              <div
+                class="mod-select quan"
+              >
+                <label>Quận/ Huyện</label
+                >
+                  <div>
+                  <select class="adress_quan adress_quan7 disable" alt="" code="" onclick="chonQuan(this)">
+                    <option value="">Quận / Huyện</option>
+                  </select>
+                </div>
+                <b></b><span></span>
+              </div>
+              <div
+                class="mod-select phuong"
+              >
+                <label>Phường/ Xã</label
+                ><div>
+                  <select class="adress_phuong adress_phuong7 disable" alt="" onclick="chonPhuong(this)">
+                    <option value="">Phường/ Xã</option>
+                  </select>
+                </div>
+                <b></b>
+              </div>
+              <div class="mod-address-tag">
+                <p class="mod-address-tag-title">
+                  Lựa chọn tên cho địa chỉ thường dùng:
+                </p>
+                <div class="mod-address-tag-content">
+                  <div
+                    class="mod-address-tag-item mod-address-tag-work" onclick="vanphong()"
+                  >
+                    <span
+                      class="mod-address-tag-icon-1"
+                    > <i class="fa-solid fa-briefcase"></i> </span
+                    ><span class="vp vp7">VĂN PHÒNG</span>
+                  </div>
+                  <div
+                    class="mod-address-tag-item" onclick="nharieng()"
+                  >
+                    <span class="mod-address-tag-icon-2"><i class="fa-solid fa-house"></i></span
+                    ><span class="nr nr7">NHÀ RIÊNG</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mod-address">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" >Hủy</button>
+            <button class="btn-luu-adress" onclick="luuadress1()"> 
+              LƯU
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    

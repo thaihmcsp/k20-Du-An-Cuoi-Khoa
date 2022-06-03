@@ -1,0 +1,15 @@
+<p>Size</p>
+<div class="selection-size">
+  <div class="ten-size">
+    <span class="size-da-chon">Vui lòng chọn</span>
+  </div>
+  <div class="size-sp">
+    <% for(var i = 0 ; i < listsize.length ; i+= 2) { %>
+    <div class="btn-sp">
+      <button class="btn-size" id="size-sp<%= i %>" alt="<%= listsize[i] %>">
+        <%= listsize[i] %>
+      </button>
+    </div>
+    <% } %>
+  </div>
+</div>

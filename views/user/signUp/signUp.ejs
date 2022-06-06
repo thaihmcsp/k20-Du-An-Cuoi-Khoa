@@ -21,8 +21,9 @@
     <link rel="stylesheet" href="/public/css/signUp.css" />
   </head>
   <body>
-    <%- include('../../components/header') %>
-    <div class="main">
+    <%- include('../../components/header') %> <%-
+    include('../../components/loading') %>
+    <main class="main">
       <h2>Tạo tài khoản Lazada</h2>
       <div class="form">
         <div class="form-register">
@@ -62,7 +63,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </main>
     <%- include('../../components/footer') %>
   </body>
   <script

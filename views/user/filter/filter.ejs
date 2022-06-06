@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= ten %> - Mua <%= ten %> trên Lazada VN</title>
     <link
       rel="shortcut icon"
-      href="/public/upload/lazada-logo.png"
+      href="/public/icon/lazada-logo.png"
       type="image/x-icon"
     />
     <link
@@ -21,9 +21,10 @@
     <link rel="stylesheet" href="/public/css/filter.css" />
   </head>
   <body>
-    <div class="z111111"> <%- include('../../components/header') %></div>
+    <%- include('../../components/header') %> <%-
+    include('../../components/loading') %>
 
-    <div class="tong2manhinhdoc">
+    <main class="tong2manhinhdoc">
       <div id="" class="buttomhome">
         <div class="header123">
           <a href="/">
@@ -35,21 +36,31 @@
       </div>
       <div class="tong2manhinhdoc2">
         <div class="khoibentrai">
-          <div class=""><b>Giá</b></div>
-          <div class="">
-            <input id="giatoithieu" placeholder="Tối thiểu" type="number" />
-            <input id="giatoida" placeholder="Tối đa" type="number" />
-            <button onclick="timtheogia('<%=pagenow%>','<%= ten %>')">
-              Tìm theo giá
-            </button>
+          <div class="khoibentrai-group">
+            <h3>Giá</h3>
+            <div class="khoibentrai-group-price">
+              <input id="giatoithieu" placeholder="Tối thiểu" type="number" />
+              <p>-</p>
+              <input id="giatoida" placeholder="Tối đa" type="number" />
+              <button
+                onclick="timtheogia('<%=pagenow%>','<%= ten %>')"
+                class="khoibentrai-group-price-btn"
+              >
+                Tìm theo giá
+              </button>
+            </div>
           </div>
         </div>
+
         <div class="khoibenphai">
+          <h3><%= ten %></h3>
           <div class="headerTopRight">
-            <% let tongTimDuoc %> <% listNoLimit.map(function(value11,index){ %>
-            <% tongTimDuoc = index +1 %> <% })%> <% if(tongTimDuoc>0){%> Có <%=
-            tongTimDuoc %> kết quả tìm được : <%= ten %> <% } else{%> Không có
-            kết quả tìm được theo : <%= ten %> <% }%>
+            <p>
+              <% let tongTimDuoc %> <% listNoLimit.map(function(value11,index){
+              %> <% tongTimDuoc = index +1 %> <% })%> <% if(tongTimDuoc>0){%> Có
+              <%= tongTimDuoc %> kết quả tìm được theo "<%= ten %>" <% } else{%>
+              Không có kết quả tìm được theo "<%= ten %>" <% }%>
+            </p>
           </div>
 
           <div class="noidungbenphai">
@@ -95,8 +106,8 @@
             </div>
             <% })%> <% }%> <% let uniquetknangcao = [...new Set(tknangcao)];%>
             <% for (let i = 0; i < uniquetknangcao.length; i++) {%> <%
-            list.map(function(value,index){ %> <% if(uniquetknangcao[i] ==
-            value._id){%>
+            list.map(function(value,index){ %> <% if (uniquetknangcao[i] ==
+            value._id) {%>
             <div class="khoi0">
               <div class="khoi1">
                 <div class="khoi11">
@@ -116,8 +127,7 @@
                 </div>
               </div>
             </div>
-
-            <% }%> <% })%> <% }%>
+            <% } %> <% })%> <% }%>
           </div>
 
           <!-- phân trang -->
@@ -141,7 +151,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <%- include('../../components/footer') %>
   </body>
   <script

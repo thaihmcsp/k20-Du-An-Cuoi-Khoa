@@ -21,7 +21,8 @@
     />
   </head>
   <body>
-    <%- include('../../components/header') %>
+    <%- include('../../components/header') %> <%-
+    include('../../components/loading') %>
     <main class="main">
       <div class="content">
         <%- include('./general') %>
@@ -30,47 +31,56 @@
           <div class="content-info-container">
             <div class="content-order">
               <% listOrder.map(order => { %>
-                <div class="content-order-item ">
-                  <a href="/profile/order/<%= order._id %>" class="content-order-link">
-                    <div class="content-order-item-title">
-                      <h5><%= order.name %></h5>
-                      <div class="content-order-item-status">
-                        <% if (order.status == 'cancel') { %>
-                          <p>
-                            Đã hủy
-                          </p>
-                            <img src="/public/icon/cancel.png" alt="" title="Đã hủy">
-                        <% } else if (order.status == 'done') { %>
-                          <p>
-                            Giao thành công
-                          </p>
-                            <img src="/public/icon/checked.png" alt="" title="Thành công">
-                        <% } else { %>
-                          <p>
-                            Đang giao
-                          </p>
-                            <img src="/public/icon/pending.png" alt="" title="Đang giao">
-                        <% } %>
-                      </div>
+              <div class="content-order-item">
+                <a
+                  href="/profile/order/<%= order._id %>"
+                  class="content-order-link"
+                >
+                  <div class="content-order-item-title">
+                    <h5><%= order.name %></h5>
+                    <div class="content-order-item-status">
+                      <% if (order.status == 'cancel') { %>
+                      <p>Đã hủy</p>
+                      <img
+                        src="/public/icon/cancel.png"
+                        alt=""
+                        title="Đã hủy"
+                      />
+                      <% } else if (order.status == 'done') { %>
+                      <p>Giao thành công</p>
+                      <img
+                        src="/public/icon/checked.png"
+                        alt=""
+                        title="Thành công"
+                      />
+                      <% } else { %>
+                      <p>Đang giao</p>
+                      <img
+                        src="/public/icon/pending.png"
+                        alt=""
+                        title="Đang giao"
+                      />
+                      <% } %>
                     </div>
-                    <p><%= order.address %></p>
-                    <% if (order.type == 'NHÀ RIÊNGNHÀ RIÊNG') { %>
-                      <div class="content-order-item-address home">
-                        <i class="fas fa-home"></i>
-                        nhà riêng
-                      </div>
-                    <% } else { %>
-                      <div class="content-order-item-address working">
-                        <i class="fas fa-briefcase"></i>
-                        văn phòng
-                      </div>
-                    <% } %>
-                    <div class="content-order-item-qty">
-                      <p>₫ <%= order.total.toLocaleString() %></p>
-                      <p><%= order.createdAt.toLocaleDateString() %></p>
-                    </div>
-                  </a>
-                </div>
+                  </div>
+                  <p><%= order.address %></p>
+                  <% if (order.type == 'NHÀ RIÊNGNHÀ RIÊNG') { %>
+                  <div class="content-order-item-address home">
+                    <i class="fas fa-home"></i>
+                    nhà riêng
+                  </div>
+                  <% } else { %>
+                  <div class="content-order-item-address working">
+                    <i class="fas fa-briefcase"></i>
+                    văn phòng
+                  </div>
+                  <% } %>
+                  <div class="content-order-item-qty">
+                    <p>₫ <%= order.total.toLocaleString() %></p>
+                    <p><%= order.createdAt.toLocaleDateString() %></p>
+                  </div>
+                </a>
+              </div>
               <% }) %>
             </div>
           </div>

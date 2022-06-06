@@ -16,15 +16,22 @@
   --font-footer: #0f136d;
   --profile-color: #1a9cb7;
   --profile-hover-color: #16849b;
+  --border-category: #e2e2e2;
   --heading-height: 25px;
   --header-height: 75px;
   --header-width: 1200px;
   --search-height: 45px;
   --category-height: 150px;
-  --border-category: #e2e2e2;
+  --loading-height: 365px;
 }
 
 html {
   font-family: Arial, Helvetica, sans-serif;
   color: var(--font-color);
+}
+
+main {
+  width: var(--header-width);
+  margin: 0 auto;
+  display: none;
 }

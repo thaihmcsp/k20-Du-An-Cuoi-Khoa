@@ -6,11 +6,6 @@ body {
   z-index: -1;
 }
 
-main {
-  width: var(--header-width);
-  margin: 0 auto;
-}
-
 .title {
   font-weight: 400;
   margin: 30px 0 20px;

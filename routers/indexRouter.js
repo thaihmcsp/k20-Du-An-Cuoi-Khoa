@@ -203,19 +203,13 @@ router.get("/admin/productCode", async function (req, res) {
 //     });
 // });
 
-router.get("/cart", checkLogin, (req, res) => {
-  res.render("user/cart/cart", {
-    user: req.user,
-  });
-});
-
 router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order");
 });
 
 router.get("/search", checkRequire, async function (req, res) {
   let dktimkiem = {};
-  let dktimkiem1 = { name: { $regex: req.query.search, $options: "i" } };
+  let dktimkiem1 = { name: { $regex: req.query.keyword, $options: "i" } };
 
   if (req.query.pricemax) {
     dktimkiem1.price = {
@@ -232,12 +226,13 @@ router.get("/search", checkRequire, async function (req, res) {
   try {
     const listproduct1 = await productModel.find();
     const listSearchNoLimit = await productCode.find(dktimkiem1);
+    console.log(listSearchNoLimit);
     const listSearch = await productCode
       .find(dktimkiem1)
       .limit(req.query.limit)
       .skip((req.query.page - 1) * req.query.limit);
     const listSearch1 = await productCode.find({
-      name: { $regex: req.query.search, $options: "i" },
+      name: { $regex: req.query.keyword, $options: "i" },
     });
     res.render("user/filter/filter", {
       user: req.user,
@@ -247,7 +242,7 @@ router.get("/search", checkRequire, async function (req, res) {
       max: req.query.pricemax,
       url: req.url,
       pagenow: req.query.page,
-      ten: req.query.search,
+      ten: req.query.keyword,
       list: listSearch,
       listNoLimit: listSearchNoLimit,
       list123: listSearch1,
@@ -255,10 +250,6 @@ router.get("/search", checkRequire, async function (req, res) {
   } catch (err) {
     res.status(500).json({ mess: "zz,thất bại", err });
   }
-});
-
-router.get("/cart", checkUser, (req, res) => {
-  res.render("user/cart/cart");
 });
 
 module.exports = router;

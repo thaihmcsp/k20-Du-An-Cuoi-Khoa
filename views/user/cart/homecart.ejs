@@ -1,57 +1,49 @@
 <div class="leftcontainer">
-    <div class="list-header-man">
-        <div class="checkbox-wrap">
-            <input type="checkbox" alt="false" class="checkall" onclick="testall()">
-            <span>Chọn tất cả (<%= sumCart %> sản phẩm)</span>
-        </div>
-        <div class="list-header-operations" onclick="xoaAll()">
-            <span><i class="fa-solid fa-trash-can"></i>Xóa</span>
-        </div>
+  <div class="list-header-man">
+    <div class="checkbox-wrap">
+      <input type="checkbox" alt="false" class="checkall" onclick="testall()" />
+      <span>Chọn tất cả (<%= sumCart %> sản phẩm)</span>
     </div>
+    <div class="list-header-operations" onclick="xoaAll()">
+      <span><i class="fa-solid fa-trash-can"></i>Xóa</span>
+    </div>
+  </div>
 
-    <%- include('./datacart.ejs'); %> 
-
+  <%- include('./datacart.ejs'); %>
 </div>
 
 <div class="rightcontainer">
-    <div class="summary-section address">
-        <div class="location-label">
-            Địa điểm
-        </div>
-        <div class="location__body">
-            <span><i class="fa-solid fa-location-dot"></i></span>
-            <div class="location-adress">
-                Khánh Hòa, Thành Phố Nha Trang, Phường Vĩnh Phước
-            </div>
-        </div>
-        
+  <div class="summary-section address">
+    <div class="location-label">Địa điểm</div>
+    <div class="location__body">
+      <span><i class="fa-solid fa-location-dot"></i></span>
+      <div class="location-adress">
+        Khánh Hòa, Thành Phố Nha Trang, Phường Vĩnh Phước
+      </div>
     </div>
+  </div>
 
-    <div class="summary-section">
-        <div class="summary-section-heading">
-            Thông tin đơn hàng
+  <div class="summary-section">
+    <div class="summary-section-heading">Thông tin đơn hàng</div>
+    <div class="checkout-summary">
+      <div class="checkout-summary-rows">
+        <div class="checkout-summary-label">
+          Tạm tính (<span alt=""><%= sumarrorder %></span> sản phẩm)
         </div>
-        <div class="checkout-summary">
-            <div class="checkout-summary-rows">
-                <div class="checkout-summary-label">
-                    Tạm tính (<span alt=""><%= sumarrorder %></span> sản phẩm)
-                </div>
-                <span class="checkout-value">
-                    <span><%= sumprice %></span> ₫
-                </span>
-            </div>
-            <div class="checkout-order-total-row">
-                <div class="checkout-order-total">
-                    Tổng cộng
-                </div>
-                <div class="checkout-order-value">
-                    <span><%= sumprice %> ₫</span>
-                    <small>Đã bao gồm VAT (nếu có)</small>
-                </div>
-            </div>
-            <button class="order-group"><a href="/order">XÁC NHẬN GIỎ HÀNG(<%= sumarrorder %>)</a></button>
+        <span class="checkout-value"> <%= sumprice.toLocaleString() %> ₫ </span>
+      </div>
+      <div class="checkout-order-total-row">
+        <div class="checkout-order-total">Tổng cộng</div>
+        <div class="checkout-order-value">
+          <span><%= sumprice.toLocaleString() %> ₫</span>
         </div>
+      </div>
+      <div class="checkout-small">
+        <small>Đã bao gồm VAT (nếu có)</small>
+      </div>
+      <button class="order-group" onclick="window.location.href = '/order'">
+        XÁC NHẬN GIỎ HÀNG (<%= sumarrorder %>)
+      </button>
     </div>
-
-    
+  </div>
 </div>

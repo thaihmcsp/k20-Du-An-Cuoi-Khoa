@@ -19,64 +19,22 @@ a:active {
 }
 
 .buttomhome {
-  border-bottom: 1px solid rgb(185, 185, 185);
+  border-bottom: 1px solid var(--page-color);
 }
 
 .tong2manhinhdoc {
-  color: rgba(0, 0, 0, 0.85);
-  display: block;
-  flex-basis: 100%;
-  font-feature-settings: "tnum";
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  line-height: 22.001px;
-  max-width: 100%;
-  min-height: 1px;
-  position: relative;
-  text-size-adjust: 100%;
-  width: 1200px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .tong2manhinhdoc2 {
   z-index: -1;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  font-feature-settings: "tnum";
-  font-size: 14px;
-  font-variant-caps: normal;
-  font-variant-east-asian: normal;
-  font-variant-ligatures: normal;
-  font-variant-numeric: tabular-nums;
-  height: auto;
-  line-height: 22.001px;
-  text-size-adjust: 100%;
-  width: 1200px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  margin-top: 20px;
 }
 .header123 {
-  z-index: -1;
-  text-align: justify;
   width: 100%;
   height: 47px;
-  cursor: pointer;
-  display: inline;
-  font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
-  font-feature-settings: "tnum";
-  font-size: 14px;
-  font-variant-caps: normal;
-  font-variant-east-asian: normal;
-  font-variant-ligatures: normal;
-  font-variant-numeric: tabular-nums;
-  font-weight: 300;
-  height: auto;
   line-height: 47px;
-  list-style-type: disc;
-  text-align: left;
-  text-size-adjust: 100%;
-  white-space: nowrap;
-  width: auto;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-size: 15px;
 }
 
 .khoibentrai {
@@ -101,17 +59,20 @@ a:active {
   display: flex;
   flex-direction: column;
   flex-basis: 83.3333%;
-  float: right;
-  font-feature-settings: "tnum";
-  font-size: 14px;
-  height: auto;
-  left: 200px;
-  line-height: 22.001px;
-  min-height: 1px;
-  text-size-adjust: 100%;
-  width: 1000px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.khoibenphai h3 {
+  font-size: 20px;
+  color: black;
+  margin-bottom: 15px;
+  font-weight: 450;
+}
+
+.headerTopRight p {
+  font-size: 14px;
+  color: #666;
+}
+
 .headerkhoiphai {
   background-color: white;
   height: 48px;
@@ -135,9 +96,10 @@ a:active {
 .buttomhomezzz {
   z-index: -1;
   opacity: 50%;
+  margin: 0 8px;
 }
 .buttomhomezzz1 {
-  color: rgb(26, 156, 183);
+  color: var(--link-color);
 }
 .noidungbenphai {
   border-top: rgb(241, 241, 241) solid 1px;
@@ -191,4 +153,54 @@ a:active {
 
 .khoi1 {
   border: 1px solid rgb(10, 9, 9);
+}
+
+.khoibentrai-group {
+  padding-right: 12px;
+}
+
+.khoibentrai-group h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: black;
+}
+
+.khoibentrai-group-price {
+  margin-top: 8px;
+}
+
+.khoibentrai-group-price input {
+  width: 100%;
+  outline: none;
+  padding: 6px 4px;
+  border: 1px solid #a8a8a8;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.khoibentrai-group-price p {
+  text-align: center;
+}
+
+.khoibentrai-group-price-btn {
+  margin-top: 15px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--btn-color);
+  color: white;
+  font-size: 15px;
+  transition: ease-in-out 0.25s;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.khoibentrai-group-price-btn:hover {
+  background-color: var(--hover-btn-color);
+}
+
+.event-click {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
 }

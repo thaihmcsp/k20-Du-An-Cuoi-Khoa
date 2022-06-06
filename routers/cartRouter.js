@@ -1,10 +1,23 @@
 const router = require("express").Router();
+const UserModel = require("../models/userModel");
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
-const cookieParser = require("cookie-parser");
-router.use(cookieParser());
+
+router.get("/", checkLogin, async (req, res) => {
+  try {
+    const dataObject = await renderCart(req.id);
+    for (var j = 0; j < dataObject.arrCode.length; j++) {
+      for (var i = 0; i < dataObject.data.length; i++) {
+        console.log(90, dataObject.arrproductcode[i].price);
+      }
+    }
+    res.render("user/cart/cart", { ...dataObject, user: req.user });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 async function renderCart(UserID) {
   try {
@@ -81,23 +94,8 @@ async function renderCart(UserID) {
   }
 }
 
-router.get("/",checkLogin, checkUser, async (req, res) => {
+router.post("/create", checkLogin, async (req, res) => {
   try {
-    const dataObject = await renderCart(req.id);
-    for (var j = 0; j < dataObject.arrCode.length; j++) {
-      for (var i = 0; i < dataObject.data.length; i++) {
-        console.log(90, dataObject.arrproductcode[i].price);
-      }
-    }
-    res.render("user/cart/cart", {...dataObject, user: req.user});
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.post("/create", checkUser, async (req, res) => {
-  try {
-    console.log(500, req.body.productID);
     const data = await CartModel.create({
       productList: {
         productID: req.body.productID,
@@ -105,12 +103,13 @@ router.post("/create", checkUser, async (req, res) => {
       },
       UserID: req.id,
     });
-    console.log(13, data);
-    res.json(data);
+    console.log(data);
+    res.status(200).json({ message: "Successfull" });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error });
   }
 });
+
 router.put("/update", checkUser, async (req, res) => {
   try {
     console.log(70, req.body.productID);

@@ -10,7 +10,7 @@ const checkAdmin = require("../middleWare/checkAdmin");
 const checkRequire = require("../middleWare/checkRequire");
 
 // Home
-router.get("/home", checkRequire, async (req, res) => {
+router.get("/", checkRequire, async (req, res) => {
   const listcategory = await category.find();
   let listproductCode = await productCode
     .find()

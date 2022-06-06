@@ -10,7 +10,7 @@ async function checkUser(req, res, next) {
         req.id = account._id;
         next();
       } else {
-        res.redirect("/home");
+        res.redirect("/");
       }
     } else {
       next();

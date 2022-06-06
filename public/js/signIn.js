@@ -26,7 +26,7 @@ async function signIn() {
           password: password.val(),
         },
       });
-      window.location.href = "/home";
+      window.location.href = "/";
     } else if (email.val().trim().length > 0) {
       email[0].parentElement.querySelector(".form-message").innerText =
         "Email này không hợp lệ";

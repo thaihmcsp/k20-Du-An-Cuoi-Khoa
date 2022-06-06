@@ -216,7 +216,7 @@
   </ul>
   <div class="header">
     <div class="header-logo">
-      <a href="/home">
+      <a href="/">
         <img src="/public/icon/lazada-icon.png" alt="" />
       </a>
     </div>
@@ -285,7 +285,7 @@
   function searchBtn() {
     const search = $("#search").val();
     if (search == "") {
-      window.location.href = "/Home";
+      window.location.href = "/";
     } else {
       window.location.href = `/search?keyword=${search}&page=1&limit=8`;
     }

@@ -1,4 +1,4 @@
-.header-row{
+.header-row {
   display: flex;
   justify-content: space-between;
   background: orange !important;
@@ -11,7 +11,7 @@
   margin-right: 20px;
   margin-left: 20px;
 }
-.the-a{
+.the-a {
   margin: 30px;
   color: white;
   height: 100%;
@@ -19,7 +19,7 @@
 .the-a:hover {
   cursor: pointer;
   color: #0033a0;
-  border-bottom:  #0033a0 solid 5px ;
+  border-bottom: #0033a0 solid 5px;
 }
 .doi-mau {
   border: none;
@@ -35,9 +35,7 @@
   align-items: center;
   text-align: center;
   background: orange;
-
 }
 .header-col:hover {
   color: red;
 }
-

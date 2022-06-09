@@ -66,7 +66,7 @@ async function renderCart(UserID) {
     const arrCode = [];
     const N = [];
     const add = await OrderModel.find({ UserID: UserID, productList: [] });
-    const user = await UserModel.findOne({ UserID: UserID });
+    const user = await UserModel.findOne({ _id: UserID });
     const email = user.email;
     const data = await CartModel.find({
       UserID: UserID,
@@ -150,10 +150,10 @@ async function renderCart(UserID) {
   }
 }
 
-router.get("/",checkLogin , async (req, res) => {
+router.get("/", checkLogin, async (req, res) => {
   try {
     const dataObject = await renderCart(req.id);
-    res.render("user/order/order", {...dataObject, user: req.user});
+    res.render("user/order/order", { ...dataObject, user: req.user });
   } catch (error) {
     console.log(error);
   }
@@ -211,25 +211,28 @@ router.post("/Neworder", checkUser, async (req, res) => {
   }
 });
 
-router.put('/:id' ,async (req,res) => {
+router.put("/:id", async (req, res) => {
   try {
-    await OrderModel.updateOne({
-      _id : req.params.id
-    }, {
-      status : 'cancel'
-    })
-    res.status(200).json({mess : 'Thanh cong'})
+    await OrderModel.updateOne(
+      {
+        _id: req.params.id,
+      },
+      {
+        status: "cancel",
+      }
+    );
+    res.status(200).json({ mess: "Thanh cong" });
   } catch (error) {
-    res.status(400).json({mess : 'That bai'})
+    res.status(400).json({ mess: "That bai" });
   }
-})
+});
 
 // router.get("/dataorder", checkUser, async (req, res) => {
 //   try {
 //     const dataOrder = [];
 //     const data = await OrderModel.find();
 //     console.log(230,data);
-    
+
 //     for (let i = 0; i < data.length; i++) {
 //       // console.log(232,data[i].productList.length);
 //       if (data[i].productList.length) {

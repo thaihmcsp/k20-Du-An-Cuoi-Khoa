@@ -123,7 +123,7 @@ router.put("/update", checkUser, async (req, res) => {
       res.render("user/cart/homecart", dataObject);
     } else {
       const data = await CartModel.updateOne(
-        { "productList.productID": req.body.productID },
+        { UserID: req.id, "productList.productID": req.body.productID },
         { $inc: { "productList.$.quantity": req.body.quantity } }
       );
       // Since 'productList ' is an array, you will need to use an array operator for updating just the one element.
@@ -138,7 +138,7 @@ router.put("/up", checkUser, async (req, res) => {
   try {
     console.log(70, req.body.productID);
     const data = await CartModel.updateOne(
-      { "productList.productID": req.body.productID },
+      { UserID: req.id, "productList.productID": req.body.productID },
       { $inc: { "productList.$.quantity": 1 } }
     );
     const dataObject = await renderCart(req.id);
@@ -151,7 +151,7 @@ router.put("/down", checkUser, async (req, res) => {
   try {
     console.log(70, req.body.productID);
     const data = await CartModel.updateOne(
-      { "productList.productID": req.body.productID },
+      { UserID: req.id, "productList.productID": req.body.productID },
       { $inc: { "productList.$.quantity": -1 } }
     );
     const dataObject = await renderCart(req.id);
@@ -164,7 +164,7 @@ router.put("/test", checkUser, async (req, res) => {
   try {
     console.log(72, req.body.productID, req.body.select);
     const data = await CartModel.updateOne(
-      { "productList.productID": req.body.productID },
+      { UserID: req.id, "productList.productID": req.body.productID },
       { "productList.$.select": req.body.select }
     );
     const dataObject = await renderCart(req.id);
@@ -193,6 +193,7 @@ router.delete("/xoa", checkUser, async (req, res) => {
   try {
     console.log(70, req.body.productID);
     const data = await CartModel.deleteOne({
+      UserID: req.id,
       "productList.productID": req.body.productID,
     });
     const dataObject = await renderCart(req.id);

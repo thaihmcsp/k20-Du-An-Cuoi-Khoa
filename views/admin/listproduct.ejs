@@ -158,6 +158,36 @@
     </div>
   </div>
 
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Bạn muốn xoá dữ liệu này?
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" id="body-yes-no">
+          <button type="button" data-bs-dismiss="modal" class="no" id="yes-no">
+            NO
+          </button>
+          <button onclick="yes()" id="yes-no">YES</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"

@@ -141,7 +141,6 @@ async function ADD() {
   const size = $("#size").val();
   const quantity = $("#quantity").val();
 
-
   console.log(95);
   if (listImg == "") {
     $(".note1").text("Vùi lòng nhập ảnh sản phẩm");
@@ -174,10 +173,10 @@ async function ADD() {
 async function xoaproduct(id) {
   try {
     const res = await $.ajax({
-      url : '/product/' + id,
-      type : 'DELETE'
-    })
-    window.location.reload()
+      url: "/product/" + id,
+      type: "DELETE",
+    });
+    window.location.reload();
   } catch (error) {
     console.log(error);
   }

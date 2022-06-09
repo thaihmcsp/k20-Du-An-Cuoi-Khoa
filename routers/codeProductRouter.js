@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const ProductCode = require("../models/productCode");
-const ProductCodeModel = require("../models/productCode");
 const Category = require("../models/category");
 const Product = require("../models/product");
 const path = require("path");
@@ -118,18 +117,6 @@ router.get("/get", checkLogin, async function (req, res) {
     .skip((req.query.page - 1) * req.query.limit)
     .limit(req.query.limit);
   res.render("admin/dataproductCode", { listproductCode });
-});
-router.get("/find", function (req, res) {
-  console.log(99, req.query.name);
-  ProductCodeModel.find({ name: { $regex: req.query.name, $options: "i" } })
-    .skip((req.query.page - 1) * req.query.limit)
-    .limit(req.query.limit)
-    .then(function (data) {
-      res.json(data);
-    })
-    .catch(function (err) {
-      res.json({ mess: "thất bại", err });
-    });
 });
 router.get("/", async function (req, res) {
   const listproductCode = await ProductCode.find().limit(12);

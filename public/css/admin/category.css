@@ -2,25 +2,25 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   box-sizing: border-box;
 }
-#header-category{
-  border-bottom:  #0033a0 solid 5px ;
+#header-category {
+  border-bottom: #0033a0 solid 5px;
 }
-.category{
+.category {
   display: flex;
   justify-content: center;
   width: 1200px;
   margin: auto;
   padding: 30px 30px;
-  border-bottom:1px solid orange;
-  border-top:1px solid orange;
+  border-bottom: 1px solid orange;
+  border-top: 1px solid orange;
   flex-wrap: wrap;
   height: 300px;
 }
-.bangday{
+.bangday {
   width: 20%;
   text-align: center;
 }
-.bangchange{
+.bangchange {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,26 +88,27 @@
   object-position: center;
 }
 
-.ten{
+.ten {
   display: flex;
   padding: 20px;
   justify-content: space-around;
 }
 
-.butday{
+.butday {
   border: 0.2px solid orange;
   border-radius: 8px;
   color: red;
   background: white;
 }
-.trang{
+.trang {
   display: flex;
   justify-content: center;
   width: 1000px;
   margin: auto;
   padding: 20px;
 }
-.back,.next{
+.back,
+.next {
   border: none;
   color: #0033a0;
   background: white;
@@ -116,7 +117,7 @@
   margin: 5px;
 }
 
-.Btn{
+.Btn {
   border: none;
   color: #0033a0;
   background: white;
@@ -126,64 +127,64 @@
   font-weight: 1000;
   border-radius: 15px;
 }
-#yes-no{
+#yes-no {
   width: 80px;
   height: 50px;
   border-radius: 15px;
   opacity: 0.7;
   background: orange;
   border: none;
-
 }
-#yes-no:hover{
+#yes-no:hover {
   opacity: 5;
 }
-#body-yes-no{
+#body-yes-no {
   width: 100%;
   display: flex;
   justify-content: space-around;
 }
-#content{
+#content {
   border-radius: 20px;
 }
-#headerchange{
+#headerchange {
   font-size: 30px;
   font-weight: 800;
   position: relative;
   left: 110px;
   color: orange;
 }
-#changeimg{
+#changeimg {
   width: 120px;
   height: 120px;
 }
-#bodychang{
+#bodychang {
   width: 100%;
   height: auto;
   text-align: center;
 }
-#nameid{
+#nameid {
   width: 100%;
   height: 80px;
   border: 1px solid orange;
   border-radius: 15px;
 }
-#footer-change{
+#footer-change {
   display: flex;
   justify-content: space-between;
 }
-#changee{
+#changee {
   border: none;
   background: orange;
   border-radius: 15px;
   opacity: 0.5;
 }
-#close{
+#close {
   border: none;
   background: rgb(255, 0, 0);
   border-radius: 15px;
   opacity: 0.7;
 }
-#changee,#close:hover{
+#changee,
+#close:hover {
   opacity: 5;
 }

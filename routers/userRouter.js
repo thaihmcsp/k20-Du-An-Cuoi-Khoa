@@ -246,4 +246,10 @@ router.put("/:idedit", async function (req, res) {
   }
 });
 
+router.get("/order/user", async function (req, res) {
+  // console.log(247,req.query.id);
+  const user = await userModel.findOne({ _id: req.query.id });
+  res.json(user);
+});
+
 module.exports = router;

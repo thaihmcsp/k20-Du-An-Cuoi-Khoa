@@ -349,12 +349,14 @@ function imageZoom(imgID, resultID) {
 }
 
 // tính giá sp sau khi giảm theo %
-// $('.numbers').html()
-// $('.phan-tram-giam').html()
-// const price = Number($('.numbers').html())
-// const phantram = $('.phan-tram-giam').html()*0.01
-// $('.price').html(Math.floor( (price + price * phantram).toLocaleString("vi") ).toFixed(3))
-// $('.numbers').html(Number($('.numbers').html()).toLocaleString("vi"))
+$(".numbers").html();
+$(".phan-tram-giam").html();
+const price = Number($(".numbers").html());
+const phantram = $(".phan-tram-giam").html() * 0.01;
+$(".price").html(
+  Math.floor((price + price * phantram).toLocaleString("vi")).toFixed(3)
+);
+$(".numbers").html(Number($(".numbers").html()).toLocaleString("vi"));
 
 // add Cart
 async function addCart() {
@@ -371,14 +373,26 @@ async function addCart() {
         url: `/product/check/${mauchon}&${sizechon}&${idchon}&${soluong}`,
         type: "GET",
       });
-      if (res._id) {
+      console.log(355, res);
+      // console.log(356,res.ListData._id);
+      // console.log(357,res.UserID);
+      if (res.mess) {
+        console.log(380, res.mess);
+        console.log(381, res.quantity);
+        $(".cart-text").html(res.mess + ". Tối đa : " + res.quantity);
+        $(".modal-body span,.modal-body i").css({ color: "red" });
+      } else {
         // check có id ko
-        console.log(325, res._id);
+        console.log(325, res.ListData._id);
         const update = await $.ajax({
           // update data đã có
           url: "/cart/update",
           type: "PUT",
-          data: { productID: res._id, quantity: soluong },
+          data: {
+            UserID: res.UserID,
+            productID: res.ListData._id,
+            quantity: soluong,
+          },
         });
         console.log(339, update.modifiedCount);
         if (update.modifiedCount) {
@@ -388,208 +402,17 @@ async function addCart() {
             // tạo mới data
             url: "/cart/create",
             type: "POST",
-            data: { productID: res._id, quantity: soluong },
+            data: {
+              UserID: res.UserID,
+              productID: res.ListData._id,
+              quantity: soluong,
+            },
           });
           console.log(348, data);
         }
-
         $(".cart-text").html("Thêm vào giỏ hàng thành công");
         $(".modal-body span,.modal-body i").css({ color: "#4caf50" });
-      } else {
-        console.log(356, res.mess);
-        console.log(357, res.quantity);
-        $(".cart-text").html(res.mess + ". Tối đa : " + res.quantity);
-        $(".modal-body span,.modal-body i").css({ color: "red" });
       }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-// xóa
-async function xoa(productID) {
-  try {
-    const res = await $.ajax({
-      url: "/order/xoa",
-      type: "DELETE",
-      data: { productID: productID },
-    });
-    // console.log(res);
-    $(".container").html("");
-    $(".container").html(res);
-    findaddress();
-    tinhAllprice();
-  } catch (error) {
-    console.log(error);
-  }
-}
-// update order
-async function updateOrder() {
-  try {
-    $(".toast").css("display", "block");
-    const total = Number($(".bill-total").text().split(".").join(""));
-    console.log(309, total);
-    const name = $(".v2-address-title").html();
-    const phone = $(".v2-mobile").html();
-    const address = $(".address-user").html();
-    const type = $(".add-diachi").html();
-    console.log(327, total, name, phone, type, address);
-    const data = await $.ajax({
-      // tạo mới data dia chỉ nhận hàng
-      url: "/order/Neworder",
-      type: "POST",
-      data: {
-        total: total,
-        name: name,
-        phone: phone,
-        type: type,
-        address: address,
-      },
-    });
-    // console.log(data);
-
-    $(".toast").toast("show");
-    setTimeout(function () {
-      window.location.href = "/cart";
-    }, 2000);
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function changeAddress(i) {
-  try {
-    for (let j = 0; j < $(`.add`).length; j++) {
-      if (j == i) {
-        console.log(345, $(`.checkAddress${i}`).prop("checked"));
-        $(`.checkAddress${i}`).attr("aria-checked", "true");
-      } else {
-        $(`.checkAddress${j}`).prop("checked", false);
-        $(`.checkAddress${j}`).attr("aria-checked", "false");
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function saveadd() {
-  try {
-    for (let j = 0; j < $(`.add`).length; j++) {
-      // console.log(375,$(`.checkAddress${j}`).attr('aria-checked'));
-      if ($(`.checkAddress${j}`).attr("aria-checked") === "true") {
-        $(".v2-address-title").html($(`.ten${j}`).html());
-        $(".v2-mobile").html($(`.sdt${j}`).html());
-        $(".add-diachi").html($(`.type${j}`).html());
-        $(".address-user").html($(`.diachi${j}`).html());
-        // console.log(378, $(`.ten${j}`).html(), $(`.sdt${j}`).html(), $(`.type${j}`).html(),$(`.diachi${j}`).html() );
-      }
-      if ($(`.add-diachi`).html() === "VĂN PHÒNG") {
-        $(`.add-diachi`).css({
-          background: "#189cb7",
-          "border-radius": "99px",
-        });
-        $(`.dc`).css({ background: "#189cb7" });
-      } else {
-        $(`.add-diachi`).css({
-          background:
-            "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-        });
-        $(`.dc`).css({
-          background:
-            "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-        });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function saveadd1() {
-  try {
-    for (let j = 0; j < $(`.add`).length; j++) {
-      if ($(`.checkAddress${j}`).attr("aria-checked") === "true") {
-        $(".name-nhan").html($(`.ten${j}`).html());
-        $(".mobile-nhan").html($(`.sdt${j}`).html());
-        $(".address-nhan").html($(`.diachi${j}`).html());
-      }
-      if ($(`.add-diachi`).html() === "VĂN PHÒNG") {
-        $(`.add-diachi`).css({
-          background: "#189cb7",
-          "border-radius": "99px",
-        });
-        $(`.dc`).css({ background: "#189cb7" });
-      }
-      if ($(`.add-diachi`).html() === "Nhà Riêng") {
-        $(`.add-diachi`).css({
-          background:
-            "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-        });
-        $(`.dc`).css({
-          background:
-            "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-        });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function luu1() {
-  try {
-    for (let j = 0; j < $(`.add`).length; j++) {
-      if ($(".v2-address-title").html() === $(`.ten${j}`).html()) {
-        $(".name-nhan").html($(`.ten${j}`).html());
-        $(".mobile-nhan").html($(`.sdt${j}`).html());
-        $(".address-nhan").html($(`.diachi${j}`).html());
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function luu2() {
-  try {
-    // ('.btn-luu-adress').attr('data-dismiss','')
-    $(".hoten7").val("");
-    $(".phone7").val("");
-    $(".diachi7").val("");
-    $(".adress_tinh7").val("");
-    $(".adress_quan7").val("");
-    $(".adress_phuong7").val("");
-    for (let j = 0; j < $(`.add`).length; j++) {
-      if (
-        ($(".v2-address-title").html() === $(`.ten${j}`).html()) &
-        ($(".v2-mobile").html() === $(`.sdt${j}`).html())
-      ) {
-        $(`.checkAddress${j}`).attr("checked", "true");
-        $(`.checkAddress${j}`).attr("aria-checked", "true");
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-van_phong();
-async function van_phong() {
-  try {
-    for (let j = 0; j < $(`.add`).length; j++) {
-      if ($(`.type${j}`).html() === "VĂN PHÒNG") {
-        $(`.type${j}`).css({ background: "#189cb7", "border-radius": "99px" });
-        $(`.t${j}`).css({ background: "#189cb7" });
-      }
-    }
-    if ($(`.add-diachi`).html() === "VĂN PHÒNG") {
-      $(`.add-diachi`).css({ background: "#189cb7", "border-radius": "99px" });
-      $(`.dc`).css({ background: "#189cb7" });
-    }
-    if ($(`.add-diachi`).html() === "Nhà Riêng") {
-      $(`.add-diachi`).css({
-        background:
-          "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-      });
-      $(`.dc`).css({
-        background:
-          "linear-gradient(-143deg, rgb(255, 123, 83) 0%, rgb(255, 75, 40) 100%)",
-      });
     }
   } catch (error) {
     console.log(error);

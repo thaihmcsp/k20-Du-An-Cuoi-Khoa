@@ -1,4 +1,5 @@
 render();
+console.log(12232132321);
 $(".order-group").on("click", function () {
   window.location.href = "/order";
 });

@@ -12,7 +12,7 @@ header {
   z-index: 100;
 }
 .body-con {
-  text-align: center;
+  /* text-align: center; */
   width: 1188px;
   margin: auto;
 }
@@ -21,7 +21,7 @@ header {
 }
 .container {
   padding: 0px;
-  margin-top: 16px;
+  margin: 0px;
   width: 100%;
 }
 .footer-container ul {

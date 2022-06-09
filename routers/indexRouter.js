@@ -298,4 +298,18 @@ router.get("/search", checkRequire, async function (req, res) {
   }
 });
 
+router.get("/dataUserOrder/img&main", async function (req, res) {
+  // console.log(276,req.query.id);
+  const img = await productModel.findOne({ _id: req.query.id });
+  const main = await productCode.findOne({ _id: img.productCode });
+  // console.log(279,img.listImg[0], img.color,img.size,main.name);
+  res.json({
+    img: img.listImg[0],
+    color: img.color,
+    size: img.size,
+    main: main.name,
+    price: main.price,
+  });
+});
+
 module.exports = router;

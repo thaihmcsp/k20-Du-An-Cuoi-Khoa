@@ -47,7 +47,7 @@ router.get("/:id", checkRequire, async (req, res) => {
     _id: req.params.id,
   });
   res.render("user/filter/filter", {
-    user: req.user, 
+    user: req.user,
   });
 });
 

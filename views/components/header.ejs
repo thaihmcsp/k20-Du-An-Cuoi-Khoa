@@ -5,6 +5,7 @@
     top: 0;
     right: 0;
     left: 0;
+    z-index: 99;
   }
 
   .heading-list {
@@ -14,6 +15,7 @@
     justify-content: center;
     height: var(--heading-height);
     align-items: center;
+    margin: 0;
   }
 
   .heading-link {
@@ -83,7 +85,7 @@
   }
 
   .header-search-cart {
-    flex: 0.8;
+    flex: 0.6;
     text-align: center;
   }
 
@@ -128,6 +130,7 @@
     display: none;
     border: 1px solid #ccc;
     cursor: default;
+    z-index: 1;
   }
 
   .header-category-link {
@@ -153,37 +156,57 @@
   <ul class="heading-list">
     <li><a href="" class="heading-link">chăm sóc khách hàng</a></li>
     <li><a href="" class="heading-link">kiểm tra đơn hàng</a></li>
+    <% if (user) { %>
+    <li>
+      <a href="/profile/info" class="heading-link"
+        >Tài khoản <%= user.username %></a
+      >
+    </li>
+    <li>
+      <a href="/login" class="heading-link" onclick="logout()">Đăng xuất</a>
+    </li>
+    <% } else { %>
     <li><a href="/login" class="heading-link">đăng nhập</a></li>
     <li><a href="/register" class="heading-link">đăng kí</a></li>
+    <% } %>
   </ul>
   <div class="header">
     <div class="header-logo">
       <a href="/home">
-        <img src="/public/upload/lazada-icon.png" alt="" />
+        <img src="/public/icon/lazada-icon.png" alt="" />
       </a>
     </div>
     <div class="header-search">
       <div class="header-search-input">
-        <input
-          type="text"
-          name=""
-          id="search"
-          placeholder="Tìm kiếm trên Lazada"
-        />
+        <input type="text" name="" placeholder="Tìm kiếm trên Lazada" />
         <button><i class="fas fa-search"></i></button>
       </div>
       <div class="header-search-cart">
-        <a href="/cart"><img src="/public/upload/cart-logo.png" alt="" /></a>
+        <a href="/cart"><img src="/public/icon/cart-logo.png" alt="" /></a>
       </div>
     </div>
     <div class="header-category">
       Danh mục <i class="fas fa-angle-down"></i>
       <ul class="header-category-list">
-        <li><a href="" class="header-category-link">Thể thao</a></li>
-        <li><a href="" class="header-category-link">Điện tử</a></li>
-        <li><a href="" class="header-category-link">Đời sống</a></li>
+        <li>
+          <a href="" class="header-category-link">Điện tử</a>
+        </li>
       </ul>
     </div>
   </div>
 </header>
 <div class="height-empty"></div>
+
+<script>
+  async function logout() {
+    try {
+      await $.ajax({
+        type: "PUT",
+        url: "/user/logout",
+      });
+      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

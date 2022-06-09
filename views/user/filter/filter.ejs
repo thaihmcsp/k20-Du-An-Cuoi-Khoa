@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="shortcut icon"
+      href="/public/icon/lazada-logo.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/public/css/base.css" />
+    <link rel="stylesheet" href="/public/css/signUp.css" />
+    <link rel="stylesheet" href="/public/css/filter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="z111111"><%- include('../../components/header') %></div>
+
+    <div class="tong2manhinhdoc">
+      <div id="" class="buttomhome">
+        <div class="header123">
+          <a href="/">
+            <span class="buttomhomezzz1">Trang chủ</span>
+          </a>
+          <span class="buttomhomezzz">> </span>
+          <span class="buttomhomezzz2">Kết quả tìm kiếm</span>
+        </div>
+      </div>
+      <div class="tong2manhinhdoc2">
+        <div class="khoibentrai">
+          <div class=""><b>Giá</b></div>
+          <div class="">
+            <input id="giatoithieu" placeholder="Tối thiểu" type="number" />
+            <input id="giatoida" placeholder="Tối đa" type="number" />
+            <button onclick="timtheogia('<%=pagenow%>','<%= ten %>')">
+              Tìm theo giá
+            </button>
+          </div>
+          <div class="_9xWFp"><b>Mầu sắc</b></div>
+          <div class="chieudoc">
+            <div class="">
+              <span class=""><input type="checkbox" /> </span><span>red</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" /> </span><span>blue</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" /> </span><span>white</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" /> </span
+              ><span>mixcolor</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" /> </span><span>black</span>
+            </div>
+          </div>
+          <div class="_9xWFp"><b>Size</b></div>
+          <div class="chieudoc">
+            <div class="">
+              <span class=""><input type="checkbox" class="" /></span
+              ><span>S</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" class="" /></span
+              ><span>M</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" class="" /></span
+              ><span>L</span>
+            </div>
+            <div class="">
+              <span class=""><input type="checkbox" class="" /></span
+              ><span>XL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- khối bên phải header đã xong -->
+        <div class="khoibenphai">
+          <div class="headerkhoiphai">
+            <% let total %> <% if(dktimkiem.color){%> <%
+            listproduct.map(function(value,index){ %> <%= value %> <% })%> <%
+            }%> <% list123.map(function(value,index){ %> <% total = index %> <%
+            }) %> <% if(total>0){%> Có <%= total+1 %> kết quả tìm được theo "
+            <%= ten %> "<% } else{%> Không có kết quả tìm được theo : <%= ten %>
+            <% }%>
+          </div>
+          <div class="noidungbenphai">
+            <div class=""></div>
+
+            <% list.map(function(value,index){ %>
+            <div class="khoi0">
+              <div class="khoi1">
+                <div class="khoi11">
+                  <a href="product/detail/<%= value._id %>">
+                    <div class="xephang123">
+                      <div class="">
+                        <img src="<%= value.thumbnail %>" alt="" />
+                      </div>
+                      <div class="chubinhthuong">
+                        tên sản phẩm: <%= value.name %>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="khoi12">
+                  <div class="">sản phẩm có giá là <%= value.price %></div>
+                </div>
+              </div>
+            </div>
+
+            <% }) %>
+          </div>
+
+          <!-- phân trang -->
+          <div class="phantrang">
+            <button onclick="changepagetruoc('<%=pagenow%>','<%= ten %>')">
+              <-
+            </button>
+            <div class="phantranggiua">
+              <% let total1 = total+1 %> <% list.map(function(value,index){ %>
+              <% if(index<total1/8){%>
+              <button onclick="changepage('<%= index+1 %>','<%= ten %>')">
+                <%= index+1 %> <%= dktimkiem.color %> <%= dktimkiem.size %>
+              </button>
+              <% }%> <% }) %>
+            </div>
+            <button
+              onclick="changepagesau('<%= pagenow %>','<%= ten %>','<%=total1/8 %>')"
+            >
+              ->
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../components/footer') %>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="/public/js/search.js"></script>
+</html>

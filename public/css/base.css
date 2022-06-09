@@ -14,10 +14,14 @@
   --error-color: #f44336;
   --link-color: #049cb9;
   --font-footer: #0f136d;
+  --profile-color: #1a9cb7;
+  --profile-hover-color: #16849b;
   --heading-height: 25px;
   --header-height: 75px;
-  --header-width: 1100px;
+  --header-width: 1200px;
   --search-height: 45px;
+  --category-height: 150px;
+  --border-category: #e2e2e2;
 }
 
 html {

@@ -9,6 +9,7 @@ $('.v2-title-wrapper-edit').on('click',function(){
     $('.onEdit').hide()
 })
 $('.toast').css('display','none');
+
 async function findaddress(){
     try {
         // lấy địa chi các tỉnh thành việt nam
@@ -43,6 +44,8 @@ async function findaddress(){
             $('.add-diachi').html(data.type)
             $('.address-user').html(data.address)
             $('.v2-title-wrapper').attr('alt',data._id)
+            console.log(12,$('.add-diachi').html());
+            van_phong()
         }
         if ($('.v2-mobile').html() !== '' & $('.address-user').html() !== '') {
             $('.dat-hang').css({'background-color' : 'rgb(245, 114, 36)'})
@@ -241,7 +244,7 @@ async function luuadress() {
             $('.adress_quan').css('border','1px solid #f44336')
         }
         if ($('.hoten').val() !== '' & $('.phone').val() !== '' & $('.diachi').val() !== '' & $('.adress_tinh').val() !== '' & $('.adress_quan').val() !== '') {
-            console.log(228);
+            // console.log(228);
             const name = $('.hoten').val()
             const phone = $('.phone').val()
             const address = $('.diachi').val() + ' , ' + $('.adress_phuong').val() + ' , ' + ($('.adress_quan').val()).split('_')[0] + ' , ' + $('.adress_tinh').val() 
@@ -259,6 +262,7 @@ async function luuadress() {
             console.log(199,$('.v2-mobile').html($('.phone').val()));
             console.log(199,$('.add-diachi').html(addnhan));
             console.log(199,$('.address-user').html(address));
+            van_phong()
             $('.checkout_adress').show()
             $('.mod-guest-register').hide()
             const data = await $.ajax({ // tạo mới data dia chỉ nhận hàng
@@ -267,6 +271,8 @@ async function luuadress() {
                 data: {name: name,  phone: phone, address: address, type: addnhan}
             })
             console.log(211,data);
+            $('.dat-hang').css('background-color','rgb(245, 114, 36)')
+            location.reload()
         }
     } catch (error) {
         console.log(error);
@@ -314,8 +320,9 @@ async function luuadress1() {
             $('.v2-address-title').val($('.hoten7').val())
             console.log(199,$('.v2-address-title').html($('.hoten7').val()));
             console.log(199,$('.v2-mobile').html($('.phone7').val()));
-            console.log(199,$('.add-diachi').html(addnhan));
+            console.log(2000,$('.add-diachi').html(addnhan));
             console.log(199,$('.address-user').html(address));
+            
             $('.checkout_adress').show()
             $('.mod-guest-register').hide()
             const data = await $.ajax({ // tạo mới data dia chỉ nhận hàng
@@ -405,17 +412,20 @@ async function updateOrder(){
         const address = $('.address-user').html()
         const type = $('.add-diachi').html()
         console.log(327,total,name,phone,type, address);
-        const data = await $.ajax({ // tạo mới data dia chỉ nhận hàng
-            url: '/order/Neworder',
-            type: 'POST',
-            data: {total: total, name: name,  phone: phone,type: type, address: address}
-        })
-        // console.log(data);
-        
-        $('.toast').toast('show');
-        setTimeout(function () {
-            window.location.href = '/cart'
-        },2000); 
+        if (name != '' & phone != '' & address != '') { // kiểm tra đã có data nhận hàng chưa
+            const data = await $.ajax({ // tạo mới data dia chỉ nhận hàng
+                url: '/order/Neworder',
+                type: 'POST',
+                data: {total: total, name: name,  phone: phone,type: type, address: address}
+            })
+            // console.log(data);
+            
+            $('.toast').toast('show');
+            setTimeout(function () {
+                window.location.href = '/cart'
+            },2000);
+        }
+         
     } catch (error) {
         console.log(error);
     }
@@ -533,5 +543,7 @@ async function van_phong(){
         console.log(error);
     }
 }
+
+
 
 

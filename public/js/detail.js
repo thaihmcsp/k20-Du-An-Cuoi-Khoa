@@ -352,12 +352,20 @@ async function addCart(){
                 url : `/product/check/${mauchon}&${sizechon}&${idchon}&${soluong}`,
                 type : 'GET'
             })
-            if (res._id) { // check có id ko
-                console.log(325,res._id);
+            console.log(355,res);
+            // console.log(356,res.ListData._id);
+            // console.log(357,res.UserID);
+            if (res.mess ){
+                console.log(380,res.mess);
+                console.log(381,res.quantity);
+                $('.cart-text').html(res.mess +'. Tối đa : '+ res.quantity)
+                $('.modal-body span,.modal-body i').css({color: "red"})
+            } else { // check có id ko
+                console.log(325,res.ListData._id);
                 const update = await $.ajax({ // update data đã có
                     url: '/cart/update',
                     type: 'PUT',
-                    data: {productID: res._id, quantity: soluong}
+                    data: {UserID: res.UserID ,productID: res.ListData._id, quantity: soluong}
                 })
                 console.log(339,update.modifiedCount);
                 if (update.modifiedCount) {
@@ -366,22 +374,15 @@ async function addCart(){
                     const data = await $.ajax({ // tạo mới data
                     url: '/cart/create',
                     type: 'POST',
-                    data: {productID: res._id,  quantity: soluong}
+                    data: {UserID: res.UserID ,productID: res.ListData._id,  quantity: soluong}
                     })
                     console.log(348,data);
                 }
-                
                 $('.cart-text').html('Thêm vào giỏ hàng thành công')
                 $('.modal-body span,.modal-body i').css({color: "#4caf50"})
-            } else {
-                console.log(356,res.mess);
-                console.log(357,res.quantity);
-                $('.cart-text').html(res.mess +'. Tối đa : '+ res.quantity)
-                $('.modal-body span,.modal-body i').css({color: "red"})
             }
             
-        }
-        
+        }    
     } catch (error) {
         console.log(error);
     }

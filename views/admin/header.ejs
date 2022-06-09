@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../public/css/admin/header.css" />
+  </head>
+  <style>
+    #right {
+      padding: 0px 15px;
+    }
+    #right:hover,
+    #headeruser:hover {
+      border-bottom: #0033a0 solid 5px;
+    }
+  </style>
+  <body>
+    <div class="header-row">
+      <div class="left-col">
+        <img src="/public/upload/lazada.jpg" alt="" class="avatar" />
+        <a href="/admin" class="the-a"
+          ><button class="doi-mau"><h5>Home</h5></button></a
+        >
+        <a href="/user/get" class="the-a" id="headeruser"
+          ><button class="doi-mau"><h5>Manage User</h5></button></a
+        >
+        <a href="/orderadmin" class="the-a" id="header-orderadmin"
+          ><button class="doi-mau"><h5>Order</h5></button></a
+        >
+        <a href="/category" class="the-a" id="header-category"
+          ><button class="doi-mau"><h5>Category</h5></button></a
+        >
+        <a href="/codeProduct" class="the-a" id="header-code"
+          ><button class="doi-mau"><h5>ProductCode</h5></button></a
+        >
+      </div>
+      <a href="" onclick="logout()" id="right">
+        <button class="doi-mau"><h5>Logout</h5></button>
+      </a>
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</html>
+<script>
+  async function logout() {
+    try {
+      await $.ajax({
+        type: "PUT",
+        url: "/user/logout",
+      });
+      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>

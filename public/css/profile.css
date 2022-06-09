@@ -498,12 +498,32 @@ body {
   font-size: 14px;
 }
 
+.order-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 250px;
+}
+
+.order-empty img {
+  width: 100px;
+  height: 100px;
+}
+
+.order-empty h5 {
+  font-size: 18px;
+  color: var(--font-color);
+  margin-top: 20px;
+}
+
 /* Modal Confirm */
 @keyframes showModal {
-  from { 
+  from {
     opacity: 0;
     transform: scale(0.3);
-  } to {
+  }
+  to {
     opacity: 1;
     transform: scale(1);
   }
@@ -525,12 +545,12 @@ body {
 .modal-footer {
   border: none;
   padding: 8px 12px;
-} 
+}
 
 .btn-primary {
   background-color: var(--btn-color);
   border: none;
-  transition: ease-in-out .25s;
+  transition: ease-in-out 0.25s;
 }
 
 .btn-primary:hover {

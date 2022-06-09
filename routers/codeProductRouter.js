@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const ProductCode = require("../models/productCode");
-const ProductCodeModel = require('../models/productCode')
+const ProductCodeModel = require("../models/productCode");
 const Category = require("../models/category");
 const Product = require("../models/product");
 const path = require("path");
@@ -19,6 +19,32 @@ var storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+// Access Not Marker
+function removeAccents(str) {
+  var AccentsMap = [
+    "aàảãáạăằẳẵắặâầẩẫấậ",
+    "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+    "dđ",
+    "DĐ",
+    "eèẻẽéẹêềểễếệ",
+    "EÈẺẼÉẸÊỀỂỄẾỆ",
+    "iìỉĩíị",
+    "IÌỈĨÍỊ",
+    "oòỏõóọôồổỗốộơờởỡớợ",
+    "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+    "uùủũúụưừửữứự",
+    "UÙỦŨÚỤƯỪỬỮỨỰ",
+    "yỳỷỹýỵ",
+    "YỲỶỸÝỴ",
+  ];
+  for (var i = 0; i < AccentsMap.length; i++) {
+    var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+    var char = AccentsMap[i][0];
+    str = str.replace(re, char);
+  }
+  return str;
+}
 
 // Home
 router.get("/pagination", async (req, res) => {
@@ -63,6 +89,7 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
     const create = await ProductCode.create({
       code: req.body.code,
       name: req.body.name,
+      nameSearch: removeAccents(req.body.name),
       thumbnail: req.file.path,
       categoryID: req.body.categoryID,
       price: req.body.price,
@@ -92,20 +119,18 @@ router.get("/get", checkLogin, async function (req, res) {
     .limit(req.query.limit);
   res.render("admin/dataproductCode", { listproductCode });
 });
-router.get('/find',function(req,res){
-  console.log(99,req.query.name);
-  ProductCodeModel.find(
-      {name:{$regex:req.query.name,$options:'i'}}
-    )
-    .skip((req.query.page-1) *req.query.limit)
+router.get("/find", function (req, res) {
+  console.log(99, req.query.name);
+  ProductCodeModel.find({ name: { $regex: req.query.name, $options: "i" } })
+    .skip((req.query.page - 1) * req.query.limit)
     .limit(req.query.limit)
     .then(function (data) {
-       res.json (data)
-      })
-      .catch(function (err) {
-        res.json({mess:'thất bại',err})
-      });
-})
+      res.json(data);
+    })
+    .catch(function (err) {
+      res.json({ mess: "thất bại", err });
+    });
+});
 router.get("/", async function (req, res) {
   const listproductCode = await ProductCode.find().limit(12);
   const totala = await ProductCode.count();
@@ -135,6 +160,7 @@ router.put("/:idupdate", upload.single("chien"), async function (req, res) {
         {
           code: req.body.code,
           name: req.body.name,
+          nameSearch: removeAccents(req.body.name),
           categoryID: req.body.categoryID,
           price: req.body.price,
         }

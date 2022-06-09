@@ -60,6 +60,7 @@ router.get("/detail/:id", checkRequire, async (req, res) => {
       listsize: size,
       queryColor,
       querySize,
+      ten: "",
     });
   } catch (error) {
     console.log(error);
@@ -173,9 +174,9 @@ router.get("/get", async function (req, res) {
 });
 
 router.get("/:id", checkLogin, async function (req, res) {
-  const listproduct = await ProductModel.find({ productCode: req.params.id }).limit(
-    5
-  );
+  const listproduct = await ProductModel.find({
+    productCode: req.params.id,
+  }).limit(5);
   const a = await await ProductModel.find({ productCode: req.params.id });
   const totala = a.length;
   const total = Math.ceil(totala / 5);
@@ -293,10 +294,10 @@ router.post("/add", upload.array("listImg", 5), async function (req, res) {
 router.delete("/:id", async function (req, res) {
   try {
     await ProductModel.deleteOne({ _id: req.params.id });
-    const listproduct = await ProductModel.find()
+    const listproduct = await ProductModel.find();
     res.render("admin/product", { listproduct });
   } catch (error) {
-    res.status(400).json({mess : 'Failed'})
+    res.status(400).json({ mess: "Failed" });
   }
 });
 
@@ -324,9 +325,11 @@ router.put(
           quantity: req.body.quantityid,
         }
       );
-      const listproduct = await ProductModel.find({ productCode: arr[length - 1] })
-        // .skip((req.query.page - 1) * req.query.limit)
-        // .limit(req.query.limit);
+      const listproduct = await ProductModel.find({
+        productCode: arr[length - 1],
+      });
+      // .skip((req.query.page - 1) * req.query.limit)
+      // .limit(req.query.limit);
       res.render("admin/product", { listproduct });
     } else {
       const update = await ProductModel.updateOne(
@@ -338,7 +341,9 @@ router.put(
           quantity: req.body.quantityid,
         }
       );
-      const listproduct = await ProductModel.find({ productCode: arr[length - 1] })
+      const listproduct = await ProductModel.find({
+        productCode: arr[length - 1],
+      })
         .skip((req.query.page - 1) * req.query.limit)
         .limit(req.query.limit);
       res.render("admin/product", { listproduct });

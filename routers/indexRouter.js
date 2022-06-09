@@ -8,6 +8,7 @@ const orderModel = require("../models/orderModel");
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkAdmin = require("../middleWare/checkAdmin");
 const checkRequire = require("../middleWare/checkRequire");
+const { name } = require("ejs");
 
 // Home
 router.get("/", checkRequire, async (req, res) => {
@@ -44,6 +45,7 @@ router.get("/", checkRequire, async (req, res) => {
     listproductCode,
     countProduct,
     listCode,
+    ten: "",
   });
 });
 
@@ -86,6 +88,7 @@ router.get("/pagination", checkRequire, async (req, res) => {
       listPage: Math.ceil(total / 24),
       currentPage: page,
       total,
+      ten: "",
     });
   } catch (error) {
     console.log(error);
@@ -94,11 +97,11 @@ router.get("/pagination", checkRequire, async (req, res) => {
 
 // Login & Register
 router.get("/register", checkUser, (req, res) => {
-  res.render("user/signUp/signUp", { user: req.user });
+  res.render("user/signUp/signUp", { user: req.user, ten: "" });
 });
 
 router.get("/login", checkUser, (req, res) => {
-  res.render("user/signIn/signIn", { user: req.user });
+  res.render("user/signIn/signIn", { user: req.user, ten: "" });
 });
 
 router.get("/admin/login", checkUser, (req, res) => {
@@ -107,7 +110,7 @@ router.get("/admin/login", checkUser, (req, res) => {
 
 // Profile
 router.get("/profile/info", checkLogin, (req, res) => {
-  res.render("user/profile/info", { user: req.user });
+  res.render("user/profile/info", { user: req.user, ten: "" });
 });
 
 router.get("/profile/order", checkLogin, async (req, res) => {
@@ -117,6 +120,7 @@ router.get("/profile/order", checkLogin, async (req, res) => {
   res.render("user/profile/myOrder", {
     user: req.user,
     listOrder: listOrder.reverse(),
+    ten: "",
   });
 });
 
@@ -145,6 +149,7 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
     res.render("user/profile/detailOrder", {
       user: req.user,
       detailOrder,
+      ten: "",
     });
   } catch (error) {
     console.log(error);
@@ -153,11 +158,11 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
 });
 
 router.get("/profile/info/edit", checkLogin, (req, res) => {
-  res.render("user/profile/edit", { user: req.user });
+  res.render("user/profile/edit", { user: req.user, ten: "" });
 });
 
 router.get("/profile/info/change-password", checkLogin, (req, res) => {
-  res.render("user/profile/changePassword", { user: req.user });
+  res.render("user/profile/changePassword", { user: req.user, ten: "" });
 });
 
 // Admin
@@ -204,48 +209,89 @@ router.get("/admin/productCode", async function (req, res) {
 // });
 
 router.get("/order", checkLogin, (req, res) => {
-  res.render("user/order/order");
+  res.render("user/order/order", {
+    user: req.user,
+    ten: "",
+  });
 });
+
+function removeAccents(str) {
+  var AccentsMap = [
+    "aàảãáạăằẳẵắặâầẩẫấậ",
+    "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+    "dđ",
+    "DĐ",
+    "eèẻẽéẹêềểễếệ",
+    "EÈẺẼÉẸÊỀỂỄẾỆ",
+    "iìỉĩíị",
+    "IÌỈĨÍỊ",
+    "oòỏõóọôồổỗốộơờởỡớợ",
+    "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+    "uùủũúụưừửữứự",
+    "UÙỦŨÚỤƯỪỬỮỨỰ",
+    "yỳỷỹýỵ",
+    "YỲỶỸÝỴ",
+  ];
+  for (var i = 0; i < AccentsMap.length; i++) {
+    var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+    var char = AccentsMap[i][0];
+    str = str.replace(re, char);
+  }
+  return str;
+}
 
 router.get("/search", checkRequire, async function (req, res) {
   let dktimkiem = {};
-  let dktimkiem1 = { name: { $regex: req.query.keyword, $options: "i" } };
+  let searchCondition = {
+    nameSearch: {
+      $regex: removeAccents(req.query.keyword),
+      $options: "i",
+    },
+  };
 
   if (req.query.pricemax) {
-    dktimkiem1.price = {
+    searchCondition.price = {
       $lte: req.query.pricemax * 1,
       $gte: req.query.pricemin * 1,
     };
   }
-  if (req.query.color) {
-    dktimkiem.color = [req.query.color];
-  }
-  if (req.query.size) {
-    dktimkiem.size = req.query.size;
-  }
+
   try {
-    const listproduct1 = await productModel.find();
-    const listSearchNoLimit = await productCode.find(dktimkiem1);
-    console.log(listSearchNoLimit);
-    const listSearch = await productCode
-      .find(dktimkiem1)
-      .limit(req.query.limit)
-      .skip((req.query.page - 1) * req.query.limit);
-    const listSearch1 = await productCode.find({
-      name: { $regex: req.query.keyword, $options: "i" },
+    // const listproduct1 = await productCode.find();
+    const listProduct = await productModel.find();
+    const listSearchNoLimit = await productCode.find(searchCondition);
+    let listSearch = await productCode
+      .find(searchCondition)
+      .skip((req.query.page - 1) * 16)
+      .limit(16);
+    const listCode = listProduct.filter(function (product, index) {
+      return (
+        index ===
+        listProduct.findIndex((value) => {
+          return value.productCode === product.productCode;
+        })
+      );
+    });
+    listSearch = listSearch.map((product, i) => {
+      for (let j = 0; j < listCode.length; j++) {
+        if (listCode[j].productCode == product._id) {
+          const newProduct = { ...product._doc };
+          newProduct.hasData = true;
+          return newProduct;
+        }
+      }
+      return product;
     });
     res.render("user/filter/filter", {
       user: req.user,
-      dktimkiem: dktimkiem,
-      listproduct: listproduct1,
+      dktimkiem,
       min: req.query.pricemin,
       max: req.query.pricemax,
-      url: req.url,
       pagenow: req.query.page,
       ten: req.query.keyword,
-      list: listSearch,
-      listNoLimit: listSearchNoLimit,
-      list123: listSearch1,
+      listSearch,
+      tongTimDuoc: listSearchNoLimit.length,
+      // list123: listSearch1,
     });
   } catch (err) {
     res.status(500).json({ mess: "zz,thất bại", err });

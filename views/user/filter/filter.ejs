@@ -10,6 +10,7 @@
       href="/public/icon/lazada-logo.png"
       type="image/x-icon"
     />
+    <link rel="stylesheet" href="/public/css/base.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -17,7 +18,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="/public/css/base.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="/public/css/filter.css" />
   </head>
   <body>
@@ -56,92 +62,26 @@
           <h3><%= ten %></h3>
           <div class="headerTopRight">
             <p>
-              <% let tongTimDuoc %> <% listNoLimit.map(function(value11,index){
-              %> <% tongTimDuoc = index +1 %> <% })%> <% if(tongTimDuoc>0){%> Có
-              <%= tongTimDuoc %> kết quả tìm được theo "<%= ten %>" <% } else{%>
-              Không có kết quả tìm được theo "<%= ten %>" <% }%>
+              <% if(tongTimDuoc>0){%> Có <%= tongTimDuoc %> kết quả tìm được
+              theo "<%= ten %>" <% } else { %> Không có kết quả tìm được theo
+              "<%= ten %>" <% } %>
             </p>
           </div>
 
-          <div class="noidungbenphai">
-            <% let i %>
-            <div class=""></div>
-            <% let tknangcao =[] %> <% if(dktimkiem.color){%> <%
-            listproduct.map(function(value,index){ %> <% if(value.color ==
-            dktimkiem.color ){%> <% tknangcao.push(value.productCode) %> <% }%>
-            <% }) %> <% }else{%> <% list.map(function(value,index){ %> <% let
-            idcuano = value._id %> <% let cacmau = [] %> <%
-            listproduct.map(function(value11,index){ %> <%
-            if(value11.productCode == idcuano){%> <% cacmau.push( value11.color)
-            %> <% }%> <% })%> <% let cacmau1 = [...new Set(cacmau)];%> <% let
-            cacsize = [] %><% listproduct.map(function(value11,index){ %> <%
-            if(value11.productCode == idcuano){%> <% cacsize.push( value11.size)
-            %> <% }%> <% })%> <% let cacsize1 = [...new Set(cacsize)];%>
-            <div class="khoi0" id="<%= cacmau1 %>">
-              <% i = index+1 %>
-
-              <div class="khoi1">
-                <div class="khoi11">
-                  <a href="product/detail/<%= value._id %>">
-                    <div class="xephang123">
-                      <div class="">
-                        <img src="<%= value.thumbnail %>" alt="" />
-                      </div>
-                      <div class="chubinhthuong">
-                        Sản phẩm: <%= value.name %>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <div class="khoi12">
-                  <div class="">$: <%= value.price %>đ</div>
-                </div>
-                <div class="khoi13">
-                  <div class="">Mầu: <%= cacmau1 %></div>
-                </div>
-                <div class="khoi14">
-                  <div class="">Size:<%= cacsize1 %></div>
-                </div>
-              </div>
-            </div>
-            <% })%> <% }%> <% let uniquetknangcao = [...new Set(tknangcao)];%>
-            <% for (let i = 0; i < uniquetknangcao.length; i++) {%> <%
-            list.map(function(value,index){ %> <% if (uniquetknangcao[i] ==
-            value._id) {%>
-            <div class="khoi0">
-              <div class="khoi1">
-                <div class="khoi11">
-                  <a href="product/detail/<%= value._id %>">
-                    <div class="xephang123">
-                      <div class="">
-                        <img src="<%= value.thumbnail %>" alt="" />
-                      </div>
-                      <div class="chubinhthuong">
-                        tên sản phẩm: <%= value.name %>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <div class="khoi12">
-                  <div class="">sản phẩm có giá là <%= value.price %></div>
-                </div>
-              </div>
-            </div>
-            <% } %> <% })%> <% }%>
-          </div>
+          <div class="noidungbenphai"><%- include('./product') %></div>
 
           <!-- phân trang -->
+          <% if (tongTimDuoc > 16 ) { %>
           <div class="phantrang">
             <button onclick="changepagetruoc('<%=pagenow%>','<%= ten %>')">
               <-
             </button>
             <div class="phantranggiua">
-              <% list.map(function(value,index){ %> <% if(index<
-              tongTimDuoc/8){%>
+              <% listSearch.map(function(value,index){ %>
               <button onclick="changepage('<%= index+1 %>','<%= ten %>')">
-                <%= index+1 %>
+                <%= index + 1 %>
               </button>
-              <% }%> <% }) %>
+              <% }) %>
             </div>
             <button
               onclick="changepagesau('<%= pagenow %>','<%= ten %>','<%=tongTimDuoc/8 %>')"
@@ -149,6 +89,7 @@
               ->
             </button>
           </div>
+          <% } %>
         </div>
       </div>
     </main>

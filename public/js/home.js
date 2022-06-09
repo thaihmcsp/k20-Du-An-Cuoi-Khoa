@@ -1,10 +1,6 @@
-function btnView() {
-  window.location.href = "/pagination";
-}
-
-let link = window.location.href;
-let numPage = link.split("=")[1];
-if (link.split("/")[link.split("/").length - 1] == "pagination") {
+let url = window.location.href;
+let numPage = url.split("=")[1];
+if (url.split("/")[url.split("/").length - 1] == "pagination") {
   numPage = 1;
 }
 $(`#page-${numPage}`).addClass("active");

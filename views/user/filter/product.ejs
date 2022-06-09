@@ -1,0 +1,24 @@
+<ul class="product-list">
+  <% listSearch.map(product => { %>
+  <li class="product-item col-3">
+    <a class="product-link" <%= product.hasData ? 'href=/product/detail/' + product._id : null  %>>
+      <img src="<%= product.thumbnail %>" alt="" />
+      <div class="product-content">
+        <p class="product-name"><%= product.name %></p>
+        <p class="product-price">
+          <span><%= product.price.toLocaleString() %> </span>
+          <span>₫</span>
+        </p>
+      </div>
+      <div class="product-address">
+        <% if (product.hasData) { %>
+        <i class="fas fa-heart"></i>
+        <% } else { %>
+        <p>Hết hàng</p>
+        <% } %>
+        <p></p>
+      </div>
+    </a>
+  </li>
+  <% }) %>
+</ul>

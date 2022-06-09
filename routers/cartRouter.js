@@ -13,7 +13,7 @@ router.get("/", checkLogin, async (req, res) => {
         console.log(90, dataObject.arrproductcode[i].price);
       }
     }
-    res.render("user/cart/cart", { ...dataObject, user: req.user });
+    res.render("user/cart/cart", { ...dataObject, user: req.user, ten: "" });
   } catch (error) {
     console.log(error);
   }

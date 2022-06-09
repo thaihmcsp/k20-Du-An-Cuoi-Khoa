@@ -222,8 +222,16 @@
     </div>
     <div class="header-search">
       <div class="header-search-input">
-        <input type="text" name="" id="search" placeholder="Tìm kiếm" />
-        <button onclick="searchBtn()"><i class="fas fa-search"></i></button>
+        <input
+          type="text"
+          name=""
+          id="search"
+          value="<%= ten == '' ? '' : ten %>"
+          placeholder="Tìm kiếm"
+        />
+        <button onclick="searchBtn()">
+          <i class="fas fa-search"></i>
+        </button>
         <ul class="searchtong search-hide">
           <li class="searchconten">
             <a href="#"> gif do </a>
@@ -283,19 +291,15 @@
   });
 
   function searchBtn() {
-    const search = $("#search").val();
+    const search = $("#search").val().trim();
     if (search == "") {
       window.location.href = "/";
+    } else if (search.includes(" ")) {
+      window.location.href = `/search?keyword=${search
+        .split(" ")
+        .join("+")}&page=1`;
     } else {
-      window.location.href = `/search?keyword=${search}&page=1&limit=8`;
+      window.location.href = `/search?keyword=${search}&page=1`;
     }
-  }
-
-  let link = window.location.href;
-  let keyword = link.split("keyword=")[1].split("&")[0];
-  if (keyword) {
-    $("#search").val(keyword);
-  } else {
-    $("#search").val("");
   }
 </script>

@@ -29,6 +29,7 @@
         <div class="content-info">
           <h3>Đơn hàng của tôi</h3>
           <div class="content-info-container">
+            <% if (listOrder.length > 0) { %>
             <div class="content-order">
               <% listOrder.map(order => { %>
               <div class="content-order-item">
@@ -83,6 +84,12 @@
               </div>
               <% }) %>
             </div>
+            <% } else { %>
+            <div class="order-empty">
+              <img src="/public/icon/no-task.png" alt="" />
+              <h5>Bạn chưa có đơn hàng nào</h5>
+            </div>
+            <% } %>
           </div>
         </div>
       </div>

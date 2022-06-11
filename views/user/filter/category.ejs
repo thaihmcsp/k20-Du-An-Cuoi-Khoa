@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= ten %> - Mua <%= ten %> trên Lazada VN</title>
+    <title><%= name %></title>
     <link
       rel="shortcut icon"
       href="/public/icon/lazada-logo.png"
@@ -37,7 +37,7 @@
             <span class="buttomhomezzz1">Trang chủ</span>
           </a>
           <span class="buttomhomezzz">> </span>
-          <span class="buttomhomezzz2">Kết quả tìm kiếm</span>
+          <span class="buttomhomezzz2"><%= name %></span>
         </div>
       </div>
       <div class="tong2manhinhdoc2">
@@ -49,7 +49,7 @@
               <p>-</p>
               <input id="giatoida" placeholder="Tối đa" type="number" value="<%= max %>" />
               <button
-                onclick="timtheogia('<%=pagenow%>','<%= ten %>')"
+                onclick="timtheogia('<%=pagenow%>','<%= name %>')"
                 class="khoibentrai-group-price-btn"
               >
                 Tìm theo giá
@@ -59,12 +59,12 @@
         </div>
 
         <div class="khoibenphai">
-          <h3><%= ten %></h3>
+          <h3><%= name %></h3>
           <div class="headerTopRight">
             <p>
               <% if(tongTimDuoc>0){%> Có <%= tongTimDuoc %> kết quả tìm được
-              theo "<%= ten %>" <% } else { %> Không có kết quả tìm được theo
-              "<%= ten %>" <% } %>
+              trong <%= name %> <% } else { %> Không có kết quả tìm được trong
+              <%= name %> <% } %>
             </p>
             <div>
               <span>Sắp xếp theo :</span>
@@ -84,18 +84,18 @@
           <!-- phân trang -->
           <% if (tongTimDuoc > 16 ) { %>
           <div class="phantrang">
-            <button onclick="changepagetruoc('<%=pagenow%>','<%= ten %>')">
+            <button onclick="changepagetruoc('<%=pagenow%>','<%= name %>')">
               <-
             </button>
             <div class="phantranggiua">
               <% listSearch.map(function(value,index){ %>
-              <button onclick="changepage('<%= index+1 %>','<%= ten %>')">
+              <button onclick="changepage('<%= index+1 %>','<%= name %>')">
                 <%= index + 1 %>
               </button>
               <% }) %>
             </div>
             <button
-              onclick="changepagesau('<%= pagenow %>','<%= ten %>','<%=tongTimDuoc/8 %>')"
+              onclick="changepagesau('<%= pagenow %>','<%= name %>','<%=tongTimDuoc/8 %>')"
             >
               ->
             </button>

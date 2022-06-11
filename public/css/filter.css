@@ -68,10 +68,57 @@ a:active {
   font-weight: 450;
 }
 
+.khoibenphai-price {
+  display: flex;
+  align-items: center;
+}
+
+.khoibenphai-price p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.khoibenphai-price-item {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border: 1px solid var(--border-category);
+  font-size: 13px;
+  color: #666;
+}
+
+.khoibenphai-price-item i {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.headerTopRight {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  justify-content: space-between;
+}
+
 .headerTopRight p {
   font-size: 14px;
   color: #666;
-  margin-bottom: 12px;
+  margin-bottom: 0;
+}
+
+.headerTopRight div {
+  font-size: 14px;
+}
+
+#sort {
+  margin-left: 12px;
+  padding: 8px;
+  width: 150px;
+  cursor: pointer;
+  border: 1px solid var(--border-category);
+  transition: ease-in 0.25s;
+}
+
+#sort:hover {
+  border: 1px solid #666;
 }
 
 .headerkhoiphai {
@@ -107,7 +154,7 @@ a:active {
   display: block;
   font-size: 14px;
   margin-bottom: -10px;
-  margin-top: 15px;
+  margin-top: 28px;
   text-size-adjust: 100%;
   width: 1000px;
 }

@@ -8,7 +8,6 @@ const orderModel = require("../models/orderModel");
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkAdmin = require("../middleWare/checkAdmin");
 const checkRequire = require("../middleWare/checkRequire");
-const { name } = require("ejs");
 
 // Home
 router.get("/", checkRequire, async (req, res) => {
@@ -215,6 +214,7 @@ router.get("/order", checkLogin, (req, res) => {
   });
 });
 
+// Filter
 function removeAccents(str) {
   var AccentsMap = [
     "aàảãáạăằẳẵắặâầẩẫấậ",
@@ -257,13 +257,19 @@ router.get("/search", checkRequire, async function (req, res) {
   }
 
   try {
-    // const listproduct1 = await productCode.find();
     const listProduct = await productModel.find();
     const listSearchNoLimit = await productCode.find(searchCondition);
     let listSearch = await productCode
       .find(searchCondition)
       .skip((req.query.page - 1) * 16)
-      .limit(16);
+      .limit(16)
+    if (req.query.sort != 'popularity') {
+      listSearch = await productCode
+        .find(searchCondition)
+        .sort({price : req.query.sort == 'priceasc' ? 1 : -1})
+        .skip((req.query.page - 1) * 16)
+        .limit(16)
+    } 
     const listCode = listProduct.filter(function (product, index) {
       return (
         index ===

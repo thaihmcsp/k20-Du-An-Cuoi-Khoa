@@ -4,6 +4,7 @@ const checkRequire = require("../middleWare/checkRequire");
 const UserModel = require("../models/userModel");
 const Category = require("../models/category");
 const ProductCode = require("../models/productCode");
+const productModel = require('../models/product')
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -41,14 +42,68 @@ router.get("/", checkLogin, async function (req, res) {
   }
 });
 
-// Home
 router.get("/:id", checkRequire, async (req, res) => {
-  const category = await Category.findOne({
-    _id: req.params.id,
-  });
-  res.render("user/filter/filter", {
-    user: req.user,
-  });
+  try {
+    const category = await Category.findOne({
+      _id : req.params.id
+    })
+    if (category) {
+      let condition = {
+        categoryID : category._id
+      }
+    
+      if (req.query.pricemax) {
+        condition.price = {
+          $lte: req.query.pricemax * 1,
+          $gte: req.query.pricemin * 1,
+        };
+      }
+      const listProduct = await productModel.find();
+      const listSearchNoLimit = await ProductCode.find(condition)
+      let listSearch = await ProductCode.find(condition)
+        .skip((req.query.page - 1) * 16)
+        .limit(16)
+      if (req.query.sort != 'popularity') {
+        listSearch = await ProductCode
+          .find(condition)
+          .sort({price : req.query.sort == 'priceasc' ? 1 : -1})
+          .skip((req.query.page - 1) * 16)
+          .limit(16)
+      }
+      const listCode = listProduct.filter(function (product, index) {
+        return (
+          index ===
+          listProduct.findIndex((value) => {
+            return value.productCode === product.productCode;
+          })
+        );
+      });
+      listSearch = listSearch.map((product, i) => {
+        for (let j = 0; j < listCode.length; j++) {
+          if (listCode[j].productCode == product._id) {
+            const newProduct = { ...product._doc };
+            newProduct.hasData = true;
+            return newProduct;
+          }
+        }
+        return product;
+      });
+      res.render("user/filter/category", {
+        user: req.user,
+        ten : '',
+        name : category.name,
+        pagenow: req.query.page,
+        tongTimDuoc: listSearchNoLimit.length,
+        listSearch,
+        min: req.query.pricemin,
+        max: req.query.pricemax,
+      });
+    } else {
+      res.status(400).json({mess : 'Failed'})
+    }
+  } catch (error) {
+    res.status(500).json({mess : 'Error ' , error})
+  }
 });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {

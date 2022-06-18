@@ -110,7 +110,11 @@
                   </div>
                   <div class="product-address">
                     <% if (product.hasData) { %>
-                      <i class="fas fa-heart"></i>
+                      <% if (user.favorite.includes(product._id)) { %>
+                        <i class="fas fa-heart" style="color: red;"></i>
+                      <% } else { %>
+                        <i class="fas fa-heart" ></i>
+                      <% } %>
                     <% } else { %>
                       <p>Hết hàng</p>
                     <% } %>

@@ -62,8 +62,22 @@
           <div class="block-center">
             <div id="myresult" class="img-zoom-result"></div>
             <div class="block-center-left">
-              <div class="name-sp" id="namesp" alt="<%= listcode.id %>">
+              <div class="name-sp" id="namesp">
                 <h1><%= listcode.name %></h1>
+                <% if (user.favorite.includes(listcode._id)) { %>
+                <i
+                  onclick="showHeart('<%= listcode._id %>')"
+                  id="<%= listcode._id %>"
+                  style="color: red"
+                  class="fas fa-heart"
+                ></i>
+                <% } else { %>
+                <i
+                  onclick="showHeart('<%= listcode._id %>')"
+                  id="<%= listcode._id %>"
+                  class="fas fa-heart"
+                ></i>
+                <% } %>
               </div>
 
               <div class="danh-gia-sao">

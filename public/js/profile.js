@@ -1,9 +1,11 @@
-let url = window.location.href
+let url = window.location.href;
 
-if (url.includes('info')) {
-  $('#info').addClass('active')
+if (url.includes("info")) {
+  $("#info").addClass("active");
+} else if (url.includes("order")) {
+  $("#order").addClass("active");
 } else {
-  $('#order').addClass('active')
+  $("#favorite").addClass("active");
 }
 
 // Change Password
@@ -148,13 +150,13 @@ fileToRead.addEventListener(
 
 //* Cancel Order
 async function cancelOrder() {
-  let orderID = url.split('/')[url.split('/').length - 1]
+  let orderID = url.split("/")[url.split("/").length - 1];
   try {
     await $.ajax({
-      type : 'PUT',
-      url : '/order/' + orderID
-    })
-    window.location.reload()
+      type: "PUT",
+      url: "/order/" + orderID,
+    });
+    window.location.reload();
   } catch (error) {
     console.log(error);
   }

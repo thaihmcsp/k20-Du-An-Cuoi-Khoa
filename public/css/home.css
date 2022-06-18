@@ -147,6 +147,7 @@ body {
   color: var(--font-heading-color);
   margin-left: 4px;
   font-size: 14px;
+  z-index: 1;
 }
 
 .product-address p {

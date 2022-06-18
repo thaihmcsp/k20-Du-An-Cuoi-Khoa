@@ -134,7 +134,6 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
         path: "productList.productID",
         populate: { path: "productCode" },
       });
-    console.log(detailOrder.productList[0]);
     // let hour = Math.round( (new Date() - detailOrder.createdAt ) / 3600000)
     // let newOrder = {...detailOrder._doc}
     // if( hour < 24){
@@ -153,6 +152,26 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ mess: "That bai", error });
+  }
+});
+
+router.get("/profile/favorite", checkLogin, async (req, res) => {
+  try {
+    var listCode = [];
+    let listFavorite = req.user.favorite;
+    for (let i = 0; i < listFavorite.length; i++) {
+      const listProductCode = await productCode.findOne({
+        _id: listFavorite[i],
+      });
+      listCode.push(listProductCode);
+    }
+    res.render("user/profile/favorite", {
+      user: req.user,
+      ten: "",
+      listCode,
+    });
+  } catch (error) {
+    res.status(500).json({ mess: "Server Error" });
   }
 });
 
@@ -262,14 +281,14 @@ router.get("/search", checkRequire, async function (req, res) {
     let listSearch = await productCode
       .find(searchCondition)
       .skip((req.query.page - 1) * 16)
-      .limit(16)
-    if (req.query.sort != 'popularity') {
+      .limit(16);
+    if (req.query.sort != "popularity") {
       listSearch = await productCode
         .find(searchCondition)
-        .sort({price : req.query.sort == 'priceasc' ? 1 : -1})
+        .sort({ price: req.query.sort == "priceasc" ? 1 : -1 })
         .skip((req.query.page - 1) * 16)
-        .limit(16)
-    } 
+        .limit(16);
+    }
     const listCode = listProduct.filter(function (product, index) {
       return (
         index ===

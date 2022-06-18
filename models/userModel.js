@@ -18,6 +18,10 @@ const UserSchema = mongoose.Schema(
     },
     searchHistory: [{ type: String }],
     token: String,
+    favorite : [{
+      type : String,
+      ref : 'productCode'
+    }]
   },
   { collection: "user" }
 );

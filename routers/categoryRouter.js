@@ -4,7 +4,7 @@ const checkRequire = require("../middleWare/checkRequire");
 const UserModel = require("../models/userModel");
 const Category = require("../models/category");
 const ProductCode = require("../models/productCode");
-const productModel = require('../models/product')
+const productModel = require("../models/product");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 var multer = require("multer");
 var storage = multer.diskStorage({
@@ -20,6 +20,7 @@ var storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+const imgbbUploader = require("imgbb-uploader");
 
 // Admin
 router.get("/get", async function (req, res) {
@@ -45,13 +46,13 @@ router.get("/", checkLogin, async function (req, res) {
 router.get("/:id", checkRequire, async (req, res) => {
   try {
     const category = await Category.findOne({
-      _id : req.params.id
-    })
+      _id: req.params.id,
+    });
     if (category) {
       let condition = {
-        categoryID : category._id
-      }
-    
+        categoryID: category._id,
+      };
+
       if (req.query.pricemax) {
         condition.price = {
           $lte: req.query.pricemax * 1,
@@ -59,16 +60,15 @@ router.get("/:id", checkRequire, async (req, res) => {
         };
       }
       const listProduct = await productModel.find();
-      const listSearchNoLimit = await ProductCode.find(condition)
+      const listSearchNoLimit = await ProductCode.find(condition);
       let listSearch = await ProductCode.find(condition)
         .skip((req.query.page - 1) * 16)
-        .limit(16)
-      if (req.query.sort != 'popularity') {
-        listSearch = await ProductCode
-          .find(condition)
-          .sort({price : req.query.sort == 'priceasc' ? 1 : -1})
+        .limit(16);
+      if (req.query.sort != "popularity") {
+        listSearch = await ProductCode.find(condition)
+          .sort({ price: req.query.sort == "priceasc" ? 1 : -1 })
           .skip((req.query.page - 1) * 16)
-          .limit(16)
+          .limit(16);
       }
       const listCode = listProduct.filter(function (product, index) {
         return (
@@ -90,8 +90,8 @@ router.get("/:id", checkRequire, async (req, res) => {
       });
       res.render("user/filter/category", {
         user: req.user,
-        ten : '',
-        name : category.name,
+        ten: "",
+        name: category.name,
         pagenow: req.query.page,
         tongTimDuoc: listSearchNoLimit.length,
         listSearch,
@@ -99,10 +99,10 @@ router.get("/:id", checkRequire, async (req, res) => {
         max: req.query.pricemax,
       });
     } else {
-      res.status(400).json({mess : 'Failed'})
+      res.status(400).json({ mess: "Failed" });
     }
   } catch (error) {
-    res.status(500).json({mess : 'Error ' , error})
+    res.status(500).json({ mess: "Error ", error });
   }
 });
 
@@ -111,9 +111,10 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
     console.log(41, req.file);
     const check = await Category.find({ name: req.body.name });
     if (check == "") {
-      const data = await Category.create({
+      const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
+      await Category.create({
         name: req.body.name,
-        thumbnail: req.file.path,
+        thumbnail: upload.url,
       });
       res.status(200).json({ mes: "Thêm thành công" });
     } else {
@@ -181,11 +182,12 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
       );
       res.json(update);
     } else {
+      const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
       const update = await Category.updateOne(
         { _id: req.params.id },
         {
           name: req.body.name,
-          thumbnail: req.file.path,
+          thumbnail: upload.url,
         }
       );
       res.json(update);
@@ -195,18 +197,18 @@ router.put("/:id", upload.single("thumbnail"), async function (req, res) {
   }
 });
 
-router.post("/", function (req, res) {
-  console.log(req.body);
-  CategoryModel.create({
-    name: req.body.name,
-    thumbnail: req.body.thumbnail,
-  })
-    .then(function (data) {
-      res.json({ mess: "ok", data });
-    })
-    .catch(function (err) {
-      res.json({ mess: "thất bại", err });
-    });
-});
+// router.post("/", function (req, res) {
+//   console.log(req.body);
+//   CategoryModel.create({
+//     name: req.body.name,
+//     thumbnail: req.body.thumbnail,
+//   })
+//     .then(function (data) {
+//       res.json({ mess: "ok", data });
+//     })
+//     .catch(function (err) {
+//       res.json({ mess: "thất bại", err });
+//     });
+// });
 
 module.exports = router;

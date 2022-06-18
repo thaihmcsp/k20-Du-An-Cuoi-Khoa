@@ -418,3 +418,23 @@ async function addCart() {
     console.log(error);
   }
 }
+
+async function showHeart(codeID) {
+  try {
+    const styleHeart = $("#" + codeID).attr("style");
+    if (styleHeart == "" || styleHeart == undefined) {
+      $("#" + codeID).attr("style", "color : red");
+    } else {
+      $("#" + codeID).attr("style", "");
+    }
+    await $.ajax({
+      url: "/user/favorite",
+      type: "PUT",
+      data: {
+        codeID,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

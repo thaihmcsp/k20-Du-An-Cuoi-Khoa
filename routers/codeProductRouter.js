@@ -18,6 +18,7 @@ var storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+const imgbbUploader = require("imgbb-uploader");
 
 // Access Not Marker
 function removeAccents(str) {
@@ -85,11 +86,12 @@ router.post("/", function (req, res) {
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   console.log(21, req.file.path);
   try {
+    const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
     const create = await ProductCode.create({
       code: req.body.code,
       name: req.body.name,
       nameSearch: removeAccents(req.body.name),
-      thumbnail: req.file.path,
+      thumbnail: upload.url,
       categoryID: req.body.categoryID,
       price: req.body.price,
     });
@@ -157,12 +159,13 @@ router.put("/:idupdate", upload.single("chien"), async function (req, res) {
         .limit(req.query.limit);
       res.render("admin/dataproductCode", { listproductCode });
     } else {
-      const create = await ProductCode.updateOne(
+      const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
+      await ProductCode.updateOne(
         { _id: req.params.idupdate },
         {
           code: req.body.code,
           name: req.body.name,
-          thumbnail: req.file.path,
+          thumbnail: upload.url,
           categoryID: req.body.categoryID,
           price: req.body.price,
         }

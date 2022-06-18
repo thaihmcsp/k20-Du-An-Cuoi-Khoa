@@ -232,14 +232,6 @@
         <button onclick="searchBtn()">
           <i class="fas fa-search"></i>
         </button>
-        <ul class="searchtong search-hide">
-          <li class="searchconten">
-            <a href="#"> gif do </a>
-          </li>
-          <li class="searchconten">
-            <a href="#"> Tao la nhat </a>
-          </li>
-        </ul>
       </div>
       <div class="header-search-cart">
         <a href="/cart"><img src="/public/icon/cart-logo.png" alt="" /></a>
@@ -278,28 +270,42 @@
     }
   }
 
-  $("#search").on("focus", () => {
-    $(".searchtong").removeClass("search-hide");
-    $("#search").on("blur", () => {
-      $(".searchtong").addClass("search-hide");
+  $("#search")
+    .focus(function () {
+      $(".searchtong").toggle();
+      document.onkeydown = (e) => {
+        if (e.code === "Enter") {
+          searchBtn();
+        }
+      };
+    })
+    .blur(function (e) {
+      $(".searchtong").toggle();
     });
-    document.onkeydown = (e) => {
-      if (e.code === "Enter") {
-        searchBtn();
-      }
-    };
-  });
 
-  function searchBtn() {
+  async function searchBtn() {
     const search = $("#search").val().trim();
-    if (search == "") {
-      window.location.href = "/";
-    } else if (search.includes(" ")) {
-      window.location.href = `/search?keyword=${search
-        .split(" ")
-        .join("+")}&page=1`;
-    } else {
-      window.location.href = `/search?keyword=${search}&page=1&sort=popularity`;
+    try {
+      if (search == "") {
+        window.location.href = "/";
+      } else {
+        await $.ajax({
+          type: "PUT",
+          url: "/user/search",
+          data: {
+            search: search,
+          },
+        });
+        if (search.includes(" ")) {
+          window.location.href = `/search?keyword=${search
+            .split(" ")
+            .join("+")}&page=1`;
+        } else {
+          window.location.href = `/search?keyword=${search}&page=1&sort=popularity`;
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 </script>

@@ -84,7 +84,6 @@ router.post("/", function (req, res) {
 });
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
-  console.log(21, req.file.path);
   try {
     const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
     const create = await ProductCode.create({

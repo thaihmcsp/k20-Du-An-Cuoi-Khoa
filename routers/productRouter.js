@@ -3,12 +3,10 @@ const path = require("path");
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
-const cookieParser = require("cookie-parser");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 const checkRequire = require("../middleWare/checkRequire");
-router.use(cookieParser());
-var multer = require("multer");
-var storage = multer.diskStorage({
+const multer = require("multer");
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
   },

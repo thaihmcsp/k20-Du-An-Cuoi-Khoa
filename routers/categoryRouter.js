@@ -6,8 +6,8 @@ const Category = require("../models/category");
 const ProductCode = require("../models/productCode");
 const productModel = require("../models/product");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
-var multer = require("multer");
-var storage = multer.diskStorage({
+const multer = require("multer");
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
   },
@@ -108,7 +108,6 @@ router.get("/:id", checkRequire, async (req, res) => {
 
 router.post("/add", upload.single("thumbnail"), async function (req, res) {
   try {
-    console.log(41, req.file);
     const check = await Category.find({ name: req.body.name });
     if (check == "") {
       const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);

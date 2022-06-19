@@ -4,8 +4,8 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 const path = require("path");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
-var multer = require("multer");
-var storage = multer.diskStorage({
+const multer = require("multer");
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/upload");
   },

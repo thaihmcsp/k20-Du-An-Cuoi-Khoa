@@ -148,6 +148,22 @@ fileToRead.addEventListener(
   false
 );
 
+// * Remove Heart
+async function removeHeart(codeID) {
+  try {
+    await $.ajax({
+      type: "PUT",
+      url: "/user/favorite",
+      data: {
+        codeID,
+      },
+    });
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //* Cancel Order
 async function cancelOrder() {
   let orderID = url.split("/")[url.split("/").length - 1];

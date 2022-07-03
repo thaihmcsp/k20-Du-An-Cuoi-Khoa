@@ -45,6 +45,7 @@ router.get("/", checkLogin, async function (req, res) {
 
 router.get("/:id", checkRequire, async (req, res) => {
   try {
+    const listcategory = await Category.find();
     const category = await Category.findOne({
       _id: req.params.id,
     });
@@ -97,6 +98,7 @@ router.get("/:id", checkRequire, async (req, res) => {
         listSearch,
         min: req.query.pricemin,
         max: req.query.pricemax,
+        listcategory,
       });
     } else {
       res.status(400).json({ mess: "Failed" });

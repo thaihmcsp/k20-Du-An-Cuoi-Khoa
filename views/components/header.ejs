@@ -241,9 +241,15 @@
     <div class="header-category">
       Danh mục <i class="fas fa-angle-down"></i>
       <ul class="header-category-list">
+        <% listcategory.map(category => { %>
         <li>
-          <a href="" class="header-category-link">Điện tử</a>
+          <a
+            href="/category/<%= category._id %>?page=1&sort=popularity"
+            class="header-category-link"
+            ><%= category.name %></a
+          >
         </li>
+        <% }) %>
       </ul>
     </div>
   </div>
@@ -270,18 +276,14 @@
     }
   }
 
-  $("#search")
-    .focus(function () {
-      $(".searchtong").toggle();
-      document.onkeydown = (e) => {
-        if (e.code === "Enter") {
-          searchBtn();
-        }
-      };
-    })
-    .blur(function (e) {
-      $(".searchtong").toggle();
-    });
+  $("#search").focus(() => {
+    $(".searchtong").toggle();
+    document.onkeydown = (e) => {
+      if (e.code === "Enter") {
+        searchBtn();
+      }
+    };
+  });
 
   async function searchBtn() {
     const search = $("#search").val().trim();
@@ -289,20 +291,9 @@
       if (search == "") {
         window.location.href = "/";
       } else {
-        await $.ajax({
-          type: "PUT",
-          url: "/user/search",
-          data: {
-            search: search,
-          },
-        });
-        if (search.includes(" ")) {
-          window.location.href = `/search?keyword=${search
-            .split(" ")
-            .join("+")}&page=1`;
-        } else {
-          window.location.href = `/search?keyword=${search}&page=1&sort=popularity`;
-        }
+        window.location.href = `/search?keyword=${
+          search.includes(" ") ? search.split(" ").join("+") : search
+        }&page=1`;
       }
     } catch (error) {
       console.log(error);

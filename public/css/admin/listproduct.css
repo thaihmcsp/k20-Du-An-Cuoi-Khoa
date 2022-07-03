@@ -39,21 +39,64 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
-.color-size {
+.color-qty {
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
-#size {
-  width: 20%;
-  text-align: center;
-  font-size: 15px;
-}
-#color,
-#quantity {
+
+.color-qty input {
+  padding: 8px 12px;
   border: none;
   border-bottom: 1px solid orange;
-  padding: 10px;
-  width: 100%;
-  height: 50px;
+  font-size: 16px;
+}
+
+#color {
+  width: 75%;
+}
+
+#quantity {
+  width: calc(20% + 15px);
+}
+
+.select-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 8px;
+}
+
+.select-item {
+  margin: 4px -8px;
+}
+
+.select-list input {
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 1px solid orange;
+}
+
+.select-list button {
+  padding: 8px;
+  border: none;
+  color: var(--btn-color);
+  background-color: transparent;
+  transition: ease-in 0.3s;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.select-list button:hover {
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: var(--border-category);
+}
+
+.select-list button i {
+  margin-right: 8px;
+  font-size: 18px;
 }
 
 #add {
@@ -64,11 +107,6 @@
   box-shadow: 0 0 5px orange;
   border-radius: 20px;
   margin-top: 20px;
-}
-.note1,
-.note3,
-.note2 {
-  color: red;
 }
 .button {
   width: 1000px;
@@ -102,8 +140,8 @@
   flex-wrap: wrap;
 }
 .imgthumbnail {
-  width: 80px;
-  height: 70%;
+  width: 150px;
+  height: 150px;
   margin: 5px;
 }
 .end {
@@ -178,10 +216,6 @@
   color: orange;
   position: relative;
   left: 130px;
-}
-.chien {
-  display: flex;
-  justify-content: center;
 }
 .chien-anh-day {
   width: 50px;

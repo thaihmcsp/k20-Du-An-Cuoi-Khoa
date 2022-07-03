@@ -1,70 +1,55 @@
-<% for(var j=0; j < arrCode.length; j++) { %>
-<div class="group-sp gr<%= j %>" val="<%= arrCode[j] %>">
-  <% for(var i=0; i < data.length; i++) { %>
-  <div
-    class="checkout-item sp<%= j %>-<%= i %>"
-    val="<%= arrproductcode[i]._id %>"
-  >
-    <div class="cart-item-left">
-      <input
-        type="checkbox"
-        class="checkbox<%= i %> box<%= j %><%= i %>"
-        alt="<%= data[i].productList[0].select %>"
-        val="<%= arrproductcode[i]._id %>"
-        onclick="test('<%= i %>','<%= j %>','<%= arrproduct[i]._id %>')"
-      />
-      <img src="<%= arrproduct[i].listImg[0] %>" alt="" srcset="" />
-      <div class="content">
-        <a
-          href="/product/detail/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>"
-          ><%= arrproductcode[i].name %></a
-        >
-        <a
-          href="/product/detail/<%= arrproductcode[i]._id %>?color=<%= arrproduct[i].color %>&size=<%= arrproduct[i].size %>"
-          class="color-size"
-          >Nhóm Màu: <%= arrproduct[i].color %>, Size: <%= arrproduct[i].size
-          %></a
-        >
-      </div>
+<% listCart.map(product => { %>
+<div class="checkout-item">
+  <div class="cart-item-left">
+    <input type="checkbox" class="" />
+    <img src="<%= product.productID.illustration %>" alt="" />
+    <div class="content">
+      <a
+        class="content-link"
+        href="/product/detail/<%= product.productID.productCode._id %>"
+      >
+        <p class="content-name"><%= product.productID.productCode.name %></p>
+        <p class="color-size">
+          <% if (product.productID.color != '' && product.size != '') { %> Nhóm
+          màu : <%= product.productID.color %> , Kích thước : <%= product.size
+          %> <% } else { %>
+          <span>
+            <%= product.productID.color != '' ? 'Nhóm màu : ' +
+            product.productID.color : '' %>
+          </span>
+          <span>
+            <%= product.size != '' ? 'Kích thước : ' + product.size : '' %>
+          </span>
+          <% } %>
+        </p>
+      </a>
     </div>
-    <div class="cart-item-middle">
-      <p class="current-price">
-        <span class="price<%= i %>"><%= arrproductcode[i].price %></span> ₫
-      </p>
-      <div class="operations">
-        <span class="icon">
-          <i
-            class="fa-solid fa-trash-can"
-            onclick="xoa('<%= arrproduct[i]._id %>')"
-          ></i>
-        </span>
-      </div>
+  </div>
+  <div class="cart-item-middle">
+    <p class="current-price">
+      <span
+        ><%= product.productID.productCode.price.toLocaleString("vi") %></span
+      >
+      ₫
+    </p>
+    <div class="operations">
+      <i class="fa-solid fa-trash-can" onclick="xoa()"></i>
     </div>
-    <div class="cart-item-right">
-      <div class="so-luong-sp">
-        <div>
-          <button
-            class="down<%= i %>"
-            onclick="down('<%= arrproduct[i]._id %>')"
-          >
-            -
-          </button>
-          <input
-            type="text"
-            onclick="keyup('<%= i %>','<%= j %>','<%= arrproduct[i]._id %>')"
-            min="1"
-            max="<%= arrproduct[i].quantity %>"
-            val="<%= arrproductcode[i]._id %>"
-            class="number-sp<%= i %> Number<%= j %><%= i %>"
-            value="<%= data[i].productList[0].quantity %>"
-          />
-          <button class="up<%= i %>" onclick="up('<%= arrproduct[i]._id %>')">
-            +
-          </button>
-        </div>
+  </div>
+  <div class="cart-item-right">
+    <div class="so-luong-sp">
+      <div>
+        <button class="" onclick="down()">-</button>
+        <input
+          type="number"
+          id="quantity"
+          value="<%= product.quantity %>"
+          onclick="keyup()"
+          min="1"
+        />
+        <button class="" onclick="up()">+</button>
       </div>
     </div>
   </div>
-  <% } %>
 </div>
-<% } %>
+<% }) %>

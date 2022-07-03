@@ -3,6 +3,7 @@ const path = require("path");
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
+const category = require("../models/category");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 const checkRequire = require("../middleWare/checkRequire");
 const multer = require("multer");
@@ -19,144 +20,29 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+const imgbbUploader = require("imgbb-uploader");
 
 router.get("/detail/:id", checkRequire, async (req, res) => {
   try {
-    console.log(7, req.params.id);
-    // console.log(109,req.query.color);
-    // console.log(109,req.query.size);
-    const ListCode = await ProductCodeModel.findOne({ _id: req.params.id });
-    const ListData = await ProductModel.find({ productCode: req.params.id });
-    let color = [];
-    let size = [];
-    const queryColor = [];
-    const querySize = [];
-    for (let i = 0; i < ListData.length; i++) {
-      if (color.indexOf(ListData[i].color) === -1) {
-        color.push(ListData[i].color, i);
-      }
-      if (size.indexOf(ListData[i].size) === -1) {
-        size.push(ListData[i].size, i);
-      }
-    }
-    if (req.query.color) {
-      queryColor.push(req.query.color);
-    }
-    if (req.query.size) {
-      querySize.push(req.query.size);
-    }
-    console.log(50, ListData);
-    // console.log(200,color);
-    // console.log(300,size);
-    // console.log(2000,ListCode);
-    // console.log(3000,ListData);
+    const listcategory = await category.find();
+    const listcode = await ProductCodeModel.findOne({
+      _id: req.params.id,
+    }).populate("categoryID");
+    const listData = await ProductModel.find({ productCode: req.params.id });
     res.render("user/detail/detail", {
       user: req.user,
-      listdata: ListData,
-      listcode: ListCode,
-      listcolor: color,
-      listsize: size,
-      queryColor,
-      querySize,
       ten: "",
+      listcategory,
+      listData,
+      listcode,
     });
   } catch (error) {
-    console.log(error);
-  }
-});
-router.get("/change/mau", async (req, res) => {
-  try {
-    console.log(36, req.query.mau);
-    // console.log(37,req.query.idcode);
-    const ListData = await ProductModel.find({
-      color: req.query.mau,
-      productCode: req.query.idcode,
+    res.status(500).json({
+      mess: "Server error",
     });
-    console.log(39, ListData);
-    res.render("user/detail/zoomImg.ejs", { listdata: ListData });
-  } catch (error) {
-    console.log(error);
   }
 });
 
-router.get("/check/:color&:size&:id&:quantity", checkUser, async (req, res) => {
-  try {
-    console.log(77, req.params);
-    const ListData = await ProductModel.findOne({
-      size: req.params.size,
-      color: req.params.color,
-      productCode: req.params.id,
-    });
-    // console.log(79,ListData);
-    // console.log(80,ListData.quantity );// số lượng hàng ban đầu
-    // console.log(81,req.params.quantity); // số lượng hàng muốn đặt mua
-    const data = await CartModel.findOne({
-      UserID: req.id,
-      "productList.productID": ListData._id,
-    });
-    if (data) {
-      // console.log(82,data.productList[0].quantity); // số lượng hàng đã bỏ vào cart
-      if (
-        ListData.quantity <
-        Number(req.params.quantity) + data.productList[0].quantity
-      ) {
-        res.json({ mess: "Hàng tồn không đủ", quantity: ListData.quantity });
-      } else {
-        res.json(ListData);
-      }
-    } else {
-      if (ListData.quantity < Number(req.params.quantity)) {
-        res.json({ mess: "Hàng tồn không đủ", quantity: ListData.quantity });
-      } else {
-        res.json({ ListData: ListData, UserID: req.id });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/check/size", async (req, res) => {
-  try {
-    const size = [];
-    console.log(91, req.query.mau);
-    const ListData = await ProductModel.find({
-      color: req.query.mau,
-      productCode: req.query.idcode,
-    });
-    // console.log(52,ListData);
-    for (let i = 0; i < ListData.length; i++) {
-      if (size.indexOf(ListData[i].size) === -1) {
-        size.push(ListData[i].size);
-      }
-    }
-    // console.log(44444,size);
-    res.json(size);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/check/color", async (req, res) => {
-  try {
-    const color = [];
-    console.log(61, req.query.size);
-    const ListData = await ProductModel.find({
-      size: req.query.size,
-      productCode: req.query.idcode,
-    });
-    // console.log(63,ListData);
-    for (let i = 0; i < ListData.length; i++) {
-      if (color.indexOf(ListData[i].color) === -1) {
-        color.push(ListData[i].color);
-      }
-    }
-    // console.log(5555,color);
-    res.json(color);
-  } catch (error) {
-    console.log(error);
-  }
-});
 router.get("/:id", async function (req, res) {
   const listproduct = await ProductModel.find({ productCode: req.params.id });
   const total = listproduct.length;
@@ -182,125 +68,34 @@ router.get("/:id", checkLogin, async function (req, res) {
   res.render("admin/listproduct", { listproduct, total: total });
 });
 
-// router.get("/change/mau", async (req, res) => {
-//   try {
-//     console.log(36, req.query.mau);
-//     // console.log(37,req.query.idcode);
-//     const ListData = await ProductModel.find({
-//       color: req.query.mau,
-//       productCode: req.query.idcode,
-//     });
-//     console.log(39, ListData);
-//     res.render("user/detail/zoomImg.ejs", { listdata: ListData });
-//   } catch (error) {
-//     console.log(56, error);
-//   }
-// });
-// router.get("/check/size", async (req, res) => {
-//   try {
-//     const size = [];
-//     console.log(91, req.query.mau);
-//     const ListData = await ProductModel.find({
-//       color: req.query.mau,
-//       productCode: req.query.idcode,
-//     });
-//     // console.log(52,ListData);
-//     for (let i = 0; i < ListData.length; i++) {
-//       if (size.indexOf(ListData[i].size) === -1) {
-//         size.push(ListData[i].size);
-//       }
-//     }
-//     // console.log(44444,size);
-//     res.json(size);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-// router.get("/check/color", async (req, res) => {
-//   try {
-//     const color = [];
-//     console.log(61, req.query.size);
-//     const ListData = await ProductModel.find({
-//       size: req.query.size,
-//       productCode: req.query.idcode,
-//     });
-//     // console.log(63,ListData);
-//     for (let i = 0; i < ListData.length; i++) {
-//       if (color.indexOf(ListData[i].color) === -1) {
-//         color.push(ListData[i].color);
-//       }
-//     }
-//     // console.log(5555,color);
-//     res.json(color);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-// router.get("/check/:color&:size&:id&:quantity", checkUser, async (req, res) => {
-//   try {
-//     console.log(77, req.params);
-//     const ListData = await ProductModel.findOne({
-//       size: req.params.size,
-//       color: req.params.color,
-//       productCode: req.params.id,
-//     });
-//     // console.log(79,ListData);
-//     // console.log(80,ListData.quantity );// số lượng hàng ban đầu
-//     // console.log(81,req.params.quantity); // số lượng hàng muốn đặt mua
-//     const data = await CartModel.findOne({
-//       UserID: req.id,
-//       "productList.productID": ListData._id,
-//     });
-//     if (data) {
-//       // console.log(82,data.productList[0].quantity); // số lượng hàng đã bỏ vào cart
-//       if (
-//         ListData.quantity <
-//         Number(req.params.quantity) + data.productList[0].quantity
-//       ) {
-//         res.json({ mess: "Hàng tồn không đủ", quantity: ListData.quantity });
-//       } else {
-//         res.json(ListData);
-//       }
-//     } else {
-//       if (ListData.quantity < Number(req.params.quantity)) {
-//         res.json({ mess: "Hàng tồn không đủ", quantity: ListData.quantity });
-//       } else {
-//         res.json(ListData);
-//       }
-//     }
-//   } catch (error) {
-//     console.log(119, error);
-//   }
-// });
-
-router.post("/add", upload.array("listImg", 5), async function (req, res) {
-  let arr = req.headers.referer.split("/");
-  let length = arr.length;
-  var arrimg = [];
-  for (let i = 0; i < req.files.length; i++) {
-    arrimg.push(req.files[i].path);
+router.post("/add", upload.single("illustration"), async function (req, res) {
+  try {
+    let arr = req.headers.referer.split("/");
+    let length = arr.length;
+    if (req.file) {
+      const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path);
+      await ProductModel.create({
+        illustration: upload.url,
+        color: req.query.color,
+        listSize: req.query.listSize,
+        productCode: arr[length - 1],
+        quantity: req.query.quantity,
+      });
+      res.status(200).json({ mess: "Add Success" });
+    } else {
+      res.status(400).json({ mess: "Vui lòng có ảnh minh họa sản phẩm !" });
+    }
+  } catch (error) {
+    res.status(500).json({ mess: "Server Error" });
   }
-  const data = await ProductModel.create({
-    listImg: arrimg,
-    color: req.body.color,
-    size: req.body.size,
-    productCode: arr[length - 1],
-    quantity: req.body.quantity,
-  });
-  res.json(data);
 });
 
 router.delete("/:id", async function (req, res) {
   try {
-    let arr = req.headers.referer.split("/");
-    let length = arr.length;
-    const data = await Product.deleteOne({ _id: req.params.id });
-    const listproduct = await Product.find({ productCode: arr[length - 1] })
-      .skip((req.query.page - 1) * req.query.limit)
-      .limit(req.query.limit);
-    res.render("admin/product", { listproduct });
+    await ProductModel.deleteOne({ _id: req.params.id });
+    res.status(200).json({ mess: "Xoa thanh cong" });
   } catch (error) {
-    console.log(47, error);
+    res.status(500).json({ mess: "Xoa that bai" });
   }
 });
 
@@ -311,7 +106,7 @@ router.get("/get/:idup", async function (req, res) {
 
 router.put(
   "/:idupdate",
-  upload.array("listimgid", 5),
+  upload.single("illustration"),
   async function (req, res) {
     let arr = req.headers.referer.split("/");
     let length = arr.length;
@@ -361,21 +156,6 @@ router.get("/", function (req, res) {
     });
 });
 
-router.post("/", function (req, res) {
-  console.log(req.body);
-  ProductModel.create({
-    color: req.body.color,
-    size: req.body.size,
-    quantity: req.body.quantity,
-  })
-    .then(function (data) {
-      res.json({ mess: "ok", data });
-    })
-    .catch(function (err) {
-      res.json({ mess: "thất bại", err });
-    });
-});
-
 router.get("/:id", async (req, res) => {
   try {
     console.log(7, req.params.id);
@@ -394,25 +174,5 @@ router.get("/:id", async (req, res) => {
     console.log(error);
   }
 });
-// router.get('/home', async (req, res) =>{
-//     try {
-//         // console.log(7,req.params.id);
-//         // const ListData = await ProductModel.find({_id : req.params.id})
-//         // console.log(8,ListData);
-//         res.render('user/detail/detail')
-//     } catch (error) {
-//         console.log(error);
-//     }
-// })
-// router.get('/list',checkUser, async (req, res) =>{
-//     try {
-//         console.log(91, req.cookies.user);
-//         const User = await UserModel.findOne({token: req.cookies.user})
-//         const ListData = await ListModel.find({userID: User._id})
-//         res.render('page/list', {user : User, listdata: ListData})
-//     } catch (error) {
-//         console.log(error);
-//     }
-// })
 
 module.exports = router;

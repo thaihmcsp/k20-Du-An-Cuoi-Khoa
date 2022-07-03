@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const UserModel = require("../models/userModel");
+const Category = require("../models/category");
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
@@ -7,15 +8,37 @@ const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 
 router.get("/", checkLogin, async (req, res) => {
   try {
-    const dataObject = await renderCart(req.id);
-    for (var j = 0; j < dataObject.arrCode.length; j++) {
-      for (var i = 0; i < dataObject.data.length; i++) {
-        console.log(90, dataObject.arrproductcode[i].price);
-      }
+    const listcategory = await Category.find();
+    // const dataObject = await renderCart(req.id);
+    // for (var j = 0; j < dataObject.arrCode.length; j++) {
+    //   for (var i = 0; i < dataObject.data.length; i++) {
+    //     console.log(90, dataObject.arrproductcode[i].price);
+    //   }
+    // }
+    const cartUser = await CartModel.findOne({
+      UserID: req.id,
+    }).populate({
+      path: "productList.productID",
+      populate: { path: "productCode" },
+    });
+    if (cartUser) {
+      res.render("user/cart/cart", {
+        listCart: cartUser.productList,
+        sumCart: cartUser.productList.length,
+        user: req.user,
+        ten: "",
+        listcategory,
+      });
+    } else {
+      res.render("user/cart/cart", {
+        sumCart: 0,
+        user: req.user,
+        ten: "",
+        listcategory,
+      });
     }
-    res.render("user/cart/cart", { ...dataObject, user: req.user, ten: "" });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error });
   }
 });
 
@@ -96,15 +119,51 @@ async function renderCart(UserID) {
 
 router.post("/create", checkLogin, async (req, res) => {
   try {
-    const data = await CartModel.create({
-      productList: {
-        productID: req.body.productID,
-        quantity: req.body.quantity,
-      },
+    const cartUser = await CartModel.findOne({
       UserID: req.id,
     });
-    console.log(data);
-    res.status(200).json({ message: "Successfull" });
+    if (cartUser) {
+      const cartFilter = cartUser.productList.filter((item, i) => {
+        return (
+          item.productID == req.body.productID && item.size == req.body.size
+        );
+      });
+      if (cartFilter.length > 0) {
+        let index = cartUser.productList.indexOf(cartFilter[0]);
+        cartUser.productList.splice(index, 1, {
+          productID: req.body.productID,
+          quantity: req.body.quantity * 1 + cartFilter[0].quantity,
+          size: req.body.size == undefined ? "" : req.body.size,
+        });
+      } else {
+        cartUser.productList.push({
+          productID: req.body.productID,
+          quantity: req.body.quantity,
+          size: req.body.size == undefined ? "" : req.body.size,
+        });
+      }
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartUser.productList,
+        }
+      );
+      res.status(200).json({ message: "Successfull" });
+    } else {
+      await CartModel.create({
+        UserID: req.id,
+        productList: [
+          {
+            productID: req.body.productID,
+            quantity: req.body.quantity,
+            size: req.body.size == undefined ? "" : req.body.size,
+          },
+        ],
+      });
+      res.status(200).json({ message: "Successfull" });
+    }
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -134,6 +193,7 @@ router.put("/update", checkUser, async (req, res) => {
     console.log(error);
   }
 });
+
 router.put("/up", checkUser, async (req, res) => {
   try {
     console.log(70, req.body.productID);

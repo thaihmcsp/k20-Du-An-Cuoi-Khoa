@@ -6,6 +6,7 @@ const OrderModel = require("../models/orderModel");
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const cookieParser = require("cookie-parser");
 const UserModel = require("../models/userModel");
+const CategoryModel = require("../models/category");
 router.use(cookieParser());
 
 router.post("/create", checkUser, async (req, res) => {
@@ -153,11 +154,18 @@ async function renderCart(UserID) {
 router.get("/", checkLogin, async (req, res) => {
   try {
     const dataObject = await renderCart(req.id);
-    res.render("user/order/order", { ...dataObject, user: req.user });
+    const listcategory = await CategoryModel.find();
+    res.render("user/order/order", {
+      ...dataObject,
+      user: req.user,
+      ten: "",
+      listcategory,
+    });
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ mess: "Failed" });
   }
 });
+
 router.get("/checkadress", checkUser, async (req, res) => {
   try {
     const data = await OrderModel.findOne({ UserID: req.id, productList: [] });

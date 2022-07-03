@@ -1,0 +1,24 @@
+<div class="khoibentrai-group">
+  <h3>Giá</h3>
+  <div class="khoibentrai-group-price">
+    <input
+      id="giatoithieu"
+      placeholder="Tối thiểu"
+      type="number"
+      value="<%= min %>"
+    />
+    <p>-</p>
+    <input
+      id="giatoida"
+      placeholder="Tối đa"
+      type="number"
+      value="<%= max %>"
+    />
+    <button
+      onclick="timtheogia('<%=pagenow%>','<%= ten %>')"
+      class="khoibentrai-group-price-btn"
+    >
+      Tìm theo giá
+    </button>
+  </div>
+</div>

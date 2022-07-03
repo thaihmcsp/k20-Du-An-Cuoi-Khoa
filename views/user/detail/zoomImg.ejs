@@ -1,6 +1,6 @@
 <div class="img1">
   <img
-    src="/<%= listdata[0].listImg[0] %>"
+    src="<%= listData[0].illustration %>"
     id="myimage"
     class="bigImg"
     alt="ví nam"
@@ -12,11 +12,11 @@
     <i class="fa-solid fa-chevron-left"></i>
   </button>
   <div class="img-next-slick">
-    <% for(var i = 0 ; i < listdata[0].listImg.length ; i++) { %>
-    <img class="smallImg" id="<%= i %>" src="/<%= listdata[0].listImg[i] %>" />
+    <% for (var i = 0 ; i < listData.length ; i++) { %>
+    <img class="smallImg" id="<%= i %>" src="<%= listData[i].illustration %>" />
     <% } %>
   </div>
-  <button class="next" onclick="next('<%= listdata[0].listImg.length %>')">
+  <button class="next" onclick="next('<%= listData.length %>')">
     <i class="fa-solid fa-chevron-right"></i>
   </button>
 </div>

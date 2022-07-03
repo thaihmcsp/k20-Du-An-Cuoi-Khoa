@@ -6,13 +6,13 @@
       <div class="product-content">
         <p class="product-name"><%= product.name %></p>
         <p class="product-price">
-          <span><%= product.price.toLocaleString() %> </span>
+          <span><%= product.price.toLocaleString("vi") %> </span>
           <span>₫</span>
         </p>
       </div>
       <div class="product-address">
         <% if (product.hasData) { %>
-          <% if (user.favorite.includes(product._id)) { %>
+          <% if (user && user.favorite.includes(product._id)) { %>
             <i class="fas fa-heart" style="color: red;"></i>
           <% } else { %>
             <i class="fas fa-heart" ></i>

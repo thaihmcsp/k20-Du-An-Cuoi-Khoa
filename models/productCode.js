@@ -8,6 +8,7 @@ const ProductCodeSchema = mongoose.Schema(
     thumbnail: String,
     categoryID: { type: String, ref: "category" },
     price: Number,
+    stars: Number,
   },
   { collection: "productCode", timestamps: true }
 );

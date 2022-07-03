@@ -52,18 +52,10 @@ function back(total) {
   but(current - 1, total);
 }
 
-// const fileUpload = document.querySelector("#listImg");
-
-// fileUpload.addEventListener("change", (e) => {
-//   const files = e.target.files;
-//   for (let i = 0; i < files.length; i++) {
-//     const img = files[i].name;
-//     const div = `
-//     <img src="/public/upload/${img}" alt="">
-//     `;
-//     $(".luong").append(div);
-//   }
-// });
+$("#add-size").on("click", () => {
+  const html = `<input type="text" class="select-size select-item col-6" placeholder="Kích thước (Nếu có) ">`;
+  $("#add-size").before(html);
+});
 
 function importimg() {
   document.getElementById("clickimg").click();
@@ -73,24 +65,15 @@ var fileToRea = document.getElementById("clickimg");
 
 fileToRea.addEventListener(
   "change",
-  async function () {
+  function () {
     var files = fileToRea.files;
     if (files.length) {
-      // console.log(78, files);
-      // var fr = new FileReader();
-      // for (var i = 0; i < files.length; i++) {
-      //   fr.onload = function () {
-      //     let img = `<img src='${fr.result}' >`;
-      //     $(".chien").append(img);
-      //   };
-      //   fr.readAsDataURL(files[i]);
-      // }
-      const test = await readAsDataURL(files);
-      console.log(88, test);
-      for (var i = 0; i < test.length; i++) {
-        let img = `<img src='${test[i]}' >`;
-        $(".luong").append(img);
-        console.log(test);
+      var fr = new FileReader();
+      for (var i = 0; i < files.length; i++) {
+        fr.onload = function () {
+          document.getElementById("change").src = fr.result;
+        };
+        fr.readAsDataURL(files[0]);
       }
     }
   },
@@ -133,46 +116,40 @@ fileToRead.addEventListener(
   },
   false
 );
-let form1 = $("form")[0];
-console.log(form1);
-async function ADD() {
-  const listImg = $("#listImg").val();
-  const color = $("#color").val();
-  const size = $("#size").val();
-  const quantity = $("#quantity").val();
 
-  console.log(95);
-  if (listImg == "") {
-    $(".note1").text("Vùi lòng nhập ảnh sản phẩm");
+let form1 = $("form")[0];
+async function addDetail() {
+  var listSize = [];
+  for (let i = 0; i < $(".select-size").length; i++) {
+    listSize.push($(".select-size").eq(i).val());
   }
-  if (color == "") {
-    $(".note2").text("Vùi lòng nhập màu sắc sản phẩm");
-  }
-  if (quantity == "") {
-    $(".note3").text("Vùi lòng nhập giá sản phẩm");
-  } else {
-    try {
+  const color = $("#color").val();
+  const quantity = $("#quantity").val();
+  try {
+    if (quantity * 1 > 0) {
       const form = $("form")[0];
-      console.log(form);
       const formData = new FormData(form);
-      const res = await $.ajax({
-        url: "/product/add",
+      await $.ajax({
+        url: `/product/add?color=${color}&quantity=${
+          quantity * 1
+        }&listSize=${listSize}`,
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
       });
-      console.log(res);
-      // window.location.reload();
-    } catch (error) {
-      console.log(error);
+      window.location.reload();
+    } else {
+      alert("Số lượng sản phẩm không phù hợp");
     }
+  } catch (error) {
+    alert(error.responseJSON.message);
   }
 }
 
 async function xoaproduct(id) {
   try {
-    const res = await $.ajax({
+    await $.ajax({
       url: "/product/" + id,
       type: "DELETE",
     });
@@ -182,34 +159,33 @@ async function xoaproduct(id) {
   }
 }
 
-var idupdate = "";
-async function up(idup) {
-  const res = await $.ajax({
-    url: "/product/get/" + idup,
-    type: "GET",
-  });
-  $("#colorid").val(res.color);
-  $("#sizeid").val(res.size);
-  $("#quantityid").val(res.quantity);
-  idupdate = idup;
-}
+// var idupdate = "";
+// async function up(idup) {
+//   const res = await $.ajax({
+//     url: "/product/get/" + idup,
+//     type: "GET",
+//   });
+//   $("#colorid").val(res.color);
+//   $("#sizeid").val(res.size);
+//   $("#quantityid").val(res.quantity);
+//   idupdate = idup;
+// }
 
-async function update() {
-  try {
-    const form = $("#form")[0];
-    const formData = new FormData(form);
-    const res = await $.ajax({
-      url: `/product/${idupdate}?page=${current}&limit=5`,
-      type: "PUT",
-      data: formData,
-      processData: false,
-      contentType: false,
-    });
-    // console.log(161, res);
-    $("#Close").trigger("click");
-    $(".button").html("");
-    $(".button").html(res);
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function update() {
+//   try {
+//     const form = $("#form")[0];
+//     const formData = new FormData(form);
+//     const res = await $.ajax({
+//       url: `/product/${idupdate}?page=${current}&limit=5`,
+//       type: "PUT",
+//       data: formData,
+//       processData: false,
+//       contentType: false,
+//     });
+//     $("#Close").trigger("click");
+//     $(".button").html("");
+//     $(".button").html(res);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

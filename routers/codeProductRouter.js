@@ -94,7 +94,7 @@ router.post("/add", upload.single("thumbnail"), async function (req, res) {
       categoryID: req.body.categoryID,
       price: req.body.price,
     });
-    res.json(create);
+    res.status(200).json(create);
   } catch (error) {
     res.status(500).json({ mess: "Loi Server" });
   }

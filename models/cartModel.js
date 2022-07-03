@@ -13,6 +13,7 @@ const CartSchema = mongoose.Schema(
           ref: "product",
         },
         quantity: Number,
+        size: String,
         select: {
           type: Boolean,
           default: false,

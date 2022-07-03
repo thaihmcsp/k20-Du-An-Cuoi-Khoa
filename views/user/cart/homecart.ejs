@@ -13,36 +13,26 @@
 </div>
 
 <div class="rightcontainer">
-  <div class="summary-section address">
-    <div class="location-label">Địa điểm</div>
-    <div class="location__body">
-      <span><i class="fa-solid fa-location-dot"></i></span>
-      <div class="location-adress">
-        Khánh Hòa, Thành Phố Nha Trang, Phường Vĩnh Phước
-      </div>
-    </div>
-  </div>
-
   <div class="summary-section">
     <div class="summary-section-heading">Thông tin đơn hàng</div>
     <div class="checkout-summary">
       <div class="checkout-summary-rows">
         <div class="checkout-summary-label">
-          Tạm tính (<span alt=""><%= sumarrorder %></span> sản phẩm)
+          Tạm tính (<span alt="">0</span> sản phẩm)
         </div>
-        <span class="checkout-value"> <%= sumprice.toLocaleString() %> ₫ </span>
+        <span class="checkout-value">0 ₫ </span>
       </div>
       <div class="checkout-order-total-row">
         <div class="checkout-order-total">Tổng cộng</div>
         <div class="checkout-order-value">
-          <span><%= sumprice.toLocaleString() %> ₫</span>
+          <span>0 ₫</span>
         </div>
       </div>
       <div class="checkout-small">
         <small>Đã bao gồm VAT (nếu có)</small>
       </div>
       <button class="order-group" onclick="window.location.href = '/order'">
-        XÁC NHẬN GIỎ HÀNG (<%= sumarrorder %>)
+        XÁC NHẬN GIỎ HÀNG (<%= sumCart %>)
       </button>
     </div>
   </div>

@@ -21,14 +21,17 @@
         </div>
       </div>
       <div class="the-listanh">
-        <% for (item of value.listImg) { %>
-        <img src="/<%= item %>" alt="" class="imgthumbnail" />
-        <% } %>
+        <img src="<%= value.illustration %>" alt="" class="imgthumbnail" />
       </div>
       <div class="bottom">
-        <div><span class="khac-mau">Color:</span> <%= value.color %></div>
-        <div><span class="khac-mau">Size:</span> <%= value.size %></div>
-        <div><span class="khac-mau">Quantity:</span> <%= value.quantity %></div>
+        <div><span class="khac-mau">Màu sắc :</span> <%= value.color %></div>
+        <div>
+          <span class="khac-mau">Kích thước :</span> <%= value.listSize != '' ?
+          value.listSize : 'Không có' %>
+        </div>
+        <div>
+          <span class="khac-mau">Số lượng :</span> <%= value.quantity %>
+        </div>
       </div>
     </div>
   </div>

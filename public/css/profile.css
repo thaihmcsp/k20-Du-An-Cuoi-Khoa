@@ -565,3 +565,59 @@ body {
 .btn-secondary:hover {
   background-color: var(--font-heading-color);
 }
+
+/* Favorite */
+.content-favorite-list {
+  list-style: none;
+}
+
+.content-favorite-item {
+  display: flex;
+  border-top: 1px solid var(--page-color);
+  padding: 12px 0;
+}
+
+.content-favorite-link {
+  flex: 2;
+  display: flex;
+}
+
+.content-favorite-link img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.content-favorite-link p {
+  padding: 0 16px;
+  font-size: 14px;
+  color: var(--font-color);
+}
+
+.content-favorite-price {
+  display: flex;
+  flex: 1;
+  padding: 0 12px;
+}
+
+.content-favorite-price p {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--btn-color);
+  flex: 1;
+}
+
+.content-favorite-price i {
+  flex: 1;
+  cursor: pointer;
+  color: var(--font-heading-color);
+  transition: linear 0.25s;
+  text-align: center;
+  font-size: 16px;
+  height: fit-content;
+}
+
+.content-favorite-price i:hover {
+  color: var(--btn-color);
+}

@@ -28,7 +28,7 @@
         <input
           type="file"
           id="clickimg"
-          name="listImg"
+          name="illustration"
           style="display: none"
           multiple
         />
@@ -39,27 +39,23 @@
           onclick="importimg()"
         />
         <br />
-        <div class="luong"></div>
-        <div class="color-size">
-          <input type="text" placeholder="Color" id="color" name="color" />
-          <select name="size" id="size">
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">Xl</option>
-          </select>
-          <br />
-        </div>
-        <small class="note2"></small>
+      </form>
+      <div class="color-qty">
+        <input type="text" placeholder="Màu sắc" id="color" />
         <input
           type="number"
           id="quantity"
           name="quantity"
           placeholder="Số lượng"
         />
-        <small class="note3"></small>
-      </form>
-      <button onclick="ADD()" id="add">ADD</button><br />
+      </div>
+      <div class="select-list">
+        <button class="select-item col-6" id="add-size">
+          <i class="fas fa-plus"></i>
+          Thêm kích thước
+        </button>
+      </div>
+      <button onclick="addDetail()" id="add">ADD</button><br />
     </div>
     <div class="button"><%- include('./product.ejs') %></div>
 
@@ -118,7 +114,6 @@
               onclick="importa()"
             />
             <br />
-            <div class="chien"></div>
             <div class="update-color">
               <input
                 type="text"

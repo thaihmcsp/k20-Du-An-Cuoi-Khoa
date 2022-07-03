@@ -1,32 +1,35 @@
-const mongoose = require('./connectDB')
+const mongoose = require("./connectDB");
 
-const OrderSchema = mongoose.Schema({
-  UserID:	{
+const OrderSchema = mongoose.Schema(
+  {
+    UserID: {
+      type: String,
+      ref: "user",
+    },
+    productList: [
+      {
+        productID: { type: String, ref: "product" },
+        quantity: Number,
+        size: String,
+      },
+    ],
+    total: Number,
+    address: String,
+    phone: String,
+    name: String,
     type: String,
-    ref:'user'
+    status: {
+      type: String,
+      enum: ["pending", "done", "cancel"],
+      default: "pending",
+    },
   },
-  productList:	[
-    {
-      productID: {type: String, ref:'product'},
-      quantity: Number
-    }
-  ],
-  total:	Number,
-  address:	String,
-  phone:	String,
-  name: String,
-  type: String,
-  status:	{
-    type: String,
-    enum: ['pending', 'done', 'cancel'],
-    default: 'pending'
-  }
-}, {collection: 'order', timestamps: true})
+  { collection: "order", timestamps: true }
+);
 
-const OrderModel = mongoose.model('order', OrderSchema)
+const OrderModel = mongoose.model("order", OrderSchema);
 
-module.exports = OrderModel
-
+module.exports = OrderModel;
 
 // OrderModel.create({
 //   UserID:	'dfaddfsd',
@@ -41,4 +44,3 @@ module.exports = OrderModel
 //   phone:	'dfasdsdsda',
 //   status:	'done'})
 //   .then(data=>{console.log(data);})
-

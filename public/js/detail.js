@@ -1,4 +1,3 @@
-render();
 pointerImg();
 querychange();
 // check query color & size URL từ page cart
@@ -18,32 +17,28 @@ function querychange() {
       if ($(`#size-sp${i * 2}`).attr("alt") === $(".nhom-size").attr("alt")) {
         $(`#size-sp${i * 2}`).attr({ class: "size-chon" });
         $(".ten-size span").html($(".nhom-size").attr("alt"));
-        checkcolor(
-          $(`#size-sp${i * 2}`).attr("alt"),
-          $(".name-sp").attr("alt")
-        ); // check color
+
         $(".nhom-size").attr("alt", "");
       }
     }
   }
 }
 
-// hiệu ứng mouse chuột qua smallImg
+//* hiệu ứng mouse chuột qua smallImg
 function pointerImg() {
   $(".smallImg").on("mouseover", function () {
-    // console.log(4,this);
     const link = $(this).attr("src");
     const id = $(this).attr("id");
     $(".bigImg").attr("src", link);
     $(".bigImg").attr("id", "myimage" + id);
-    $(this).css({ border: "1px solid green" });
+    $(this).css({ border: "1px solid var(--btn-color)" });
   });
   $(".smallImg").on("mouseout", function imgBigOff() {
-    $(this).css({ border: "" });
+    $(this).css({ border: "none" });
   });
 }
 
-// next - back div link ảnh sản phẩm
+//* next - back div link ảnh sản phẩm
 $(".img-line .back").css({ cursor: "pointer" });
 $(".img-line .next").css({ cursor: "pointer" });
 function next(len) {
@@ -97,113 +92,114 @@ function back() {
     $(".img-line .back").css({ cursor: "not-allowed" });
   }
 }
+
 // + - số lượng sản phẩm
 function down() {
-  let number = $("#number-sp").val();
+  let number = $("#number-sp").val() * 1;
   if (number > 1) {
-    $("#number-sp").val(number * 1 - 1);
+    $("#number-sp").val(number - 1);
+    $(".toast-error").text("");
+  } else {
+    $(".toast-error").text("Số lượng phải có tối thiểu 1 sản phẩm");
   }
 }
+
 function up() {
-  let number = $("#number-sp").val();
-  $("#number-sp").val(number * 1 + 1);
+  let number = $("#number-sp").val() * 1;
+  if (number < 10) {
+    $("#number-sp").val(number + 1);
+    $(".toast-error").text("");
+  } else {
+    $(".toast-error").text("Số lượng mua tối đa là 10 sản phẩm");
+  }
 }
+
 // hiệu ứng mouse chuột qua hình ảnh chọn màu
 $(".img-sp img").on("mouseover", function () {
-  const mau = $(this).attr("alt");
-  $(".ten-mau span").html(mau);
-  $(this).css({ border: "1px solid red" });
-  const link = $(this).attr("src");
+  const src = $(this).attr("src");
   const id = $(this).attr("id");
-  $(".bigImg").attr("src", link);
+  $(".bigImg").attr("src", src);
   $(".bigImg").attr("id", "myimage" + id);
-  $(this).css({ border: "1px solid red" });
-  render();
-});
-$(".img-sp img").on("mouseout", function () {
-  const mau = $(this).attr("alt");
-  if ($(this).attr("class") === "image-mau") {
-    $(this).css({ border: "" });
-    $(".ten-mau span").html("Vui lòng chọn");
-  }
-  render();
-});
-// hiệu ứng mouse chuột qua nút chon size
-$(".btn-sp button").on("mouseover", function () {
-  const mau = $(this).attr("alt");
-  $(".ten-size span").html(mau);
-  $(this).css({ border: "1px solid red" });
-  render();
-});
-$(".btn-sp button").on("mouseout", function () {
-  if ($(this).attr("class") === "btn-size") {
-    $(this).css({ border: "" });
-    $(".ten-size span").html("Vui lòng chọn");
-  }
-  render();
 });
 
-function render() {
-  $(".mau-da-chon").html($(".mau-chon").attr("alt"));
-  $(".ten-size span").html($(".size-chon").attr("alt"));
+function renderSize() {
+  $(".btn-sp button").on("click", function () {
+    const size = $(this).text();
+    $(".select-size span").text(size);
+    $(".btn-sp button").removeClass("active");
+    $(this).addClass("active");
+    $(".toast-error").text("");
+  });
 }
 
-// chọn color
-$(".image-mau").on("click", function colorchange() {
-  const select = $(this).attr("class");
-  const mau = $(this).attr("alt");
-  // console.log(100,$(this).attr('class'));
-  if (select === "image-mau") {
-    $(".mau-chon").off("click");
-    $(".mau-chon").on("click", colorchange);
-    $(".mau-chon").attr({ class: "image-mau" });
-    $(".image-mau").css({ border: "" });
-    $(this).attr({ class: "mau-chon" });
-    $(".ten-mau span").html(mau);
-    console.log(1111, mau);
-    change(mau, $(".name-sp").attr("alt")); // đổi link ảnh trên class smallImg
-    checksize(mau, $(".name-sp").attr("alt")); // check size
-    render();
+renderSize();
+
+$(".image-mau").on("click", function () {
+  $(".toast-error").text("");
+  if ($(this).attr("class").includes("active")) {
+    $(this).removeClass("active");
+    $(".select-color span").text("Vui lòng chọn");
+    $(".select-size span").text("Vui lòng chọn");
+    $(".size-sp").html("");
+    $(".select-qty p").text("");
   } else {
-    $(".mau-chon").attr({ class: "image-mau" });
-    $(".ten-mau span").html("Vui lòng chọn");
-    for (let i = 0; i < $(".btn-sp").length; i++) {
-      if ($(`#size-sp${i * 2}`).attr("disabled", false) === -1) {
-        $(`#size-sp${i * 2}`).attr("disabled", true);
-      }
+    $(".size-sp").html("");
+    const color = $(this).attr("data-color");
+    const quantity = $(this).attr("quantity");
+    $(".select-color span").text(color);
+    $(".image-mau.active").removeClass("active");
+    $(this).addClass("active");
+    $(".select-size span").text("Vui lòng chọn");
+    $(".select-qty p").text(`Còn ${quantity} sản phẩm`);
+    if ($(this).attr("data-size") != "") {
+      const listSize = $(this).attr("data-size").split(",");
+      listSize.forEach((size) => {
+        const htmls = `
+          <div class="btn-sp">
+            <button class="btn-size " id="" alt="">${size}</button>
+          </div>
+        `;
+        $(".size-sp").append(htmls);
+      });
+      renderSize();
     }
-    render();
   }
-  console.log(107, $(this).attr("class"));
 });
-// check size từ color đã chọn
-async function checksize(mau, idcode) {
-  try {
-    // console.log(129,mau);
-    // console.log(130,idcode);
-    const res = await $.ajax({
-      url: "/product/check/size",
-      type: "GET",
-      data: { mau: mau, idcode: idcode },
-    });
-    // console.log(137,res);
-    for (let i = 0; i < $(".btn-sp").length; i++) {
-      const checksize = res.indexOf($(`#size-sp${i * 2}`).attr("alt"));
-      if (checksize === -1) {
-        $(`#size-sp${i * 2}`).attr("disabled", true);
-      } else {
-        $(`#size-sp${i * 2}`).attr("disabled", false);
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
+
+// $(".image-mau.active").on("click", function () {
+//   console.log($(this));
+// });
+
+// select color
+
+// $(".image-mau").on("click", () => {
+//   const select = $(this).attr("class");
+//   const mau = $(this).attr("alt");
+//   if (select === "image-mau") {
+//     $(".mau-chon").off("click");
+//     $(".mau-chon").on("click", colorchange);
+//     $(".mau-chon").attr({ class: "image-mau" });
+//     $(".image-mau").css({ border: "" });
+//     $(this).attr({ class: "mau-chon" });
+//     $(".ten-mau span").html(mau);
+//     console.log(1111, mau);
+//     change(mau, $(".name-sp").attr("alt")); // đổi link ảnh trên class smallImg
+//     checksize(mau, $(".name-sp").attr("alt")); // check size
+//     render();
+//   } else {
+//     $(".mau-chon").attr({ class: "image-mau" });
+//     for (let i = 0; i < $(".btn-sp").length; i++) {
+//       if ($(`#size-sp${i * 2}`).attr("disabled", false) === -1) {
+//         $(`#size-sp${i * 2}`).attr("disabled", true);
+//       }
+//     }
+//     render();
+//   }
+// });
+
 // đoi link ảnh smallimg khi chọn color
 async function change(mau, idcode) {
   try {
-    // console.log(114,mau);
-    // console.log(115,idcode);
     const res = await $.ajax({
       url: "/product/change/mau",
       type: "GET",
@@ -217,53 +213,52 @@ async function change(mau, idcode) {
     console.log(error);
   }
 }
+
 // chọn size
-$(".btn-size").on("click", function sizechange() {
-  const select = $(this).attr("class");
-  const mau = $(this).attr("alt");
-  console.log(100, $(this).attr("alt"));
-  if (select === "btn-size") {
-    $(".size-chon").off("click");
-    $(".size-chon").on("click", sizechange);
-    $(".size-chon").attr({ class: "btn-size" });
-    $(".btn-size").css({ border: "" });
-    $(this).attr({ class: "size-chon" });
-    $(".ten-size span").html(mau);
-    checkcolor($(this).attr("alt"), $(".name-sp").attr("alt")); // check color
-  } else {
-    $(this).attr({ class: "btn-size" });
-    $(".ten-size span").html("Vui lòng chọn");
-    for (let i = 0; i < $(".img-sp").length; i++) {
-      $(`#mau-sp${i * 2}`).show(1000);
-    }
-  }
-  // console.log(107,$(this).attr('class'));
-  render();
-});
+// $(".btn-size").on("click", function sizechange() {
+//   const select = $(this).attr("class");
+//   const mau = $(this).attr("alt");
+//   console.log(100, $(this).attr("alt"));
+//   if (select === "btn-size") {
+//     $(".size-chon").off("click");
+//     $(".size-chon").on("click", sizechange);
+//     $(".size-chon").attr({ class: "btn-size" });
+//     $(".btn-size").css({ border: "" });
+//     $(this).attr({ class: "size-chon" });
+//     $(".ten-size span").html(mau);
+//     checkcolor($(this).attr("alt"), $(".name-sp").attr("alt")); // check color
+//   } else {
+//     $(this).attr({ class: "btn-size" });
+//     $(".ten-size span").html("Vui lòng chọn");
+//     for (let i = 0; i < $(".img-sp").length; i++) {
+//       $(`#mau-sp${i * 2}`).show(1000);
+//     }
+//   }
+// });
+
 // check color từ size đã chọn
-async function checkcolor(size, idcode) {
-  try {
-    console.log(193, size);
-    console.log(194, idcode);
-    const res = await $.ajax({
-      url: "/product/check/color",
-      type: "GET",
-      data: { size: size, idcode: idcode },
-    });
-    //    console.log(137,res);
-    for (let i = 0; i < $(".img-sp").length; i++) {
-      const checksize = res.indexOf($(`#mau-sp${i * 2}`).attr("alt"));
-      if (checksize === -1) {
-        // $(`#mau-sp${i*2}`).slideToggle(1000)
-        $(`#mau-sp${i * 2}`).hide(1000);
-      } else {
-        $(`#mau-sp${i * 2}`).show(1000);
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function checkcolor(size, idcode) {
+//   try {
+//     const res = await $.ajax({
+//       url: "/product/check/color",
+//       type: "GET",
+//       data: { size: size, idcode: idcode },
+//     });
+//     for (let i = 0; i < $(".img-sp").length; i++) {
+//       const checksize = res.indexOf($(`#mau-sp${i * 2}`).attr("alt"));
+//       if (checksize === -1) {
+//         // $(`#mau-sp${i*2}`).slideToggle(1000)
+//         $(`#mau-sp${i * 2}`).hide(1000);
+//       } else {
+//         $(`#mau-sp${i * 2}`).show(1000);
+//       }
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+//* Zoom Image
 zoombigImg();
 // imageZoom("myimage", "myresult");
 //zoom ảnh bigImg
@@ -348,71 +343,48 @@ function imageZoom(imgID, resultID) {
   }
 }
 
-// tính giá sp sau khi giảm theo %
-$(".numbers").html();
-$(".phan-tram-giam").html();
-const price = Number($(".numbers").html());
-const phantram = $(".phan-tram-giam").html() * 0.01;
-$(".price").html(
-  Math.floor((price + price * phantram).toLocaleString("vi")).toFixed(3)
-);
-$(".numbers").html(Number($(".numbers").html()).toLocaleString("vi"));
+if ($(".select-name").attr("class").includes("select-color")) {
+  console.log(123);
+} else {
+  console.log(456);
+}
 
-// add Cart
-async function addCart() {
+// Toast
+function showToast() {
+  var toastTrigger = document.getElementById("liveToastBtn");
+  var toastLiveExample = document.getElementById("liveToast");
+  if (toastTrigger) {
+    var toast = new bootstrap.Toast(toastLiveExample);
+    toastLiveExample.setAttribute("style", "animation: showToast linear 0.2s;");
+    toast.show();
+  }
+}
+
+//* Add Cart
+async function addCart(productID) {
+  if ($(".image-mau.active").attr("id") != undefined) {
+    productID = $(".image-mau.active").attr("id");
+  }
+  const size = $(".select-size span").text().trim();
+  const quantity = $("#number-sp").val() * 1;
   try {
-    const mauchon = $(".mau-chon").attr("alt");
-    const sizechon = $(".size-chon").attr("alt");
-    const idchon = $(".name-sp").attr("alt");
-    const soluong = $("#number-sp").val();
-    if (mauchon === undefined || sizechon === undefined) {
-      $(".cart-text").html("Vui lòng chọn màu và size ");
-      $(".modal-body span,.modal-body i").css({ color: "red" });
-    } else {
-      const res = await $.ajax({
-        url: `/product/check/${mauchon}&${sizechon}&${idchon}&${soluong}`,
-        type: "GET",
-      });
-      console.log(355, res);
-      // console.log(356,res.ListData._id);
-      // console.log(357,res.UserID);
-      if (res.mess) {
-        console.log(380, res.mess);
-        console.log(381, res.quantity);
-        $(".cart-text").html(res.mess + ". Tối đa : " + res.quantity);
-        $(".modal-body span,.modal-body i").css({ color: "red" });
-      } else {
-        // check có id ko
-        console.log(325, res.ListData._id);
-        const update = await $.ajax({
-          // update data đã có
-          url: "/cart/update",
-          type: "PUT",
+    if (document.cookie) {
+      if ($(".select-qty p").text().length > 0 && size != "Vui lòng chọn") {
+        await $.ajax({
+          type: "POST",
+          url: "/cart/create",
           data: {
-            UserID: res.UserID,
-            productID: res.ListData._id,
-            quantity: soluong,
+            productID,
+            size,
+            quantity,
           },
         });
-        console.log(339, update.modifiedCount);
-        if (update.modifiedCount) {
-          console.log(341, update);
-        } else {
-          const data = await $.ajax({
-            // tạo mới data
-            url: "/cart/create",
-            type: "POST",
-            data: {
-              UserID: res.UserID,
-              productID: res.ListData._id,
-              quantity: soluong,
-            },
-          });
-          console.log(348, data);
-        }
-        $(".cart-text").html("Thêm vào giỏ hàng thành công");
-        $(".modal-body span,.modal-body i").css({ color: "#4caf50" });
+        showToast();
+      } else {
+        $(".toast-error").text("Vui lòng chọn đầy đủ thông tin sản phẩm");
       }
+    } else {
+      window.location.href = "/login";
     }
   } catch (error) {
     console.log(error);
@@ -422,18 +394,22 @@ async function addCart() {
 async function showHeart(codeID) {
   try {
     const styleHeart = $("#" + codeID).attr("style");
-    if (styleHeart == "" || styleHeart == undefined) {
-      $("#" + codeID).attr("style", "color : red");
+    if (document.cookie) {
+      if (styleHeart == "" || styleHeart == undefined) {
+        $("#" + codeID).attr("style", "color : red");
+      } else {
+        $("#" + codeID).attr("style", "");
+      }
+      await $.ajax({
+        url: "/user/favorite",
+        type: "PUT",
+        data: {
+          codeID,
+        },
+      });
     } else {
-      $("#" + codeID).attr("style", "");
+      window.location.href = "/login";
     }
-    await $.ajax({
-      url: "/user/favorite",
-      type: "PUT",
-      data: {
-        codeID,
-      },
-    });
   } catch (error) {
     console.log(error);
   }

@@ -31,20 +31,24 @@
           <div class="content-info-container">
             <% if (listCode.length > 0) { %>
             <ul class="content-favorite-list">
+              <% listCode.forEach(product => { %>
               <li class="content-favorite-item">
-                <a href="" class="content-favorite-link">
-                  <img
-                    src="https://vn-live.slatic.net/p/6cfb15a541f87fa5b13f8b8c45a17086.png"
-                    alt=""
-                  />
-                  <p>
-                    Gel chấm tẩy nốt ruồi, mụn cóc, tàn nhang hiệu quả DVELINIL
-                    của Nga
-                  </p>
+                <a
+                  href="/product/detail/<%= product._id %>"
+                  class="content-favorite-link"
+                >
+                  <img src="<%= product.thumbnail %>" alt="" />
+                  <p><%= product.name %></p>
                 </a>
-                <p>₫ 18.620</p>
-                <div><i class="fas fa-trash-alt"></i></div>
+                <div class="content-favorite-price">
+                  <p>₫ <%= product.price.toLocaleString() %></p>
+                  <i
+                    class="fas fa-trash-alt"
+                    onclick="removeHeart('<%= product._id %>')"
+                  ></i>
+                </div>
               </li>
+              <% }) %>
             </ul>
             <% } else { %>
             <div class="order-empty">

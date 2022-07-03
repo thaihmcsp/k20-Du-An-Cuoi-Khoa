@@ -226,30 +226,31 @@ router.put("/favorite", checkLogin, async (req, res) => {
 });
 
 // Search
-router.put("/search", async (req, res) => {
-  try {
-    let token = req.cookies.user;
-    const user = await userModel.findOne({
-      token: token,
-    });
-    if (user) {
-      user.searchHistory.push(req.body.search);
-      await userModel.updateOne(
-        { token: token },
-        {
-          searchHistory: user.searchHistory,
-        }
-      );
-      res.status(200).json({ message: "Successfull" });
-    } else {
-      res.status(400).json({ message: "Error" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Lỗi Server" });
-  }
-});
+// router.put("/search", async (req, res) => {
+//   try {
+//     let token = req.cookies.user;
+//     const user = await userModel.findOne({
+//       token: token,
+//     });
+//     if (user) {
+//       user.searchHistory.push(req.body.search);
+//       await userModel.updateOne(
+//         { token: token },
+//         {
+//           searchHistory: user.searchHistory,
+//         }
+//       );
+//       res.status(200).json({ message: "Successfull" });
+//     } else {
+//       res.status(400).json({ message: "Error" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: "Lỗi Server" });
+//   }
+// });
 
 // Admin
+
 router.get("/admin/get", checkAdmin, async function (req, res) {
   const user = await userModel
     .find()

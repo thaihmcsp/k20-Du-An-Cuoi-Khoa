@@ -18,6 +18,7 @@ router.get("/", checkRequire, async (req, res) => {
     .limit(12);
   const listProduct = await productModel.find();
   const countProduct = await productCode.count();
+
   const listCode = listProduct.filter(function (product, index) {
     return (
       index ===
@@ -60,7 +61,9 @@ router.get("/pagination", checkRequire, async (req, res) => {
       .skip((page - 1) * 24)
       .limit(24);
     const total = await productCode.count();
+    const listcategory = await category.find();
     const listProduct = await productModel.find();
+
     const listCode = listProduct.filter(function (product, index) {
       return (
         index ===
@@ -83,6 +86,7 @@ router.get("/pagination", checkRequire, async (req, res) => {
 
     res.render("user/home/pagination", {
       user: req.user,
+      listcategory,
       listproductCode: listproductCode,
       listPage: Math.ceil(total / 24),
       currentPage: page,
@@ -95,12 +99,14 @@ router.get("/pagination", checkRequire, async (req, res) => {
 });
 
 // Login & Register
-router.get("/register", checkUser, (req, res) => {
-  res.render("user/signUp/signUp", { user: req.user, ten: "" });
+router.get("/register", checkUser, async (req, res) => {
+  const listcategory = await category.find();
+  res.render("user/signUp/signUp", { user: req.user, ten: "", listcategory });
 });
 
-router.get("/login", checkUser, (req, res) => {
-  res.render("user/signIn/signIn", { user: req.user, ten: "" });
+router.get("/login", checkUser, async (req, res) => {
+  const listcategory = await category.find();
+  res.render("user/signIn/signIn", { user: req.user, ten: "", listcategory });
 });
 
 router.get("/admin/login", checkUser, (req, res) => {
@@ -108,11 +114,13 @@ router.get("/admin/login", checkUser, (req, res) => {
 });
 
 // Profile
-router.get("/profile/info", checkLogin, (req, res) => {
-  res.render("user/profile/info", { user: req.user, ten: "" });
+router.get("/profile/info", checkLogin, async (req, res) => {
+  const listcategory = await category.find();
+  res.render("user/profile/info", { user: req.user, ten: "", listcategory });
 });
 
 router.get("/profile/order", checkLogin, async (req, res) => {
+  const listcategory = await category.find();
   const listOrder = await orderModel.find({
     UserID: req.user._id,
   });
@@ -120,11 +128,13 @@ router.get("/profile/order", checkLogin, async (req, res) => {
     user: req.user,
     listOrder: listOrder.reverse(),
     ten: "",
+    listcategory,
   });
 });
 
 router.get("/profile/order/:id", checkLogin, async (req, res) => {
   try {
+    const listcategory = await category.find();
     let detailOrder = await orderModel
       .findOne({
         _id: req.params.id,
@@ -148,6 +158,7 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
       user: req.user,
       detailOrder,
       ten: "",
+      listcategory,
     });
   } catch (error) {
     console.log(error);
@@ -159,6 +170,7 @@ router.get("/profile/favorite", checkLogin, async (req, res) => {
   try {
     var listCode = [];
     let listFavorite = req.user.favorite;
+    const listcategory = await category.find();
     for (let i = 0; i < listFavorite.length; i++) {
       const listProductCode = await productCode.findOne({
         _id: listFavorite[i],
@@ -169,18 +181,25 @@ router.get("/profile/favorite", checkLogin, async (req, res) => {
       user: req.user,
       ten: "",
       listCode,
+      listcategory,
     });
   } catch (error) {
     res.status(500).json({ mess: "Server Error" });
   }
 });
 
-router.get("/profile/info/edit", checkLogin, (req, res) => {
-  res.render("user/profile/edit", { user: req.user, ten: "" });
+router.get("/profile/info/edit", checkLogin, async (req, res) => {
+  const listcategory = await category.find();
+  res.render("user/profile/edit", { user: req.user, ten: "", listcategory });
 });
 
-router.get("/profile/info/change-password", checkLogin, (req, res) => {
-  res.render("user/profile/changePassword", { user: req.user, ten: "" });
+router.get("/profile/info/change-password", checkLogin, async (req, res) => {
+  const listcategory = await category.find();
+  res.render("user/profile/changePassword", {
+    user: req.user,
+    ten: "",
+    listcategory,
+  });
 });
 
 // Admin
@@ -210,21 +229,6 @@ router.get("/admin/productCode", async function (req, res) {
   const listategory = await category.find();
   res.render("admin/productCode", { listproductCode, listategory });
 });
-
-// router.post("/search/?size",checkRequire, function (req, res) {
-//   productModel
-//     .create({
-//       quantity: req.body.quantity,
-//       size: req.body.size,
-//       color: req.body.color,
-//     })
-//     .then(function (data) {
-//       res.json({ mess: "ok", data });
-//     })
-//     .catch(function (err) {
-//       res.json({ mess: "thất bại", err });
-//     });
-// });
 
 router.get("/order", checkLogin, (req, res) => {
   res.render("user/order/order", {
@@ -276,6 +280,7 @@ router.get("/search", checkRequire, async function (req, res) {
   }
 
   try {
+    const listcategory = await category.find();
     const listProduct = await productModel.find();
     const listSearchNoLimit = await productCode.find(searchCondition);
     let listSearch = await productCode
@@ -289,6 +294,7 @@ router.get("/search", checkRequire, async function (req, res) {
         .skip((req.query.page - 1) * 16)
         .limit(16);
     }
+
     const listCode = listProduct.filter(function (product, index) {
       return (
         index ===
@@ -297,6 +303,7 @@ router.get("/search", checkRequire, async function (req, res) {
         })
       );
     });
+
     listSearch = listSearch.map((product, i) => {
       for (let j = 0; j < listCode.length; j++) {
         if (listCode[j].productCode == product._id) {
@@ -307,6 +314,7 @@ router.get("/search", checkRequire, async function (req, res) {
       }
       return product;
     });
+
     res.render("user/filter/filter", {
       user: req.user,
       dktimkiem,
@@ -316,6 +324,7 @@ router.get("/search", checkRequire, async function (req, res) {
       ten: req.query.keyword,
       listSearch,
       tongTimDuoc: listSearchNoLimit.length,
+      listcategory,
       // list123: listSearch1,
     });
   } catch (err) {

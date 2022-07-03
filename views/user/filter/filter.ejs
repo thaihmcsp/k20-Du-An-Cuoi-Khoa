@@ -41,22 +41,7 @@
         </div>
       </div>
       <div class="tong2manhinhdoc2">
-        <div class="khoibentrai">
-          <div class="khoibentrai-group">
-            <h3>Giá</h3>
-            <div class="khoibentrai-group-price">
-              <input id="giatoithieu" placeholder="Tối thiểu" type="number" value="<%= min %>" />
-              <p>-</p>
-              <input id="giatoida" placeholder="Tối đa" type="number" value="<%= max %>" />
-              <button
-                onclick="timtheogia('<%=pagenow%>','<%= ten %>')"
-                class="khoibentrai-group-price-btn"
-              >
-                Tìm theo giá
-              </button>
-            </div>
-          </div>
-        </div>
+        <div class="khoibentrai"><%- include('./option') %></div>
 
         <div class="khoibenphai">
           <h3><%= ten %></h3>
@@ -76,7 +61,7 @@
             </div>
           </div>
           <div class="khoibenphai-price">
-            <p>Lọc theo: </p>
+            <p>Lọc theo:</p>
           </div>
 
           <div class="noidungbenphai"><%- include('./product') %></div>

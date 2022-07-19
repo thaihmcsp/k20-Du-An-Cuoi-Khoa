@@ -166,37 +166,6 @@ $(".image-mau").on("click", function () {
   }
 });
 
-// $(".image-mau.active").on("click", function () {
-//   console.log($(this));
-// });
-
-// select color
-
-// $(".image-mau").on("click", () => {
-//   const select = $(this).attr("class");
-//   const mau = $(this).attr("alt");
-//   if (select === "image-mau") {
-//     $(".mau-chon").off("click");
-//     $(".mau-chon").on("click", colorchange);
-//     $(".mau-chon").attr({ class: "image-mau" });
-//     $(".image-mau").css({ border: "" });
-//     $(this).attr({ class: "mau-chon" });
-//     $(".ten-mau span").html(mau);
-//     console.log(1111, mau);
-//     change(mau, $(".name-sp").attr("alt")); // đổi link ảnh trên class smallImg
-//     checksize(mau, $(".name-sp").attr("alt")); // check size
-//     render();
-//   } else {
-//     $(".mau-chon").attr({ class: "image-mau" });
-//     for (let i = 0; i < $(".btn-sp").length; i++) {
-//       if ($(`#size-sp${i * 2}`).attr("disabled", false) === -1) {
-//         $(`#size-sp${i * 2}`).attr("disabled", true);
-//       }
-//     }
-//     render();
-//   }
-// });
-
 // đoi link ảnh smallimg khi chọn color
 async function change(mau, idcode) {
   try {
@@ -213,50 +182,6 @@ async function change(mau, idcode) {
     console.log(error);
   }
 }
-
-// chọn size
-// $(".btn-size").on("click", function sizechange() {
-//   const select = $(this).attr("class");
-//   const mau = $(this).attr("alt");
-//   console.log(100, $(this).attr("alt"));
-//   if (select === "btn-size") {
-//     $(".size-chon").off("click");
-//     $(".size-chon").on("click", sizechange);
-//     $(".size-chon").attr({ class: "btn-size" });
-//     $(".btn-size").css({ border: "" });
-//     $(this).attr({ class: "size-chon" });
-//     $(".ten-size span").html(mau);
-//     checkcolor($(this).attr("alt"), $(".name-sp").attr("alt")); // check color
-//   } else {
-//     $(this).attr({ class: "btn-size" });
-//     $(".ten-size span").html("Vui lòng chọn");
-//     for (let i = 0; i < $(".img-sp").length; i++) {
-//       $(`#mau-sp${i * 2}`).show(1000);
-//     }
-//   }
-// });
-
-// check color từ size đã chọn
-// async function checkcolor(size, idcode) {
-//   try {
-//     const res = await $.ajax({
-//       url: "/product/check/color",
-//       type: "GET",
-//       data: { size: size, idcode: idcode },
-//     });
-//     for (let i = 0; i < $(".img-sp").length; i++) {
-//       const checksize = res.indexOf($(`#mau-sp${i * 2}`).attr("alt"));
-//       if (checksize === -1) {
-//         // $(`#mau-sp${i*2}`).slideToggle(1000)
-//         $(`#mau-sp${i * 2}`).hide(1000);
-//       } else {
-//         $(`#mau-sp${i * 2}`).show(1000);
-//       }
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 //* Zoom Image
 zoombigImg();
@@ -349,7 +274,7 @@ if ($(".select-name").attr("class").includes("select-color")) {
   console.log(456);
 }
 
-// Toast
+//* Toast
 function showToast() {
   var toastTrigger = document.getElementById("liveToastBtn");
   var toastLiveExample = document.getElementById("liveToast");
@@ -391,6 +316,39 @@ async function addCart(productID) {
   }
 }
 
+// * Buy now
+async function buyNow(productID) {
+  if ($(".image-mau.active").attr("id") != undefined) {
+    productID = $(".image-mau.active").attr("id");
+  }
+  const size = $(".select-size span").text().trim();
+  const quantity = $("#number-sp").val() * 1;
+  try {
+    if (document.cookie) {
+      if ($(".select-qty p").text().length > 0 && size != "Vui lòng chọn") {
+        await $.ajax({
+          type: "POST",
+          url: "/cart/create",
+          data: {
+            productID,
+            size,
+            quantity,
+            checked: true,
+          },
+        });
+        window.location.href = "/cart";
+      } else {
+        $(".toast-error").text("Vui lòng chọn đầy đủ thông tin sản phẩm");
+      }
+    } else {
+      window.location.href = "/login";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// * Show Heart
 async function showHeart(codeID) {
   try {
     const styleHeart = $("#" + codeID).attr("style");

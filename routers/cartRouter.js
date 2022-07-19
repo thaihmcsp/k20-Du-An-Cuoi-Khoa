@@ -9,12 +9,6 @@ const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 router.get("/", checkLogin, async (req, res) => {
   try {
     const listcategory = await Category.find();
-    // const dataObject = await renderCart(req.id);
-    // for (var j = 0; j < dataObject.arrCode.length; j++) {
-    //   for (var i = 0; i < dataObject.data.length; i++) {
-    //     console.log(90, dataObject.arrproductcode[i].price);
-    //   }
-    // }
     const cartUser = await CartModel.findOne({
       UserID: req.id,
     }).populate({
@@ -23,6 +17,7 @@ router.get("/", checkLogin, async (req, res) => {
     });
     if (cartUser) {
       res.render("user/cart/cart", {
+        cartID: cartUser._id,
         listCart: cartUser.productList,
         sumCart: cartUser.productList.length,
         user: req.user,
@@ -42,81 +37,6 @@ router.get("/", checkLogin, async (req, res) => {
   }
 });
 
-async function renderCart(UserID) {
-  try {
-    console.log(9, UserID);
-    let sumprice = 0;
-    let sumCart = 0;
-    let sumarrorder = 0;
-    const arrorder = [];
-    const arrprice = [];
-    const arrproduct = [];
-    const arrproductcode = [];
-    const arrCode = [];
-    const data = await CartModel.find({ UserID: UserID });
-    for (let k = 0; k < data.length; k++) {
-      const order = data[k].productList[0].select;
-      if (order === true) {
-        arrorder.push(data[k]);
-      }
-      const product = await ProductModel.findOne({
-        _id: data[k].productList[0].productID,
-      });
-      arrproduct.push(product);
-      const productcode = await ProductCodeModel.findOne({
-        _id: product.productCode,
-      });
-      arrproductcode.push(productcode);
-      sumCart += data[k].productList[0].quantity; // số lượng sản phẩm order
-
-      if (arrCode.indexOf(product.productCode) === -1) {
-        arrCode.push(product.productCode);
-      }
-    }
-    // console.log(33,arrorder);
-    for (let m = 0; m < arrorder.length; m++) {
-      // console.log(33, arrorder[m].productList[0].quantity);
-      const productorder = await ProductModel.findOne({
-        _id: arrorder[m].productList[0].productID,
-      });
-      // console.log(34,productorder);
-      const productcodeprice = await ProductCodeModel.findOne({
-        _id: productorder.productCode,
-      });
-      arrprice.push(
-        productcodeprice.price * arrorder[m].productList[0].quantity
-      ); // giá * số lượng order
-      sumarrorder += arrorder[m].productList[0].quantity; // số lượng sản phẩm order
-    }
-
-    for (let u = 0; u < arrprice.length; u++) {
-      sumprice += arrprice[u];
-    }
-    sumprice = sumprice.toLocaleString("vi"); // Định dạng phân cách bàng dấu chấm
-    // console.log(44,arrproduct);
-    // console.log(45,sumarrorder);
-    // console.log(46,arrprice);
-    // console.log(47,sumprice);
-    // console.log(48,arrproductcode);
-    // console.log(49,sumCart);
-    console.log(50, arrCode);
-
-    return {
-      data: data,
-      arrorder: arrorder,
-      arrprice: arrprice,
-      sumprice,
-      sumarrorder,
-      sumCart,
-      arrproduct: arrproduct,
-      arrproductcode: arrproductcode,
-      arrCode: arrCode,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 router.post("/create", checkLogin, async (req, res) => {
   try {
     const cartUser = await CartModel.findOne({
@@ -134,12 +54,14 @@ router.post("/create", checkLogin, async (req, res) => {
           productID: req.body.productID,
           quantity: req.body.quantity * 1 + cartFilter[0].quantity,
           size: req.body.size == undefined ? "" : req.body.size,
+          select: req.body.checked,
         });
       } else {
         cartUser.productList.push({
           productID: req.body.productID,
           quantity: req.body.quantity,
           size: req.body.size == undefined ? "" : req.body.size,
+          select: req.body.checked,
         });
       }
       await CartModel.updateOne(
@@ -159,6 +81,7 @@ router.post("/create", checkLogin, async (req, res) => {
             productID: req.body.productID,
             quantity: req.body.quantity,
             size: req.body.size == undefined ? "" : req.body.size,
+            select: req.body.checked,
           },
         ],
       });
@@ -169,104 +92,132 @@ router.post("/create", checkLogin, async (req, res) => {
   }
 });
 
-router.put("/update", checkUser, async (req, res) => {
+router.put("/checkbox", checkLogin, async (req, res) => {
   try {
-    console.log(70, req.body.productID);
-    if (req.body.i) {
-      const data1 = await CartModel.updateOne(
-        { "productList.productID": req.body.productID },
-        { "productList.$.quantity": req.body.quantity }
+    const cartUser = await CartModel.findOne({
+      UserID: req.id,
+    });
+    if (cartUser) {
+      let boolValue = JSON.parse(req.body.checked);
+      cartUser.productList[req.body.i * 1].select = boolValue;
+
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartUser.productList,
+        }
       );
 
-      const dataObject = await renderCart(req.id);
-      res.render("user/cart/homecart", dataObject);
+      res.status(200).json({ message: "Successfull" });
     } else {
-      const data = await CartModel.updateOne(
-        { UserID: req.id, "productList.productID": req.body.productID },
-        { $inc: { "productList.$.quantity": req.body.quantity } }
-      );
-      // Since 'productList ' is an array, you will need to use an array operator for updating just the one element.
-      // In this case, since the query uniquely identifies one element, you can use the $ positional operator, like
-      res.json(data);
+      res.status(400).json({ message: "Failed" });
     }
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: "Error" });
   }
 });
 
-router.put("/up", checkUser, async (req, res) => {
+router.put("/checkboxAll", checkLogin, async (req, res) => {
   try {
-    console.log(70, req.body.productID);
-    const data = await CartModel.updateOne(
-      { UserID: req.id, "productList.productID": req.body.productID },
-      { $inc: { "productList.$.quantity": 1 } }
-    );
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
-  } catch (error) {
-    console.log(error);
-  }
-});
-router.put("/down", checkUser, async (req, res) => {
-  try {
-    console.log(70, req.body.productID);
-    const data = await CartModel.updateOne(
-      { UserID: req.id, "productList.productID": req.body.productID },
-      { $inc: { "productList.$.quantity": -1 } }
-    );
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
-  } catch (error) {
-    console.log(error);
-  }
-});
-router.put("/test", checkUser, async (req, res) => {
-  try {
-    console.log(72, req.body.productID, req.body.select);
-    const data = await CartModel.updateOne(
-      { UserID: req.id, "productList.productID": req.body.productID },
-      { "productList.$.select": req.body.select }
-    );
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
-  } catch (error) {
-    console.log(error);
-  }
-});
-router.put("/testall", checkUser, async (req, res) => {
-  try {
-    console.log(82, req.id);
-    console.log(83, req.body.select);
-    const data1 = await CartModel.updateMany(
-      { UserID: req.id },
-      { "productList.$[].select": req.body.select },
-      { multi: true }
-    );
-
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
-  } catch (error) {
-    console.log(error);
-  }
-});
-router.delete("/xoa", checkUser, async (req, res) => {
-  try {
-    console.log(70, req.body.productID);
-    const data = await CartModel.deleteOne({
+    const cartUser = await CartModel.findOne({
       UserID: req.id,
-      "productList.productID": req.body.productID,
     });
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
+    if (cartUser) {
+      let boolValue = JSON.parse(req.query.checked);
+      const cartChecked = cartUser.productList.map((value) => {
+        value.select = boolValue;
+        return value;
+      });
+
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartChecked,
+        }
+      );
+
+      res.status(200).json({ message: "Successfull" });
+    } else {
+      res.status(400).json({ message: "Failed" });
+    }
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: "Error" });
   }
 });
-router.delete("/xoaAll", checkUser, async (req, res) => {
+
+router.post("/quantity", checkLogin, async (req, res) => {
   try {
-    const data = await CartModel.deleteMany({ UserID: req.id });
-    const dataObject = await renderCart(req.id);
-    res.render("user/cart/homecart", dataObject);
+    const cartUser = await CartModel.findOne({
+      UserID: req.id,
+    });
+    if (cartUser) {
+      cartUser.productList[req.body.i * 1].quantity = req.body.quantity;
+
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartUser.productList,
+        }
+      );
+
+      res.status(200).json({ message: "Successfull" });
+    } else {
+      res.status(400).json({ message: "Failed" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+router.delete("/remove", checkLogin, async (req, res) => {
+  try {
+    const cartUser = await CartModel.findOne({
+      UserID: req.id,
+    });
+    if (cartUser) {
+      cartUser.productList.splice(req.query.i * 1, 1);
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartUser.productList,
+        }
+      );
+      res.status(200).json({ message: "Successfull" });
+    } else {
+      res.status(400).json({ message: "Failed" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+router.delete("/removeAll", checkLogin, async (req, res) => {
+  try {
+    const cartUser = await CartModel.findOne({
+      UserID: req.id,
+    });
+    if (cartUser) {
+      cartUser.productList.splice(0, cartUser.productList.length);
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: cartUser.productList,
+        }
+      );
+      res.status(200).json({ message: "Successfull" });
+    } else {
+      res.status(400).json({ message: "Failed" });
+    }
   } catch (error) {
     console.log(error);
   }

@@ -388,7 +388,7 @@ body {
 }
 
 .content-order-detail-img {
-  flex: 0.8;
+  flex: 0.7;
 }
 
 .content-order-detail-img img {
@@ -411,10 +411,29 @@ body {
   height: fit-content;
 }
 
+.color-size {
+  margin-top: 6px;
+  color: #757575;
+  font-size: 12px;
+  font-weight: 400;
+}
+
 .content-order-detail-quantity,
 .content-order-detail-price {
   flex: 1;
   text-align: center;
+}
+
+.content-order-detail-rate {
+  flex: 0.8;
+}
+
+.content-order-detail-rate button {
+  padding: 6px 12px;
+  background-color: var(--btn-color);
+  color: white;
+  font-size: 14px;
+  border: none;
 }
 
 .content-order-info {
@@ -427,6 +446,7 @@ body {
   flex: 1;
   background-color: white;
   margin: 0 8px;
+  height: fit-content;
 }
 
 .content-order-info-address {
@@ -471,11 +491,21 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.total-price {
+  font-weight: 500;
+}
+
+.total-price span:last-child {
+  font-size: 17px;
+  color: var(--btn-color);
 }
 
 .cancel-order {
   text-align: right;
-  margin: 8px 0;
+  margin: 16px 0;
 }
 
 .cancel-order button {
@@ -539,7 +569,7 @@ body {
 }
 
 .modal-body {
-  padding: 10px 16px;
+  padding: 20px 16px 10px;
 }
 
 .modal-footer {

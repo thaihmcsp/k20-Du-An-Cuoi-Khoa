@@ -165,12 +165,11 @@ async function removeHeart(codeID) {
 }
 
 //* Cancel Order
-async function cancelOrder() {
-  let orderID = url.split("/")[url.split("/").length - 1];
+async function cancelOrder(orderID) {
   try {
     await $.ajax({
       type: "PUT",
-      url: "/order/" + orderID,
+      url: "/order/cancel/" + orderID,
     });
     window.location.reload();
   } catch (error) {

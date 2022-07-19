@@ -1,11 +1,20 @@
 <div class="leftcontainer">
   <div class="list-header-man">
     <div class="checkbox-wrap">
-      <input type="checkbox" alt="false" class="checkall" onclick="testall()" />
-      <span>Chọn tất cả (<%= sumCart %> sản phẩm)</span>
+      <input
+        type="checkbox"
+        alt="false"
+        class="checkall"
+        onclick="checkboxAll()"
+      />
+      <label>Chọn tất cả (<%= sumCart %> sản phẩm)</label>
     </div>
-    <div class="list-header-operations" onclick="xoaAll()">
-      <span><i class="fa-solid fa-trash-can"></i>Xóa</span>
+    <div
+      class="list-header-operations"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+    >
+      <span><i class="fa-solid fa-trash-can"></i>Xóa tất cả</span>
     </div>
   </div>
 
@@ -18,7 +27,7 @@
     <div class="checkout-summary">
       <div class="checkout-summary-rows">
         <div class="checkout-summary-label">
-          Tạm tính (<span alt="">0</span> sản phẩm)
+          Tạm tính (<span>0</span> sản phẩm)
         </div>
         <span class="checkout-value">0 ₫ </span>
       </div>
@@ -31,8 +40,11 @@
       <div class="checkout-small">
         <small>Đã bao gồm VAT (nếu có)</small>
       </div>
-      <button class="order-group" onclick="window.location.href = '/order'">
-        XÁC NHẬN GIỎ HÀNG (<%= sumCart %>)
+      <button
+        class="order-group"
+        onclick="window.location.href='/order/<%= cartID %>?result=checkout'"
+      >
+        XÁC NHẬN GIỎ HÀNG (<span>0</span>)
       </button>
     </div>
   </div>

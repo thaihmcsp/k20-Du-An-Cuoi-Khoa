@@ -25,8 +25,8 @@ body {
 .checkbox-wrap {
   position: relative;
 }
-.checkbox-wrap span {
-  margin-left: 25px;
+.checkbox-wrap label {
+  margin-left: 36px;
   color: var(--font-heading-color);
   text-transform: uppercase;
   font-size: 12px;
@@ -51,12 +51,12 @@ body {
   font-size: 14px;
 }
 
+/** Render Cart */
 .checkout-item {
   padding: 16px 0;
   background: #ffffff;
   display: flex;
   margin-top: 12px;
-  /* margin-bottom: 12px; */
 }
 .cart-item-left {
   display: flex;
@@ -128,7 +128,7 @@ body {
   outline: 0;
 }
 
-#quantity::-webkit-inner-spin-button {
+.quantity-product::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -138,10 +138,15 @@ body {
   height: 32px;
   border: none;
   background: #eff0f5;
+  font-size: 15px;
+  color: var(--font-heading-color);
+  transition: linear 0.2s;
 }
+
 .so-luong-sp button:hover {
   background: #dadada;
 }
+
 .disable:hover {
   background: #eff0f5 !important;
 }
@@ -285,4 +290,87 @@ div.thongbao {
   color: var(--btn-color);
   background-color: transparent;
   font-weight: 500;
+}
+
+/** Css Checkbox */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: 1px solid var(--font-heading-color);
+  border-radius: 3px;
+  transition: ease-in-out 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+input[type="checkbox"]:hover {
+  cursor: pointer;
+  border: 1px solid var(--btn-color);
+}
+
+input[type="checkbox"]::after {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  color: white;
+  display: none;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--btn-color);
+  border: 1px solid var(--btn-color);
+}
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+/** Modal Confirm */
+.modal {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.modal-dialog {
+  max-width: 300px;
+}
+
+.modal-content {
+  width: 300px;
+  border-radius: 0;
+}
+
+.modal-body {
+  padding-bottom: 0;
+}
+
+.modal-body p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.modal-footer {
+  border: none;
+}
+
+.modal-footer button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  margin: 4px;
+}
+
+.modal-footer button:hover {
+  background-color: transparent;
+  color: #333;
+}
+
+.modal-footer button:last-child {
+  color: var(--profile-color);
 }

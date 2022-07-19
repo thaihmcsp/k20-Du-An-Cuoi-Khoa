@@ -10,7 +10,7 @@ const UserSchema = mongoose.Schema(
     date: String,
     avatar: {
       type: String,
-      default: "/public/upload/avatarDefault.png",
+      default: "/public/upload/avatarDefault.jpg",
     },
     role: {
       type: String,

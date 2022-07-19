@@ -207,20 +207,16 @@ router.get("/admin", checkAdmin, function (req, res) {
   res.render("admin/admin");
 });
 
-router.get("/orderadmin", async function (req, res) {
+router.get("/orderadmin", checkAdmin, async function (req, res) {
   try {
-    const dataOrder = [];
-    const data = await orderModel.find();
-    // console.log(230,data);
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].productList.length) {
-        dataOrder.push(data[i]);
-      }
-    }
-    console.log(239, dataOrder);
-    res.render("admin/orderAdmin", { listdata: dataOrder });
+    const listOrder = await orderModel
+      .find({
+        status: "pending",
+      })
+      .sort({ createdAt: 1 });
+    res.render("admin/orderAdmin", { listOrder });
   } catch (error) {
-    console.log(243, error);
+    res.status(500).json({ mess: "Server Error" });
   }
 });
 
@@ -228,13 +224,6 @@ router.get("/admin/productCode", async function (req, res) {
   const listproductCode = await productCode.find();
   const listategory = await category.find();
   res.render("admin/productCode", { listproductCode, listategory });
-});
-
-router.get("/order", checkLogin, (req, res) => {
-  res.render("user/order/order", {
-    user: req.user,
-    ten: "",
-  });
 });
 
 // Filter

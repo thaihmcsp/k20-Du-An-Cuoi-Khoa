@@ -131,7 +131,12 @@
 
               <p class="toast-error"></p>
               <div class="order">
-                <button class="mua-ngay">Mua ngay</button>
+                <button
+                  class="mua-ngay"
+                  onclick="buyNow('<%= listData[0]._id %>')"
+                >
+                  Mua ngay
+                </button>
                 <button
                   class="them-vao-cart"
                   id="liveToastBtn"

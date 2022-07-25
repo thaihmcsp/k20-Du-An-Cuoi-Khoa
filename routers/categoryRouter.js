@@ -60,9 +60,17 @@ router.get("/:id", checkRequire, async (req, res) => {
           $gte: req.query.pricemin * 1,
         };
       }
+
+      if (req.query.rate) {
+        condition.stars = {
+          $gte: req.query.rate * 1,
+          $lt: req.query.rate * 1 + 1,
+        };
+      }
+
       const listProduct = await productModel.find();
       const listSearchNoLimit = await ProductCode.find(condition);
-      let listSearch = await ProductCode.find(condition)
+      var listSearch = await ProductCode.find(condition)
         .skip((req.query.page - 1) * 16)
         .limit(16);
       if (req.query.sort != "popularity") {
@@ -71,7 +79,7 @@ router.get("/:id", checkRequire, async (req, res) => {
           .skip((req.query.page - 1) * 16)
           .limit(16);
       }
-      const listCode = listProduct.filter(function (product, index) {
+      let listCode = listProduct.filter(function (product, index) {
         return (
           index ===
           listProduct.findIndex((value) => {
@@ -89,13 +97,83 @@ router.get("/:id", checkRequire, async (req, res) => {
         }
         return product;
       });
+
+      const hasData = listSearch.filter((item) => {
+        return item.hasData;
+      });
+      var listDetail = [];
+      if (req.query.color) {
+        let detail;
+        for (let i = 0; i < hasData.length; i++) {
+          detail = await productModel.findOne({
+            productCode: hasData[i]._id,
+            color: req.query.color,
+          });
+          listDetail.push(detail);
+        }
+      } else {
+        listDetail = listProduct.filter((item) => {
+          return item.color !== "";
+        });
+      }
+      listDetail = listDetail.filter((value, i) => {
+        if (req.query.color) {
+          return value != null;
+        } else {
+          return (
+            value != null &&
+            i ==
+              listDetail.findIndex((item) => {
+                return item.color === value.color;
+              })
+          );
+        }
+      });
+      if (req.query.color) {
+        listSearch = [];
+        for (let i = 0; i < listDetail.length; i++) {
+          const code = await ProductCode.findOne({
+            ...condition,
+            _id: listDetail[i].productCode,
+          });
+          listSearch.push(code);
+        }
+
+        listCode = listDetail.filter(function (product, index) {
+          return (
+            index ===
+            listDetail.findIndex((value) => {
+              return value.productCode === product.productCode;
+            })
+          );
+        });
+
+        listSearch = listSearch.map((product, i) => {
+          for (let j = 0; j < listCode.length; j++) {
+            if (listCode[j].productCode == product._id) {
+              const newProduct = { ...product._doc };
+              newProduct.hasData = true;
+              return newProduct;
+            }
+          }
+          return product;
+        });
+
+        listDetail = await productModel.findOne({
+          color: req.query.color,
+        });
+      }
+
       res.render("user/filter/category", {
         user: req.user,
         ten: "",
         name: category.name,
         pagenow: req.query.page,
-        tongTimDuoc: listSearchNoLimit.length,
+        tongTimDuoc: req.query.color ? listSearch.length : listSearchNoLimit,
         listSearch,
+        listDetail,
+        numberPage: Math.ceil(listSearchNoLimit / 16),
+        colorName: req.query.color,
         min: req.query.pricemin,
         max: req.query.pricemax,
         listcategory,

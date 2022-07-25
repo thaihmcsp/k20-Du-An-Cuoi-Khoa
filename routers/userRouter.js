@@ -94,7 +94,6 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
           process.env.IMGBB_KEY,
           req.file.path
         );
-        console.log(upload.url);
         await userModel.updateOne(
           {
             token: token,
@@ -111,7 +110,6 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
       res.status(400).json("User này không tồn tại");
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ mess: "Lỗi Sever", error });
   }
 });
@@ -119,7 +117,6 @@ router.post("/profile/upload", upload.single("avatar"), async (req, res) => {
 // Register + Login
 router.post("/register", async (req, res) => {
   try {
-    console.log(23, req.body);
     const user = await userModel.findOne({
       email: req.body.email,
     });
@@ -290,7 +287,6 @@ router.put("/:idedit", async function (req, res) {
 });
 
 router.get("/order/user", checkAdmin, async function (req, res) {
-  // console.log(247,req.query.id);
   const user = await userModel.findOne({ _id: req.query.id });
   res.json(user);
 });

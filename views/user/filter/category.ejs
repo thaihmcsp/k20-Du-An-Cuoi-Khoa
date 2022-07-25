@@ -53,7 +53,11 @@
             </p>
             <div>
               <span>Sắp xếp theo :</span>
-              <select name="" id="sort" onchange="sortByPrice()">
+              <select
+                name=""
+                id="sort"
+                onchange="sortByPrice('<%= pagenow %>')"
+              >
                 <option value="popularity">Phù hợp nhất</option>
                 <option value="priceasc">Giá tăng dần</option>
                 <option value="pricedesc">Giá giảm dần</option>
@@ -69,20 +73,25 @@
           <!-- phân trang -->
           <% if (tongTimDuoc > 16 ) { %>
           <div class="phantrang">
-            <button onclick="changepagetruoc('<%=pagenow%>','<%= name %>')">
-              <-
-            </button>
-            <div class="phantranggiua">
-              <% listSearch.map(function(value,index){ %>
-              <button onclick="changepage('<%= index+1 %>','<%= name %>')">
-                <%= index + 1 %>
-              </button>
-              <% }) %>
-            </div>
             <button
-              onclick="changepagesau('<%= pagenow %>','<%= name %>','<%=tongTimDuoc/8 %>')"
+              onclick="pagePre('<%= pagenow %>')"
+              class="btn-page <%= pagenow == 1 ? 'active-page-hide' : '' %>"
             >
-              ->
+              <
+            </button>
+            <% for (let i = 1; i <= numberPage; i++) { %>
+            <button
+              onclick="changePage('<%= i %>', '<%= pagenow %>')"
+              class="btn-page <%= i == pagenow ? 'active-page' : '' %>"
+            >
+              <%= i %>
+            </button>
+            <% } %>
+            <button
+              onclick="pageNext('<%= pagenow %>')"
+              class="btn-page <%= pagenow == numberPage ? 'active-page-hide' : '' %>"
+            >
+              >
             </button>
           </div>
           <% } %>

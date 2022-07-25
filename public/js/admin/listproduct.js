@@ -123,7 +123,7 @@ async function addDetail() {
   for (let i = 0; i < $(".select-size").length; i++) {
     listSize.push($(".select-size").eq(i).val());
   }
-  const color = $("#color").val();
+  const color = $("#color").val().trim();
   const quantity = $("#quantity").val();
   try {
     if (quantity * 1 > 0) {

@@ -1,3 +1,69 @@
+<div class="khoibentrai-group" id="color">
+  <h3>Nhóm màu</h3>
+  <% if (listDetail.length > 0 ) { %> <% listDetail.map(detail => { %> <% if
+  (detail.color != '') { %>
+  <div class="khoibentrai-group-color">
+    <input
+      type="checkbox"
+      name=""
+      onclick="checkboxColor(this, '<%= detail.color %>')"
+    />
+    <label><%= detail.color %></label>
+  </div>
+  <% } %> <% }) %> <% } else { %>
+  <div class="khoibentrai-group-color">
+    <input
+      type="checkbox"
+      name=""
+      onclick="checkboxColor(this, '<%= colorName %>')"
+      checked
+    />
+    <label><%= colorName %></label>
+  </div>
+  <% } %>
+</div>
+<div class="khoibentrai-group">
+  <h3>Đánh giá</h3>
+  <div class="khoibentrai-group-rate" page="<%= pagenow %>">
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+  </div>
+  <div class="khoibentrai-group-rate">
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <span>Trở lên</span>
+  </div>
+  <div class="khoibentrai-group-rate">
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <span>Trở lên</span>
+  </div>
+  <div class="khoibentrai-group-rate">
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <span>Trở lên</span>
+  </div>
+  <div class="khoibentrai-group-rate">
+    <img src="/public/icon/star-active.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <img src="/public/icon/star-empty.png" alt="" />
+    <span>Trở lên</span>
+  </div>
+</div>
 <div class="khoibentrai-group">
   <h3>Giá</h3>
   <div class="khoibentrai-group-price">
@@ -15,7 +81,7 @@
       value="<%= max %>"
     />
     <button
-      onclick="timtheogia('<%=pagenow%>','<%= ten %>')"
+      onclick="timtheogia('<%= pagenow %>')"
       class="khoibentrai-group-price-btn"
     >
       Tìm theo giá

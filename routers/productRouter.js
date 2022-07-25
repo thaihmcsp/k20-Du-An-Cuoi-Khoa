@@ -2,6 +2,7 @@ const router = require("express").Router();
 const path = require("path");
 const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
+const evaluateModel = require("../models/evaluateModel");
 const CartModel = require("../models/cartModel");
 const category = require("../models/category");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
@@ -29,12 +30,26 @@ router.get("/detail/:id", checkRequire, async (req, res) => {
       _id: req.params.id,
     }).populate("categoryID");
     const listData = await ProductModel.find({ productCode: req.params.id });
+    const listComment = await evaluateModel
+      .find({
+        productCode: req.params.id,
+      })
+      .populate("userID");
+    var listCount = [];
+    for (let i = 1; i <= 5; i++) {
+      const countStar = await evaluateModel
+        .find({ star: i, productCode: req.params.id })
+        .count();
+      listCount.push(countStar);
+    }
     res.render("user/detail/detail", {
       user: req.user,
       ten: "",
       listcategory,
       listData,
       listcode,
+      listComment,
+      listCount,
     });
   } catch (error) {
     res.status(500).json({

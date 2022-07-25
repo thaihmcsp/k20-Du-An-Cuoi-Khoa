@@ -11,6 +11,10 @@ const OrderSchema = mongoose.Schema(
         productID: { type: String, ref: "product" },
         quantity: Number,
         size: String,
+        rated: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
     total: Number,

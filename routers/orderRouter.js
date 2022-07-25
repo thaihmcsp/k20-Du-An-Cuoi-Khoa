@@ -3,8 +3,8 @@ const ProductModel = require("../models/product");
 const ProductCodeModel = require("../models/productCode");
 const CartModel = require("../models/cartModel");
 const OrderModel = require("../models/orderModel");
-const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const UserModel = require("../models/userModel");
+const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const CategoryModel = require("../models/category");
 
 router.get("/:id", checkLogin, async (req, res) => {

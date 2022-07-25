@@ -1,8 +1,8 @@
 const router = require("express").Router();
+const path = require("path");
 const ProductCode = require("../models/productCode");
 const Category = require("../models/category");
 const Product = require("../models/product");
-const path = require("path");
 const { checkLogin, checkUser } = require("../middleWare/checkLogin");
 const multer = require("multer");
 const storage = multer.diskStorage({

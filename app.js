@@ -22,6 +22,8 @@ app.use("/product", require("./routers/productRouter"));
 
 app.use("/order", require("./routers/orderRouter"));
 
+app.use("/rated", require("./routers/evaluateRouter"));
+
 app.use("/", require("./routers/indexRouter"));
 
 app.listen(process.env.PORT || 3000, () => {

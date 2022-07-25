@@ -1,0 +1,70 @@
+const router = require("express").Router();
+const userModel = require("../models/userModel");
+const evaluateModel = require("../models/evaluateModel");
+const productCode = require("../models/productCode");
+const { checkLogin, checkUser } = require("../middleWare/checkLogin");
+const OrderModel = require("../models/orderModel");
+
+router.post("/creat", checkLogin, async (req, res) => {
+  try {
+    const order = await OrderModel.findOne({
+      _id: req.body.orderID,
+    });
+    if (order) {
+      await evaluateModel.create({
+        userID: req.id,
+        productCode: req.body.codeID,
+        star: req.body.star,
+        content: req.body.content,
+      });
+      order.productList[req.body.i].rated = true;
+      await OrderModel.updateOne(
+        {
+          _id: req.body.orderID,
+        },
+        {
+          productList: order.productList,
+        }
+      );
+      const comment = await evaluateModel.find({
+        productCode: req.body.codeID,
+      });
+      var sumStar = 0;
+      for (let i = 0; i < comment.length; i++) {
+        sumStar += comment[i].star;
+      }
+      await productCode.updateOne(
+        {
+          _id: req.body.codeID,
+        },
+        {
+          stars: (sumStar / comment.length).toFixed(1),
+        }
+      );
+      res.status(200).json({ mess: "Successfull" });
+    } else {
+      res.status(400).json({ mess: "Failed" });
+    }
+  } catch (error) {
+    res.status(500).json({ mess: "Error Server" });
+  }
+});
+
+// router.delete("/remove-rate", checkLogin, async (req, res) => {
+//   try {
+//     const order = await OrderModel.findOne({
+//       _id: req.body.orderID,
+//     });
+//     if (order) {
+//       await evaluateModel.find();
+//       editData(order, false);
+//       res.status(200).json({ mess: "Successfull" });
+//     } else {
+//       res.status(400).json({ mess: "Failed" });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ mess: "Error server" });
+//   }
+// });
+
+module.exports = router;

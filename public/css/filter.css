@@ -177,7 +177,34 @@ a:active {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.btn-page {
+  padding: 4px 12px;
+  border: 1px solid var(--font-heading-color);
+  background-color: transparent;
+  color: var(--font-heading-color);
+  transition: ease-in-out 0.25s;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.btn-page:hover {
+  border: 1px solid var(--profile-hover-color);
+  color: var(--profile-hover-color);
+}
+
+.active-page {
+  color: white;
+  background-color: var(--profile-color);
+  border: 1px solid var(--profile-color);
+  pointer-events: none;
+}
+
+.active-page-hide {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .buttomhome {
@@ -209,6 +236,56 @@ a:active {
   font-size: 15px;
   font-weight: 500;
   color: black;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  transition: ease-in-out 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+input[type="checkbox"]:hover {
+  cursor: pointer;
+  border: 1px solid var(--btn-color);
+}
+
+input[type="checkbox"]::after {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--btn-color);
+  display: none;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #fff1e8;
+  border: 1px solid var(--profile-color);
+}
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.khoibentrai-group-color {
+  display: flex;
+  align-items: center;
+  height: 24px;
+}
+
+.khoibentrai-group-color label {
+  font-size: 14px;
+  color: #757575;
+  margin-left: 8px;
 }
 
 .khoibentrai-group-price {
@@ -246,7 +323,25 @@ a:active {
   background-color: var(--hover-btn-color);
 }
 
-/* Product */
+.khoibentrai-group-rate {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  cursor: pointer;
+}
+
+.khoibentrai-group-rate img {
+  width: 18px;
+  height: 18px;
+}
+
+.khoibentrai-group-rate span {
+  font-size: 14px;
+  color: #757575;
+  margin-left: 8px;
+}
+
+/** Product */
 .product-list {
   list-style: none;
   padding: 0;

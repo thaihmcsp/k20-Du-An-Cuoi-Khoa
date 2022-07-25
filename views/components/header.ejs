@@ -293,7 +293,7 @@
       } else {
         window.location.href = `/search?keyword=${
           search.includes(" ") ? search.split(" ").join("+") : search
-        }&page=1`;
+        }&page=1&sort=popularity`;
       }
     } catch (error) {
       console.log(error);

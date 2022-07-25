@@ -11,11 +11,19 @@ const checkRequire = require("../middleWare/checkRequire");
 
 // Home
 router.get("/", checkRequire, async (req, res) => {
+  let sortArr = [
+    { createdAt: -1 },
+    { name: 1 },
+    { name: -1 },
+    { price: 1 },
+    { price: -1 },
+    { stars: 1 },
+    { stars: -1 },
+    { _id: 1 },
+  ];
+  const sortRandom = sortArr[Math.ceil(Math.random() * sortArr.length)];
   const listcategory = await category.find();
-  let listproductCode = await productCode
-    .find()
-    .sort({ createdAt: -1 })
-    .limit(12);
+  let listproductCode = await productCode.find().sort(sortRandom).limit(12);
   const listProduct = await productModel.find();
   const countProduct = await productCode.count();
 
@@ -268,11 +276,18 @@ router.get("/search", checkRequire, async function (req, res) {
     };
   }
 
+  if (req.query.rate) {
+    searchCondition.stars = {
+      $gte: req.query.rate * 1,
+      $lt: req.query.rate * 1 + 1,
+    };
+  }
+
   try {
     const listcategory = await category.find();
+    const listSearchNoLimit = await productCode.find(searchCondition).count();
     const listProduct = await productModel.find();
-    const listSearchNoLimit = await productCode.find(searchCondition);
-    let listSearch = await productCode
+    var listSearch = await productCode
       .find(searchCondition)
       .skip((req.query.page - 1) * 16)
       .limit(16);
@@ -284,7 +299,7 @@ router.get("/search", checkRequire, async function (req, res) {
         .limit(16);
     }
 
-    const listCode = listProduct.filter(function (product, index) {
+    let listCode = listProduct.filter(function (product, index) {
       return (
         index ===
         listProduct.findIndex((value) => {
@@ -304,6 +319,72 @@ router.get("/search", checkRequire, async function (req, res) {
       return product;
     });
 
+    const hasData = listSearch.filter((item) => {
+      return item.hasData;
+    });
+    var listDetail = [];
+    if (req.query.color) {
+      let detail;
+      for (let i = 0; i < hasData.length; i++) {
+        detail = await productModel.findOne({
+          productCode: hasData[i]._id,
+          color: req.query.color,
+        });
+        listDetail.push(detail);
+      }
+    } else {
+      listDetail = listProduct.filter((item) => {
+        return item.color !== "";
+      });
+    }
+    listDetail = listDetail.filter((value, i) => {
+      if (req.query.color) {
+        return value != null;
+      } else {
+        return (
+          value != null &&
+          i ==
+            listDetail.findIndex((item) => {
+              return item.color == value.color;
+            })
+        );
+      }
+    });
+    if (req.query.color) {
+      listSearch = [];
+      for (let i = 0; i < listDetail.length; i++) {
+        const code = await productCode.findOne({
+          ...searchCondition,
+          _id: listDetail[i].productCode,
+        });
+        listSearch.push(code);
+      }
+
+      listCode = listDetail.filter(function (product, index) {
+        return (
+          index ===
+          listDetail.findIndex((value) => {
+            return value.productCode === product.productCode;
+          })
+        );
+      });
+
+      listSearch = listSearch.map((product, i) => {
+        for (let j = 0; j < listCode.length; j++) {
+          if (listCode[j].productCode == product._id) {
+            const newProduct = { ...product._doc };
+            newProduct.hasData = true;
+            return newProduct;
+          }
+        }
+        return product;
+      });
+
+      listDetail = await productModel.findOne({
+        color: req.query.color,
+      });
+    }
+
     res.render("user/filter/filter", {
       user: req.user,
       dktimkiem,
@@ -311,28 +392,16 @@ router.get("/search", checkRequire, async function (req, res) {
       max: req.query.pricemax,
       pagenow: req.query.page,
       ten: req.query.keyword,
+      colorName: req.query.color,
       listSearch,
-      tongTimDuoc: listSearchNoLimit.length,
+      listDetail,
+      numberPage: Math.ceil(listSearchNoLimit / 16),
+      tongTimDuoc: req.query.color ? listSearch.length : listSearchNoLimit,
       listcategory,
-      // list123: listSearch1,
     });
   } catch (err) {
     res.status(500).json({ mess: "zz,thất bại", err });
   }
-});
-
-router.get("/dataUserOrder/img&main", async function (req, res) {
-  // console.log(276,req.query.id);
-  const img = await productModel.findOne({ _id: req.query.id });
-  const main = await productCode.findOne({ _id: img.productCode });
-  // console.log(279,img.listImg[0], img.color,img.size,main.name);
-  res.json({
-    img: img.listImg[0],
-    color: img.color,
-    size: img.size,
-    main: main.name,
-    price: main.price,
-  });
 });
 
 module.exports = router;

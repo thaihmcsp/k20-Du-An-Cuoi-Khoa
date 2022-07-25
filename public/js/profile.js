@@ -127,27 +127,6 @@ async function changeInfo() {
   }
 }
 
-function importData() {
-  document.getElementById("upload-avatar").click();
-}
-
-var fileToRead = document.getElementById("upload-avatar");
-
-fileToRead.addEventListener(
-  "change",
-  function () {
-    var files = fileToRead.files;
-    if (files.length) {
-      var fr = new FileReader();
-      fr.onload = function () {
-        $("#avatar-edit").attr("src", fr.result);
-      };
-      fr.readAsDataURL(files[0]);
-    }
-  },
-  false
-);
-
 // * Remove Heart
 async function removeHeart(codeID) {
   try {
@@ -176,3 +155,76 @@ async function cancelOrder(orderID) {
     console.log(error);
   }
 }
+
+//* Evaluate
+$(".modal-rated-star-icon").on("click", function () {
+  if ($(this).attr("class").includes("active-star")) {
+    $(this).removeClass("active-star");
+  } else {
+    $(this).addClass("active-star");
+  }
+});
+
+$(".modal-rated-text textarea").on("keyup", function () {
+  if ($(this).val().trim().length > 100) {
+    $(".modal-rated-text span").css("color", "var(--error-color)");
+  } else {
+    $(".modal-rated-text span").css("color", "#757575");
+    $(".modal-rated-text span").text($(this).val().trim().length);
+  }
+});
+
+function getDataToMdal(codeID, productName, orderID, i) {
+  $(".modal-rated-header h5").text("Đánh giá cho " + productName);
+  $(".modal-rated-text textarea").val("");
+  $(".modal-rated-text span").text("0");
+  $(".modal-rated-text span").css("color", "#757575");
+  $(".modal-footer-post").attr("id", codeID);
+  $(".modal-rated-error").css("display", "none");
+  $(".modal-footer-post").on("click", async () => {
+    try {
+      const countStar = $(".active-star").length;
+      const comment = $(".modal-rated-text textarea").val().trim();
+      if (countStar == 0) {
+        $(".modal-rated-error").css("display", "block");
+      } else if (comment.length <= 100) {
+        await $.ajax({
+          type: "POST",
+          url: "/rated/creat",
+          data: {
+            orderID,
+            codeID,
+            i,
+            star: countStar,
+            content: comment,
+          },
+        });
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
+//* Upload Preview Image
+function importData() {
+  document.getElementById("upload-avatar").click();
+}
+
+var fileToRead = document.getElementById("upload-avatar");
+
+fileToRead.addEventListener(
+  "change",
+  function () {
+    var files = fileToRead.files;
+    if (files.length) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        $("#avatar-edit").attr("src", fr.result);
+      };
+      fr.readAsDataURL(files[0]);
+    }
+  },
+  false
+);

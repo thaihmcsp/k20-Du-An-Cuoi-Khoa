@@ -26,7 +26,7 @@
     <%- include('../../components/header.ejs') %> <%-
     include('../../components/loading.ejs') %>
 
-    <main class="body-con">
+    <main>
       <div class="lienket">
         <a href="/">Trang chủ</a>
         <span> > </span>
@@ -53,8 +53,11 @@
 
               <div class="rate">
                 <div class="rate-star">
-                  <span>4.5/5 <i class="fas fa-star"></i></span>
-                  <a href="">2 đánh giá</a>
+                  <span
+                    ><%= listcode.stars == undefined ? '0' : listcode.stars %>/5
+                    <i class="fas fa-star"></i
+                  ></span>
+                  <a href="#evoluate"><%= listComment.length %> đánh giá</a>
                 </div>
                 <% if (user && user.favorite.includes(listcode._id)) { %>
                 <i
@@ -148,6 +151,21 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="evoluate" id="evoluate">
+        <h5 class="evoluate-title">
+          Đánh giá và nhận xét của <%= listcode.name %>
+        </h5>
+        <% if (listComment.length == 0) { %>
+        <div class="evoluate-empty">
+          <img src="/public/icon/no-comment.png" alt="" />
+          <h5>
+            Nội dung này hiện chưa có đánh giá. Hãy là người đầu tiên mua và
+            đánh giá sản phẩm của chúng tôi nào!
+          </h5>
+        </div>
+        <% } else { %> <%- include('./rated') %> <% } %>
       </div>
     </main>
 

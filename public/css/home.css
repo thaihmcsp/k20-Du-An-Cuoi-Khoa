@@ -156,6 +156,10 @@ body {
   color: var(--font-heading-color);
 }
 
+.product-address p:last-child {
+  color: #757575;
+}
+
 .product-view {
   text-align: center;
   margin-top: 30px;

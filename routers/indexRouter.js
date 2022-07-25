@@ -5,6 +5,7 @@ const category = require("../models/category");
 const productCode = require("../models/productCode");
 const productModel = require("../models/product");
 const orderModel = require("../models/orderModel");
+const evaluateModel = require("../models/evaluateModel");
 const { checkUser, checkLogin } = require("../middleWare/checkLogin");
 const checkAdmin = require("../middleWare/checkAdmin");
 const checkRequire = require("../middleWare/checkRequire");

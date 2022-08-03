@@ -69,15 +69,15 @@ router.get("/:id", checkRequire, async (req, res) => {
       }
 
       const listProduct = await productModel.find();
-      const listSearchNoLimit = await ProductCode.find(condition);
-      var listSearch = await ProductCode.find(condition)
-        .skip((req.query.page - 1) * 16)
-        .limit(16);
+      let listSearchNoLimit = await ProductCode.find(condition).count();
+      var listSearch = await ProductCode.find(condition).skip(
+        (req.query.page - 1) * 16
+      );
+
       if (req.query.sort != "popularity") {
         listSearch = await ProductCode.find(condition)
           .sort({ price: req.query.sort == "priceasc" ? 1 : -1 })
-          .skip((req.query.page - 1) * 16)
-          .limit(16);
+          .skip((req.query.page - 1) * 16);
       }
       let listCode = listProduct.filter(function (product, index) {
         return (
@@ -162,6 +162,7 @@ router.get("/:id", checkRequire, async (req, res) => {
         listDetail = await productModel.findOne({
           color: req.query.color,
         });
+        listSearchNoLimit = listSearch.length;
       }
 
       res.render("user/filter/category", {
@@ -169,7 +170,7 @@ router.get("/:id", checkRequire, async (req, res) => {
         ten: "",
         name: category.name,
         pagenow: req.query.page,
-        tongTimDuoc: req.query.color ? listSearch.length : listSearchNoLimit,
+        tongTimDuoc: listSearchNoLimit,
         listSearch,
         listDetail,
         numberPage: Math.ceil(listSearchNoLimit / 16),

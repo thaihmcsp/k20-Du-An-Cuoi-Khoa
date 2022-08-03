@@ -105,27 +105,12 @@ router.post("/create", checkLogin, async (req, res) => {
   }
 });
 
-router.delete("/xoa", checkLogin, async (req, res) => {
+router.delete("/:id", checkLogin, async (req, res) => {
   try {
-    const cartUser = await CartModel.findOne({
-      UserID: req.id,
+    await OrderModel.deleteOne({
+      _id: req.params.id,
     });
-    if (cartUser) {
-      const remainsProduct = cartUser.productList.filter((value) => {
-        return value.productID !== req.body.productID;
-      });
-      await CartModel.updateOne(
-        {
-          UserID: req.id,
-        },
-        {
-          productList: remainsProduct,
-        }
-      );
-      res.status(200).json({ mess: "Successfull" });
-    } else {
-      res.status(400).json({ mess: "Failed" });
-    }
+    res.status(200).json({ mess: "Success Delete" });
   } catch (error) {
     res.status(500).json({ mess: "Server Error" });
   }

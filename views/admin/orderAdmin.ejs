@@ -39,12 +39,23 @@
         </div>
         <div class="content-order-date">
           <p><%= order.createdAt.toLocaleDateString() %></p>
+          <% if (order.productList.length == 0) { %>
+          <button
+            class="content-order-date-remove"
+            title="Xóa đơn hàng"
+            onclick="orderRemove('<%= order._id %>')"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+          <% } else { %>
           <button
             title="Xác nhận đơn hàng giao thành công"
+            class="content-order-date-success"
             onclick="orderDone('<%= order._id %>')"
           >
             <i class="fas fa-check"></i>
           </button>
+          <% } %>
         </div>
       </div>
       <% }) %>
@@ -62,6 +73,18 @@
       try {
         await $.ajax({
           type: "PUT",
+          url: "/order/" + orderID,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function orderRemove(orderID) {
+      try {
+        await $.ajax({
+          type: "DELETE",
           url: "/order/" + orderID,
         });
         window.location.reload();

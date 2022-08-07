@@ -112,16 +112,19 @@ router.get("/:id", checkRequire, async (req, res) => {
           listDetail.push(detail);
         }
       } else {
-        listDetail = listProduct.filter((item) => {
-          return item.color !== "";
-        });
+        for (let i = 0; i < hasData.length; i++) {
+          const listDetail2 = await productModel.find({
+            productCode: hasData[i]._id,
+          });
+          listDetail = listDetail.concat(listDetail2);
+        }
       }
       listDetail = listDetail.filter((value, i) => {
         if (req.query.color) {
           return value != null;
         } else {
           return (
-            value != null &&
+            value.color != "" &&
             i ==
               listDetail.findIndex((item) => {
                 return item.color === value.color;

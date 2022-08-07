@@ -150,9 +150,13 @@
     cursor: pointer;
     color: var(--font-heading-color);
     font-weight: 500;
-    padding: 6px 12px;
-    display: block;
+    padding: 0 12px;
+    line-height: 32px;
     text-decoration: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
   }
 
   .header-category-link:hover {
@@ -246,6 +250,7 @@
           <a
             href="/category/<%= category._id %>?page=1&sort=popularity"
             class="header-category-link"
+            title="<%= category.name %>"
             ><%= category.name %></a
           >
         </li>

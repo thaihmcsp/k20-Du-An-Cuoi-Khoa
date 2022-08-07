@@ -153,6 +153,7 @@ router.get("/profile/order/:id", checkLogin, async (req, res) => {
         path: "productList.productID",
         populate: { path: "productCode" },
       });
+    // console.log(detailOrder.productList);
     // let hour = Math.round( (new Date() - detailOrder.createdAt ) / 3600000)
     // let newOrder = {...detailOrder._doc}
     // if( hour < 24){
@@ -332,16 +333,19 @@ router.get("/search", checkRequire, async function (req, res) {
         listDetail.push(detail);
       }
     } else {
-      listDetail = listProduct.filter((item) => {
-        return item.color !== "";
-      });
+      for (let i = 0; i < hasData.length; i++) {
+        const listDetail2 = await productModel.find({
+          productCode: hasData[i]._id,
+        });
+        listDetail = listDetail.concat(listDetail2);
+      }
     }
     listDetail = listDetail.filter((value, i) => {
       if (req.query.color) {
         return value != null;
       } else {
         return (
-          value != null &&
+          value.color != "" &&
           i ==
             listDetail.findIndex((item) => {
               return item.color == value.color;

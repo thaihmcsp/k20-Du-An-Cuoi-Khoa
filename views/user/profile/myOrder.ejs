@@ -21,14 +21,14 @@
     />
   </head>
   <body>
-    <%- include('../../components/header') %> <%-
-    include('../../components/loading') %>
+    <%- include('../../components/header') %>
     <main class="main">
       <div class="content">
         <%- include('./general') %>
         <div class="content-info">
           <h3>Đơn hàng của tôi</h3>
-          <div class="content-info-container">
+          <%- include('../../components/loading') %>
+          <div class="content-info-container" id="loading">
             <% if (listOrder.length > 0) { %>
             <div class="content-order">
               <% listOrder.map(order => { %>

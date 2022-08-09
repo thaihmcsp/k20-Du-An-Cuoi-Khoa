@@ -248,6 +248,7 @@ async function saveInfo() {
   } else {
     if (isVietnamesePhoneNumber(phone)) {
       toastSuccess();
+      $(".mod-guest-register").addClass("hide-btn");
       $(".dat-hang").removeClass("hide-btn");
       $(".dat-hang").on("click", async function () {
         let type =

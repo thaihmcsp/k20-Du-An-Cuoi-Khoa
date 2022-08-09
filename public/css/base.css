@@ -35,5 +35,8 @@ html {
 main {
   width: var(--header-width);
   margin: 0 auto;
+}
+
+#loading {
   display: none;
 }

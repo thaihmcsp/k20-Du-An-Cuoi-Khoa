@@ -21,14 +21,14 @@
     />
   </head>
   <body>
-    <%- include('../../components/header') %> <%-
-    include('../../components/loading') %>
+    <%- include('../../components/header') %>
     <main class="main">
       <div class="content">
         <%- include('./general') %>
         <div class="content-info">
           <h3>Sản phẩm yêu thích</h3>
-          <div class="content-info-container">
+          <%- include('../../components/loading') %>
+          <div class="content-info-container" id="loading">
             <% if (listCode.length > 0) { %>
             <ul class="content-favorite-list">
               <% listCode.forEach(product => { %>

@@ -27,8 +27,7 @@
     <link rel="stylesheet" href="/public/css/filter.css" />
   </head>
   <body>
-    <%- include('../../components/header') %> <%-
-    include('../../components/loading') %>
+    <%- include('../../components/header') %>
 
     <main class="tong2manhinhdoc">
       <div id="" class="buttomhome">
@@ -68,7 +67,10 @@
             <p>Lọc theo:</p>
           </div>
 
-          <div class="noidungbenphai"><%- include('./product') %></div>
+          <%- include('../../components/loading') %>
+          <div class="noidungbenphai" id="loading">
+            <%- include('./product') %>
+          </div>
 
           <!-- phân trang -->
           <% if (tongTimDuoc > 16 ) { %>

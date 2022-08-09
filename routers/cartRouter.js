@@ -16,6 +16,21 @@ router.get("/", checkLogin, async (req, res) => {
       populate: { path: "productCode" },
     });
     if (cartUser) {
+      let newCart = cartUser.productList.map(function (item, i) {
+        if (item.productID == null) {
+          cartUser.productList.splice(i, 1);
+        } else {
+          return item;
+        }
+      });
+      await CartModel.updateOne(
+        {
+          UserID: req.id,
+        },
+        {
+          productList: newCart,
+        }
+      );
       res.render("user/cart/cart", {
         cartID: cartUser._id,
         listCart: cartUser.productList,

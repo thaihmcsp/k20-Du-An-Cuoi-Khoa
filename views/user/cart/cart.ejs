@@ -25,7 +25,7 @@
   <body>
     <%- include('../../components/header.ejs') %> <%-
     include('../../components/loading') %>
-    <main class="body-con">
+    <main id="loading" class="body-con">
       <% if (sumCart > 0) { %>
       <div class="container"><%- include('./homecart.ejs') %></div>
       <% } else { %>

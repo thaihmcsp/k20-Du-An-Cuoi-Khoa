@@ -735,3 +735,7 @@ body {
 .content-favorite-price i:hover {
   color: var(--btn-color);
 }
+
+.loader {
+  background-color: white;
+}

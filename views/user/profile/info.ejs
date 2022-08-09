@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="/public/css/profile.css" />
   </head>
   <body>
-    <%- include('../../components/header') %> <%-
-    include('../../components/loading') %>
+    <%- include('../../components/header') %>
     <main class="main">
       <div class="content">
         <%- include('./general') %>
         <div class="content-info">
           <h3>Thông tin cá nhân</h3>
-          <div class="content-info-container">
+          <%- include('../../components/loading') %>
+          <div class="content-info-container" id="loading">
             <div class="content-info-detail">
               <div class="content-info-detail-avatar">
                 <img src="<%= user.avatar %>" alt="" />

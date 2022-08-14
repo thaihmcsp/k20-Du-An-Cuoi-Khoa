@@ -51,7 +51,7 @@
           <button
             title="Xác nhận đơn hàng giao thành công"
             class="content-order-date-success"
-            onclick="orderDone('<%= order._id %>')"
+            onclick="orderDone('<%= order._id %>', '<%= order.name %>')"
           >
             <i class="fas fa-check"></i>
           </button>
@@ -69,11 +69,60 @@
   ></script>
 
   <script>
-    async function orderDone(orderID) {
+    async function orderDone(orderID, name) {
       try {
+        const htmlGmail = `
+        <h2>Xin chào ${name}!</h2>
+        <div class="text-email">
+          <p style="line-height: 32px; font-size: 17px; margin-bottom: 24px">Đơn hàng ${orderID.slice(
+            0,
+            14
+          )} vừa được bạn thanh toán và nhận hàng</p>
+          <a href="https://k20-lazada.herokuapp.com/profile/order/${orderID}"
+          style="
+            padding: 16px 24px;
+            background-color: #1a9cb7;
+            text-decoration: none;
+            color: white;
+            font-size: 17px;
+            text-transform: uppercase;
+          ">Chi tiết sản phẩm</a>
+          <p style="line-height: 32px; font-size: 17px; margin-top: 24px">
+            Hãy chia sẻ cho chúng tôi biết về chất lượng sản phẩm của shop phần
+            đánh giá làm theo các bước sau:
+            <br />
+            1. Truy cập vào trang web
+            <a href="https://k20-lazada.herokuapp.com"
+            style="color: #049cb9;"
+              >https://k20-lazada.herokuapp.com/</a
+            >
+            <br />
+            2. Bấm vào <span style="font-weight: bolder;">Tài khoản của tôi</span> >
+            <span style="font-weight: bolder;">Đơn hàng của tôi</span>
+            <br />
+            3. Kiểm tra và chọn đơn hàng có dấu tích xanh trên cùng bên phải
+            <br />
+            4. Tiến hành đánh giá từng sản phẩm (nếu có) bằng cách thả sao và viết
+            vài lời bình luận.
+            <br />
+            5. Click vào nút Đăng, shop sẽ đưa bạn đến với trang chi tiết của sản
+            phẩm đó. Ở đây bạn có thể kiểm tra và sửa đánh giá của chính mình
+          </p>
+        </div>
+        <h4 style="margin-top: 12px;font-size: 18px ">
+          Xin chân thành cảm ơn vì bạn đã ủng hộ cho shop của chúng tôi. Nếu có dịp
+          hãy ghé qua các sản phẩm khác của bên tôi nhé!
+        </h4>
+        `;
         await $.ajax({
           type: "PUT",
-          url: "/order/" + orderID,
+          url: "/order",
+          data: {
+            orderID,
+            codeOrder: orderID.slice(0, 14),
+            name,
+            htmlGmail,
+          },
         });
         window.location.reload();
       } catch (error) {

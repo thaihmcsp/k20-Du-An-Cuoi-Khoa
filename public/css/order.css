@@ -378,11 +378,73 @@ body {
   color: #189cb7;
   cursor: pointer;
 }
+
+.summary-section small {
+  font-size: 14px;
+}
+
 .summary-section-heading {
   color: #212121;
   font-size: 18px;
-  margin: 0 0 14px;
+  margin-bottom: 15px;
 }
+
+.summary-section-code {
+  display: flex;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.summary-section-code span {
+  font-size: 13px;
+  color: var(--error-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+}
+
+#codeConfirm {
+  flex: 3;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.summary-section-code-send {
+  flex: 1;
+  text-align: center;
+}
+
+@keyframes zoomIcon {
+  from {
+    transform: scale(0.4);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.summary-section-code-send svg {
+  margin-top: 8px;
+  animation: zoomIcon ease-in-out 0.2s;
+}
+
+.summary-section-code-send button {
+  padding: 6px 0;
+  height: 100%;
+  width: 100%;
+  border: none;
+  color: white;
+  background-color: var(--profile-color);
+  font-size: 15px;
+  transition: linear 0.25s;
+}
+
+.summary-section-code-send button:hover {
+  background-color: var(--profile-hover-color);
+}
+
 .checkout-summary {
   color: #757575;
 }

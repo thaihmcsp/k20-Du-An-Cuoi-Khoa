@@ -174,37 +174,40 @@ $(".modal-rated-text textarea").on("keyup", function () {
   }
 });
 
-function getDataToMdal(codeID, productName, orderID, i) {
+function getDataToMdal(codeID, productName, ele) {
   $(".modal-rated-header h5").text("Đánh giá cho " + productName);
-  $(".modal-rated-text textarea").val("");
   $(".modal-rated-text span").text("0");
+  $(".modal-rated-text textarea").val("");
   $(".modal-rated-text span").css("color", "#757575");
-  $(".modal-footer-post").attr("id", codeID);
   $(".modal-rated-error").css("display", "none");
-  $(".modal-footer-post").on("click", async () => {
-    try {
-      const countStar = $(".active-star").length;
-      const comment = $(".modal-rated-text textarea").val().trim();
-      if (countStar == 0) {
-        $(".modal-rated-error").css("display", "block");
-      } else if (comment.length <= 100) {
-        await $.ajax({
-          type: "POST",
-          url: "/rated/creat",
-          data: {
-            orderID,
-            codeID,
-            i,
-            star: countStar,
-            content: comment,
-          },
-        });
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error);
+  $(".modal-footer-post").attr("id", codeID);
+  $(".modal-footer-post").attr("index", ele.getAttribute("index"));
+}
+
+async function postRate(orderID, ele) {
+  try {
+    const countStar = $(".active-star").length;
+    const comment = $(".modal-rated-text textarea").val().trim();
+    const codeID = ele.getAttribute("id");
+    if (countStar == 0) {
+      $(".modal-rated-error").css("display", "block");
+    } else if (comment.length <= 100) {
+      await $.ajax({
+        type: "POST",
+        url: "/rated/creat",
+        data: {
+          orderID,
+          codeID,
+          i: ele.getAttribute("index"),
+          star: countStar,
+          content: comment,
+        },
+      });
+      window.location.href = "/product/detail/" + codeID;
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 //* Upload Preview Image

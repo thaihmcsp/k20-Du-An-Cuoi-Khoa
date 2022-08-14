@@ -12,21 +12,11 @@
       </div>
       <div class="modal-body modal-rated-body">
         <div class="modal-rated-star">
+          <% for (let i = 0; i < 5; i++) { %>
           <span class="modal-rated-star-icon">
             <i class="fas fa-star"></i>
           </span>
-          <span class="modal-rated-star-icon">
-            <i class="fas fa-star"></i>
-          </span>
-          <span class="modal-rated-star-icon">
-            <i class="fas fa-star"></i>
-          </span>
-          <span class="modal-rated-star-icon">
-            <i class="fas fa-star"></i>
-          </span>
-          <span class="modal-rated-star-icon">
-            <i class="fas fa-star"></i>
-          </span>
+          <% } %>
         </div>
         <p class="modal-rated-error">
           Vui lòng thả sao để đánh giá sản phẩm này
@@ -49,7 +39,13 @@
         >
           Hủy bỏ
         </button>
-        <button type="button" class="modal-footer-post">Đăng</button>
+        <button
+          type="button"
+          class="modal-footer-post"
+          onclick="postRate('<%= detailOrder._id %>', this)"
+        >
+          Đăng
+        </button>
       </div>
     </div>
   </div>

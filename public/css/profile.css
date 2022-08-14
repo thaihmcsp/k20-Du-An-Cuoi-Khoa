@@ -599,7 +599,7 @@ body {
 
 /* * Modal Rated */
 .modal-dialog-scrollable {
-  animation: showModal linear 0.25s;
+  animation: showModal linear 0.3s;
 }
 
 .modal-rated-header {
@@ -705,7 +705,7 @@ body {
 
 .content-favorite-link p {
   padding: 0 16px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--font-color);
 }
 

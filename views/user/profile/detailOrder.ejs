@@ -69,7 +69,8 @@
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal2"
-                onclick="getDataToMdal('<%= product.productID.productCode._id %>', '<%= product.productID.productCode.name %>', '<%= detailOrder._id %>' , '<%= i %>')"
+                onclick="getDataToMdal('<%= product.productID.productCode._id %>', '<%= product.productID.productCode.name %>',this )"
+                index="<%= i %>"
               >
                 Đánh giá
               </button>
@@ -177,5 +178,6 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
   ></script>
+  <script src="/public/js/index.js"></script>
   <script src="/public/js/profile.js"></script>
 </html>

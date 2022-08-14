@@ -223,6 +223,41 @@ function diachi() {
   }
 }
 
+async function sendCode(code) {
+  try {
+    const htmlSuccess = `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      fill="currentColor"
+      class="bi bi-check-circle"
+      viewBox="0 0 16 16"
+    >
+      <path
+        style="fill: var(--success-color)"
+        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+      />
+      <path
+        style="fill: var(--success-color)"
+        d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+      />
+    </svg>
+    `;
+    $(".summary-section-code-send").html(htmlSuccess);
+    await $.ajax({
+      type: "POST",
+      url: "/order/sendCode",
+      data: {
+        code,
+        name: $(".hoten").val(),
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function saveInfo() {
   let fullname = $(".hoten").val(),
     phone = $(".phone").val(),
@@ -249,27 +284,57 @@ async function saveInfo() {
     if (isVietnamesePhoneNumber(phone)) {
       toastSuccess();
       $(".mod-guest-register").addClass("hide-btn");
+      $(".summary-section-code-send button").removeClass("hide-btn");
       $(".dat-hang").removeClass("hide-btn");
+      const code = Math.random().toFixed(6) * 10 ** 6;
+      const codeConfirm = code >= 10 ** 5 ? code : code + 10 ** 5;
+      $(".summary-section-code-send button").on("click", async () => {
+        sendCode(codeConfirm);
+      });
       $(".dat-hang").on("click", async function () {
-        let type =
+        const type =
           $(".vp").css("color") !== "rgb(153, 153, 153)"
             ? $(".vp").text()
             : $(".nr").text();
         try {
-          await $.ajax({
-            type: "POST",
-            url: "/order/create",
-            data: {
-              name: fullname,
-              phone,
-              address,
-              total: $(".bill-total").attr("data-price"),
-              type,
-            },
-          });
-          window.location.href = `/order/${$(this).attr("id")}?result=success`;
+          $(".summary-section-code span").text("");
+          if ($("#codeConfirm").val() == codeConfirm) {
+            window.location.href = `/order/${$(this).attr(
+              "id"
+            )}?result=success`;
+            await $.ajax({
+              type: "POST",
+              url: "/order/create",
+              data: {
+                name: fullname,
+                phone,
+                address,
+                total: $(".bill-total").attr("data-price"),
+                type,
+              },
+            });
+          } else {
+            $("#codeConfirm").css("border", "1px solid var(--error-color)");
+            let turnNumber = $(this).attr("turn-number");
+            turnNumber = turnNumber * 1 + 1;
+            $(this).attr("turn-number", turnNumber);
+            const turnError = $(this).attr("turn-number");
+            if (turnError < 3) {
+              $(".summary-section-code span").text(
+                $("#codeConfirm").val() == ""
+                  ? "Đây là trường bắt buộc. Vui lòng điền đầy đủ! " +
+                      ` (${turnError}/3)`
+                  : "Mã xác nhận không chính xác" + ` (${turnError}/3)`
+              );
+            } else {
+              alert(
+                "Bạn đã thất bại cả 3 lần. Vui lòng thoát ra và thử lại sau!"
+              );
+              window.location.href = "/cart";
+            }
+          }
         } catch (error) {
-          console.log(error);
+          alert(error.responseJSON.mess);
         }
       });
     } else {

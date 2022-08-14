@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const ProductModel = require("../models/product");
-const ProductCodeModel = require("../models/productCode");
+const nodemailer = require("nodemailer");
 const CartModel = require("../models/cartModel");
 const OrderModel = require("../models/orderModel");
 const UserModel = require("../models/userModel");
@@ -87,16 +86,30 @@ router.post("/create", checkLogin, async (req, res) => {
           size: listBuy[i].size,
         });
       }
-      await OrderModel.create({
-        name: req.body.name,
-        phone: req.body.phone,
-        address: req.body.address,
-        type: req.body.type,
-        total: req.body.total * 1,
-        UserID: req.id,
-        productList: listData,
-      });
-      res.status(200).json({ mess: "Successfull" });
+      if (listData.length > 0) {
+        await OrderModel.create({
+          name: req.body.name,
+          phone: req.body.phone,
+          address: req.body.address,
+          type: req.body.type,
+          total: req.body.total * 1,
+          UserID: req.id,
+          productList: listData,
+        });
+        await sendMail(
+          email,
+          "Lazada K20 đã nhận đơn hàng ",
+          `
+            <h3>Cảm ơn bạn đã đặt hàng tại Lazada của chúng tôi! </h3>
+            <p></p>
+          `
+        );
+        res.status(200).json({ mess: "Successfull" });
+      } else {
+        res
+          .status(400)
+          .json({ mess: "Đặt hàng thất bại.Vui lòng thử lại sau!" });
+      }
     } else {
       res.status(400).json({ mess: "Failed" });
     }
@@ -116,11 +129,21 @@ router.delete("/:id", checkLogin, async (req, res) => {
   }
 });
 
-router.put("/:id", checkLogin, async (req, res) => {
+router.put("/", checkLogin, async (req, res) => {
   try {
+    const user = await OrderModel.findOne({
+      _id: req.body.orderID,
+    }).populate("UserID");
+    await sendMail(
+      user.UserID.email,
+      "Lazada K20 thông báo đơn hàng " +
+        req.body.codeOrder +
+        " đã được giao thành công",
+      req.body.htmlGmail
+    );
     await OrderModel.updateOne(
       {
-        _id: req.params.id,
+        _id: req.body.orderID,
       },
       {
         status: "done",
@@ -128,54 +151,45 @@ router.put("/:id", checkLogin, async (req, res) => {
     );
     res.status(200).json({ mess: "Successfull" });
   } catch (error) {
-    res.status(500).json({ mess: "Server Error" });
-  }
-});
-
-router.post("/Neworder", checkUser, async (req, res) => {
-  try {
-    const dataObject = await renderCart(req.id);
-    let dataorder = [];
-    for (let i = 0; i < dataObject.data.length; i++) {
-      // console.log(dataObject.data[i].productList[0]);
-      dataorder.push(dataObject.data[i].productList[0]);
-    }
-    // console.log(132,dataorder,req.body._id, req.body.total);
-    const data = await OrderModel.create({
-      UserID: req.id,
-      productList: dataorder,
-      total: req.body.total,
-      name: req.body.name,
-      phone: req.body.phone,
-      address: req.body.address,
-      type: req.body.type,
-    });
-    console.log(data);
-    const datadeleteCart = await CartModel.deleteMany({
-      UserID: req.id,
-      "productList.select": true,
-    });
-    console.log(datadeleteCart);
-    res.json(data);
-  } catch (error) {
+    // res.status(500).json({ mess: "Server Error" });
     console.log(error);
   }
 });
 
-router.put("/cancel/:id", checkLogin, async (req, res) => {
+router.post("/sendCode", checkLogin, async (req, res) => {
   try {
-    await OrderModel.updateOne(
-      {
-        _id: req.params.id,
-      },
-      {
-        status: "cancel",
-      }
+    await sendMail(
+      req.user.email,
+      "Lazada K20 thông báo gửi mã xác nhận đơn hàng",
+      `
+        <h2>Xin chào ${req.body.name}! </h2>
+        <div style="font-size :17px;" >
+          <p>Bạn vừa nhận 1 đơn hàng đang chờ bạn xác nhận. Mã xác nhận : <b style="color : #f57224">${req.body.code}</b> </p>
+          <p>Lưu ý (*): Mã xác nhận chỉ được chúng tôi cấp 1 lần duy nhất cho đơn hàng được tạo. Vui lòng quay lại trang điền đầy đủ mã xác nhận nhé! </p>
+        </div>
+      `
     );
-    res.status(200).json({ mess: "Thanh cong" });
+    res.status(200).json({ mess: "Successfull" });
   } catch (error) {
-    res.status(500).json({ mess: "That bai" });
+    res.status(500).json({ mess: "Server error", error });
   }
 });
+
+function sendMail(receiver, subject, htmlContent) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_ACCOUNT,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  return transporter.sendMail({
+    from: process.env.EMAIL_ACCOUNT,
+    to: receiver,
+    subject: subject,
+    html: htmlContent,
+  });
+}
 
 module.exports = router;

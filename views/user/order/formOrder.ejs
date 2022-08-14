@@ -33,18 +33,6 @@
             </div>
           </div>
           <div class="mod-address-form-right">
-            <div class="mod-input mod-input-adress">
-              <label>Địa chỉ nhận hàng</label
-              ><input
-                class="diachi"
-                onkeyup="diachi()"
-                type="text"
-                placeholder="Vui lòng nhập địa chỉ của bạn"
-                data-meta="Field"
-                value=""
-                data-spm-anchor-id="a2o4n.shipping.0.i4.4b61705b5xcJn8"
-              /><b></b><span></span>
-            </div>
             <div class="mod-select tinh">
               <label>Tỉnh/ Thành phố</label>
               <div>
@@ -84,6 +72,18 @@
                 </select>
               </div>
               <b></b>
+            </div>
+            <div class="mod-input mod-input-adress">
+              <label>Địa chỉ chi tiết</label
+              ><input
+                class="diachi"
+                onkeyup="diachi()"
+                type="text"
+                placeholder="Vui lòng nhập địa chỉ của bạn"
+                data-meta="Field"
+                value=""
+                data-spm-anchor-id="a2o4n.shipping.0.i4.4b61705b5xcJn8"
+              /><b></b><span></span>
             </div>
             <div class="mod-address-tag">
               <p class="mod-address-tag-title">
@@ -151,7 +151,21 @@
     </div>
     <div id="additional-detail" class="additional-detail-wrapper"></div>
     <div class="summary-section">
-      <div class="summary-section-heading">Thông tin đơn hàng</div>
+      <div class="summary-section-heading">Xác nhận đơn hàng *</div>
+      <div class="summary-section-code">
+        <input type="number" placeholder="Mã xác nhận" id="codeConfirm" />
+        <span></span>
+        <div class="summary-section-code-send">
+          <button class="hide-btn">Gửi mã</button>
+        </div>
+      </div>
+      <small
+        >Lưu ý: Mã xác nhận chỉ được cấp 1 lần. Vui lòng kiểm tra gmail và nhập
+        đầy đủ mã để xác nhận đơn hàng!</small
+      >
+    </div>
+    <div class="summary-section">
+      <div class="summary-section-heading">Thông tin đơn hàng *</div>
       <div class="summary-section-content">
         <div class="checkout-summary">
           <div class="checkout-summary-row">
@@ -201,7 +215,9 @@
           ₫
         </div>
       </div>
-      <button class="dat-hang hide-btn" id="<%= cartID %>">ĐẶT HÀNG</button>
+      <button class="dat-hang hide-btn" id="<%= cartID %>" turn-number="0">
+        ĐẶT HÀNG
+      </button>
     </div>
   </div>
 </div>

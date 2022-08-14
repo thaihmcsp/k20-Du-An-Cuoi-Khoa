@@ -372,3 +372,58 @@ async function showHeart(codeID) {
     console.log(error);
   }
 }
+
+// * Change rate of user
+$(".modal-rated-text textarea").on("keyup", function () {
+  if ($(this).val().trim().length > 100) {
+    $(".modal-rated-text span").css("color", "var(--error-color)");
+  } else {
+    $(".modal-rated-text span").css("color", "#757575");
+    $(".modal-rated-text span").text($(this).val().trim().length);
+  }
+});
+
+function getDataToModal(star, comment, rateID) {
+  $(".modal-rated-star").html("");
+  for (let i = 0; i < 5; i++) {
+    const htmlStar = `
+    <span class="modal-rated-star-icon ${i < star * 1 ? "active-star" : ""}">
+      <i class="fas fa-star"></i>
+    </span>
+    `;
+    $(".modal-rated-star").append(htmlStar);
+  }
+  $(".modal-rated-star-icon").on("click", function () {
+    if ($(this).attr("class").includes("active-star")) {
+      $(this).removeClass("active-star");
+    } else {
+      $(this).addClass("active-star");
+    }
+  });
+  $(".modal-rated-error").css("display", "none");
+  $(".modal-rated-text textarea").val(comment);
+  $(".modal-rated-text p span").text(comment.length);
+  $(".modal-footer-post").attr("id", rateID);
+}
+
+async function editRate(ele, codeID) {
+  try {
+    const star = $(".active-star").length;
+    if (star == 0) {
+      $(".modal-rated-error").css("display", "block");
+    } else {
+      await $.ajax({
+        type: "PUT",
+        url: "/rated/" + ele.getAttribute("id"),
+        data: {
+          codeID,
+          content: $(".modal-rated-text textarea").val(),
+          star,
+        },
+      });
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

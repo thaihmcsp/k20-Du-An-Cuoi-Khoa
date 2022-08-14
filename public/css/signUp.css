@@ -72,11 +72,16 @@ body {
 }
 
 .form-submit-login {
-  margin-top: 8px;
+  margin: 8px 0;
   font-size: 14px;
 }
 
 .form-submit-login a {
   color: var(--link-color);
   text-decoration: none;
+}
+
+.form-submit small {
+  font-size: 14px;
+  color: #555;
 }

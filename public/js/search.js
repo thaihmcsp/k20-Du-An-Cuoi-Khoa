@@ -8,7 +8,7 @@ if (url.includes("color")) {
   $(".khoibentrai-group-color input").prop("checked", true);
   const html = `
     <div class="khoibenphai-price-item">
-      Màu sắc : ${$(".khoibentrai-group-color label").text()} 
+      Màu sắc : ${$(".khoibentrai-group-color label").text()}
       <i class="fas fa-times" onclick="removeColor()"></i>
     </div>
     `;
@@ -90,6 +90,16 @@ if (!url.split("sort=")[1].includes("&")) {
 if ($("#giatoithieu").val().length > 0 || $("#giatoida").val().length > 0) {
   $(".khoibentrai-group-price-btn").addClass("event-click");
 }
+
+// * Reset filter
+const html = `<span class="khoibenphai-remove-all">Xóa hết</span>`;
+$(".khoibenphai-price").append(html);
+
+$(".khoibenphai-remove-all").on("click", () => {
+  const sortBy = url.split("sort=")[1].split("&")[0];
+  let newUrl = url.replace(url.split(sortBy)[1], "");
+  window.location.href = newUrl;
+});
 
 // * Check empty
 function checkEmpty() {

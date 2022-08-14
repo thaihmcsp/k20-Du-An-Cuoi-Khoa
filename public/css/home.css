@@ -44,10 +44,13 @@ body {
 
 .category-item {
   width: 12.5%;
+}
+
+.category-item-link {
+  border: 1px solid var(--border-category);
   background-color: #fff;
   text-align: center;
   text-decoration: none;
-  border: 1px solid var(--border-category);
   height: var(--category-height);
   display: flex;
   flex-direction: column;

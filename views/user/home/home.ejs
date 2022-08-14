@@ -86,10 +86,12 @@
         <h3 class="title">Danh mục ngành hàng</h3>
         <div class="category-list">
           <% listcategory.map((item) => { %>
-          <a class="category-item" href="/category/<%= item._id %>?page=1&sort=popularity">
-            <img src="<%= item.thumbnail %>" alt="" />
-            <p><%= item.name %></p>
-          </a>
+            <div class="category-item">
+              <a class="category-item-link" href="/category/<%= item._id %>?page=1&sort=popularity">
+                <img src="<%= item.thumbnail %>" alt="" />
+                <p><%= item.name %></p>
+              </a>
+            </div>
           <% }) %>
         </div>
       </div>

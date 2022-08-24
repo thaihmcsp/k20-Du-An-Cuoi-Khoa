@@ -64,7 +64,7 @@
       <p><%= comment.content %></p>
       <div class="evoluate-comment-content-end">
         <p><%= comment.updatedAt.toLocaleDateString() %></p>
-        <% if (user.email === comment.userID.email) { %>
+        <% if (user && user.email === comment.userID.email) { %>
         <button
           title="Chỉnh sửa đánh giá"
           data-bs-toggle="modal"

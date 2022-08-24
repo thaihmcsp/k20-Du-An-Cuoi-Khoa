@@ -18,8 +18,8 @@
               /><b></b><span></span>
             </div>
             <div class="mod-input mod-input-phone">
-              <label>Số điện thoại (VN)</label
-              ><input
+              <label>Số điện thoại (VN)</label>
+              <input
                 class="phone"
                 onkeyup="phone()"
                 type="number"
@@ -171,13 +171,13 @@
           <div class="checkout-summary-row">
             <div class="checkout-summary-main">
               <div class="checkout-summary-label">
-                Tạm tính (<%= sumCart %> Sản phẩm)
+                Tạm tính (<span><%= sumCart %></span> Sản phẩm)
               </div>
               <div class="checkout-summary-value">
                 <span class="checkout-summary-noline-value">
-                  <span class="bill"
-                    ><%= totalPrice.toLocaleString("vi") %></span
-                  >
+                  <span class="bill" data-total="<%= totalPrice %>"
+                    ><%= totalPrice.toLocaleString("vi") %>
+                  </span>
                   ₫
                 </span>
               </div>
@@ -209,7 +209,7 @@
       <div class="checkout-order-total-row">
         <div class="checkout-order-total-title">Tổng cộng:</div>
         <div class="checkout-order-total-fee">
-          <span class="bill-total" data-price="<%= (totalPrice + 20000) %>"
+          <span class="bill-total"
             ><%= (totalPrice + 20000).toLocaleString("vi") %></span
           >
           ₫

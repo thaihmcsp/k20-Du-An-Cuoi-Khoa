@@ -34,7 +34,7 @@
     <div class="operations">
       <i
         class="fa-solid fa-trash-can"
-        onclick="xoa('<%= product.productID._id %>')"
+        onclick="xoa('<%= product.productID.productCode.price * product.quantity %>' ,'<%= i %>',this)"
       ></i>
     </div>
   </div>

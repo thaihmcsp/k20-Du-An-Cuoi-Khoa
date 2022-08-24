@@ -220,11 +220,12 @@ body {
   border: 1px solid var(--btn-color);
 }
 
-.img-sp .image-mau {
+.image-mau {
   margin: 8px 12px 0 0;
   width: 36px;
   height: 36px;
   cursor: pointer;
+  position: relative;
 }
 
 .size-sp {

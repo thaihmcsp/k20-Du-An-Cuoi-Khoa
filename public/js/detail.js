@@ -134,12 +134,30 @@ function renderSize() {
 
 renderSize();
 
+let processAnimate = {
+  showAgain(imgRemain) {
+    for (let i = 0; i < imgRemain.length; i++) {
+      imgRemain
+        .eq(i)
+        .animate({ width: "show", margin: "8px 12px 0 0", opacity: "1" }, 500);
+    }
+  },
+  hideNotActive(imgNotActive) {
+    for (let i = 0; i < imgNotActive.length; i++) {
+      imgNotActive
+        .eq(i)
+        .animate({ width: "hide", margin: "0", opacity: "0" }, 500);
+    }
+  },
+};
+
 $(".image-mau").on("click", function () {
   $(".toast-error").text("");
   if ($(this).attr("class").includes("active")) {
-    $(this).removeClass("active");
+    processAnimate.showAgain($(".image-mau:not(.active)"));
     $(".select-color span").text("Vui lòng chọn");
     $(".select-size span").text("Vui lòng chọn");
+    $(this).removeClass("active");
     $(".size-sp").html("");
     $(".select-qty p").text("");
   } else {
@@ -149,6 +167,7 @@ $(".image-mau").on("click", function () {
     $(".select-color span").text(color);
     $(".image-mau.active").removeClass("active");
     $(this).addClass("active");
+    processAnimate.hideNotActive($(".image-mau:not(.active)"));
     $(".select-size span").text("Vui lòng chọn");
     $(".select-qty p").text(`Còn ${quantity} sản phẩm`);
     if ($(this).attr("data-size") != "") {

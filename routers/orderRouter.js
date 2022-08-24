@@ -92,7 +92,7 @@ router.post("/create", checkLogin, async (req, res) => {
           phone: req.body.phone,
           address: req.body.address,
           type: req.body.type,
-          total: req.body.total * 1,
+          total: req.body.total * 1 + 20000,
           UserID: req.id,
           productList: listData,
         });
@@ -129,6 +129,23 @@ router.delete("/:id", checkLogin, async (req, res) => {
   }
 });
 
+router.put("/xoa", checkLogin, async (req, res) => {
+  try {
+    let cartUser = await CartModel.findOne({
+      UserID: req.id,
+    });
+    cartUser.productList.splice(req.query.index * 1, 1);
+    await CartModel.updateOne(
+      {
+        UserID: req.id,
+      },
+      { productList: cartUser.productList }
+    );
+  } catch (error) {
+    res.status(500).json({ mess: "Server error" });
+  }
+});
+
 router.put("/", checkLogin, async (req, res) => {
   try {
     const user = await OrderModel.findOne({
@@ -151,8 +168,7 @@ router.put("/", checkLogin, async (req, res) => {
     );
     res.status(200).json({ mess: "Successfull" });
   } catch (error) {
-    // res.status(500).json({ mess: "Server Error" });
-    console.log(error);
+    res.status(500).json({ mess: "Server Error" });
   }
 });
 

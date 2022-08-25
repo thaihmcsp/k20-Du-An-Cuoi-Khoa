@@ -428,7 +428,7 @@ body {
   flex: 0.8;
 }
 
-.content-order-detail-rate span {
+.content-order-detail-rate a {
   color: var(--link-color);
   font-size: 14px;
 }

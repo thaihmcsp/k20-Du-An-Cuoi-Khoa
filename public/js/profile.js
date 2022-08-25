@@ -174,7 +174,7 @@ $(".modal-rated-text textarea").on("keyup", function () {
   }
 });
 
-function getDataToMdal(codeID, productName, ele) {
+function getDataToModal(codeID, productName, ele) {
   $(".modal-rated-header h5").text("Đánh giá cho " + productName);
   $(".modal-rated-text span").text("0");
   $(".modal-rated-text textarea").val("");
@@ -184,11 +184,12 @@ function getDataToMdal(codeID, productName, ele) {
   $(".modal-footer-post").attr("index", ele.getAttribute("index"));
 }
 
-async function postRate(orderID, ele) {
+$(".modal-footer-post").one("click", async function () {
   try {
     const countStar = $(".active-star").length;
     const comment = $(".modal-rated-text textarea").val().trim();
-    const codeID = ele.getAttribute("id");
+    const codeID = $(this).attr("id");
+    const orderID = $(this).attr("order-id");
     if (countStar == 0) {
       $(".modal-rated-error").css("display", "block");
     } else if (comment.length <= 100) {
@@ -198,17 +199,17 @@ async function postRate(orderID, ele) {
         data: {
           orderID,
           codeID,
-          i: ele.getAttribute("index"),
+          i: $(this).attr("index"),
           star: countStar,
           content: comment,
         },
       });
-      window.location.href = "/product/detail/" + codeID;
+      window.location.reload();
     }
   } catch (error) {
     console.log(error);
   }
-}
+});
 
 //* Upload Preview Image
 function importData() {

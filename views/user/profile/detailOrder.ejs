@@ -64,12 +64,14 @@
             <% if (detailOrder.status == 'done') { %>
             <div class="content-order-detail-rate">
               <% if (product.rated) { %>
-              <span>Đã đánh giá</span>
+              <a href="/product/detail/<%= product.productID.productCode._id %>"
+                >Xem đánh giá</a
+              >
               <% } else { %>
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal2"
-                onclick="getDataToMdal('<%= product.productID.productCode._id %>', '<%= product.productID.productCode.name %>',this )"
+                onclick="getDataToModal('<%= product.productID.productCode._id %>', '<%= product.productID.productCode.name %>',this )"
                 index="<%= i %>"
               >
                 Đánh giá

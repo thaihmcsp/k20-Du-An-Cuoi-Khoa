@@ -41,12 +41,13 @@ router.post("/creat", checkLogin, async (req, res) => {
           stars: (sumStar / comment.length).toFixed(1),
         }
       );
-      res.status(200).json({ mess: "Successfull" });
+      res.status(200).json({ mess: "Successful" });
     } else {
       res.status(400).json({ mess: "Failed" });
     }
   } catch (error) {
-    res.status(500).json({ mess: "Error Server" });
+    res.status(500).json({ mess: "Error Server", error });
+    // console.log(error);
   }
 });
 

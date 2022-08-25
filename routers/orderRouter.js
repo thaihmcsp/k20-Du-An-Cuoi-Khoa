@@ -146,7 +146,23 @@ router.put("/xoa", checkLogin, async (req, res) => {
   }
 });
 
-router.put("/", checkLogin, async (req, res) => {
+router.put("/cancel/:id", checkLogin, async (req, res) => {
+  try {
+    await OrderModel.updateOne(
+      {
+        _id: req.params.id,
+      },
+      {
+        status: "cancel",
+      }
+    );
+    res.status(200).json({ mess: "Successful" });
+  } catch (error) {
+    res.status(500).json({ mess: "Server error" });
+  }
+});
+
+router.put("/done", checkLogin, async (req, res) => {
   try {
     const user = await OrderModel.findOne({
       _id: req.body.orderID,
